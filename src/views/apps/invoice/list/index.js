@@ -202,7 +202,7 @@ const InvoiceList = () => {
 
   return (
     <div className='invoice-list-wrapper'>
-      <Card>
+      <Card style={{ width:"1298px" }}>
         <div className='invoice-list-dataTable'>
           <DataTable
             noHeader

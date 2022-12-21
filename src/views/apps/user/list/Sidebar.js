@@ -65,38 +65,26 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
           <Input
             name='full-name'
             id='full-name'
-            placeholder='John Doe'
+            placeholder='Name'
             innerRef={register({ required: true })}
             className={classnames({ 'is-invalid': errors['full-name'] })}
           />
         </FormGroup>
         <FormGroup>
-          <Label for='username'>
-            Username <span className='text-danger'>*</span>
-          </Label>
-          <Input
-            name='username'
-            id='username'
-            placeholder='johnDoe99'
-            innerRef={register({ required: true })}
-            className={classnames({ 'is-invalid': errors['username'] })}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label for='email'>
+        <Label for='full-name'>
             Email <span className='text-danger'>*</span>
           </Label>
           <Input
             type='email'
             name='email'
             id='email'
-            placeholder='john.doe@example.com'
+            placeholder='Email'
             innerRef={register({ required: true })}
             className={classnames({ 'is-invalid': errors['email'] })}
           />
           <FormText color='muted'>You can use letters, numbers & periods</FormText>
         </FormGroup>
-        <FormGroup>
+        {/* <FormGroup>
           <Label for='company'>
             Company <span className='text-danger'>*</span>
           </Label>
@@ -107,10 +95,10 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
             innerRef={register({ required: true })}
             className={classnames({ 'is-invalid': errors['company'] })}
           />
-        </FormGroup>
+        </FormGroup> */}
         <FormGroup>
           <Label for='country'>
-            Country <span className='text-danger'>*</span>
+            Address <span className='text-danger'>*</span>
           </Label>
           <Input
             name='country'
@@ -132,7 +120,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
             className={classnames({ 'is-invalid': errors['contact'] })}
           />
         </FormGroup>
-        <FormGroup>
+        {/* <FormGroup>
           <Label for='user-role'>User Role</Label>
           <Input type='select' id='user-role' name='user-role' value={role} onChange={e => setRole(e.target.value)}>
             <option value='subscriber'>Subscriber</option>
@@ -141,11 +129,11 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
             <option value='author'>Author</option>
             <option value='admin'>Admin</option>
           </Input>
-        </FormGroup>
+        </FormGroup> */}
         <FormGroup className='mb-2' value={plan} onChange={e => setPlan(e.target.value)}>
-          <Label for='select-plan'>Select Plan</Label>
+          <Label for='select-plan'>Seleact Rate</Label>
           <Input type='select' id='select-plan' name='select-plan'>
-            <option value='basic'>Basic</option>
+            <option value='1000'>1000</option>
             <option value='enterprise'>Enterprise</option>
             <option value='company'>Company</option>
             <option value='team'>Team</option>

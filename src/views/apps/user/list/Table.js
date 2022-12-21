@@ -67,7 +67,7 @@ const CustomHeader = ({ toggleSidebar, handlePerPage, rowsPerPage, handleFilter,
             />
           </div>
           <Button.Ripple color='primary' onClick={toggleSidebar}>
-            Add New User
+            Add New Staffs
           </Button.Ripple>
         </Col>
       </Row>

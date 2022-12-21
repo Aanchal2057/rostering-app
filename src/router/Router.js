@@ -16,12 +16,11 @@ import { BrowserRouter as AppRouter, Route, Switch, Redirect } from 'react-route
 
 // ** Routes & Default Routes
 import { DefaultRoute, Routes } from './routes'
-
 // ** Layouts
-import BlankLayout from '@layouts/BlankLayout'
+//import BlankLayout from '@layouts/BlankLayout'
+import Login from '../views/pages/authentication/Login'
 import VerticalLayout from '@src/layouts/VerticalLayout'
 import HorizontalLayout from '@src/layouts/HorizontalLayout'
-
 const Router = () => {
   // ** Hooks
   const [layout, setLayout] = useLayout()
@@ -34,7 +33,7 @@ const Router = () => {
   const DefaultLayout = layout === 'horizontal' ? 'HorizontalLayout' : 'VerticalLayout'
 
   // ** All of the available layouts
-  const Layouts = { BlankLayout, VerticalLayout, HorizontalLayout }
+  const Layouts = {  VerticalLayout, HorizontalLayout }
 
   // ** Current Active Item
   const currentActiveItem = null
@@ -86,7 +85,7 @@ const Router = () => {
        ** Then redirect user to login
        */
 
-      return <Redirect to='/login' />
+      // return <Redirect to='/login' />
     } else if (route.meta && route.meta.authRoute && isUserLoggedIn()) {
       // ** If route has meta and authRole and user is Logged in then redirect user to home page (DefaultRoute)
       return <Redirect to='/' />
@@ -192,16 +191,19 @@ const Router = () => {
           path='/'
           render={() => {
             return isUserLoggedIn() ? <Redirect to={DefaultRoute} /> : <Redirect to='/login' />
+            // return <NotAuthorized/>
+            // console.log('hello')
           }}
-        />
+        /> 
+        <Route path='/login' component={Login} />
         {/* Not Auth Route */}
         <Route
           exact
           path='/misc/not-authorized'
           render={props => (
-            <Layouts.BlankLayout>
+            // <Layouts.BlankLayout>
               <NotAuthorized />
-            </Layouts.BlankLayout>
+            // </Layouts.BlankLayout>
           )}
         />
         {ResolveRoutes()}
