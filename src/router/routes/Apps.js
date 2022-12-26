@@ -7,6 +7,10 @@ const AppRoutes = [
     component: lazy(() => import('../../views/apps/calendar'))
   },
   {
+    path: '/apps/schedule',
+    component: lazy(() => import('../../views/apps/calendar/schedules'))
+  },
+  {
     path: '/apps/invoice/list',
     component: lazy(() => import('../../views/apps/invoice/list'))
   },
@@ -42,6 +46,10 @@ const AppRoutes = [
     path: '/apps/invoice/print',
     layout: 'BlankLayout',
     component: lazy(() => import('../../views/apps/invoice/print'))
+  },
+  {
+    path: '/apps/clients/list',
+    component: lazy(() => import('../../views/apps/user/list'))
   },
   {
     path: '/apps/user/list',

@@ -30,9 +30,8 @@ import '@styles/react/apps/app-calendar.scss'
 
 // ** CalendarColors
 const calendarsColor = {
-  Business: 'primary',
-  Holiday: 'success',
-  Personal: 'danger',
+  Assigned: 'success',
+  Unassigned: 'danger',
   Family: 'warning',
   ETC: 'info'
 }
@@ -143,3 +142,4 @@ const CalendarComponent = () => {
 }
 
 export default CalendarComponent
+

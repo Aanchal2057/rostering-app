@@ -12,4 +12,12 @@ const UsersList = () => {
   )
 }
 
+export  const ClientsList = () => {
+  return (
+    <div className='app-user-list'>
+      <Table />
+    </div>
+  )
+}
+
 export default UsersList

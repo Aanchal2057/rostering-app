@@ -1,5 +1,11 @@
-import { Settings, Calendar, FileText, Circle, ShoppingCart, User, Users  } from 'react-feather'
+import { Settings, Calendar, FileText, Circle, ShoppingCart, User, Users, Briefcase  } from 'react-feather'
 export default [
+  {
+   id:'clients',
+   title:'Clients',
+   icon:<Briefcase size={20}/>,
+   navLink: '/apps/clients/list'
+  },
   {
     id: 'user',
     title: 'Staffs',
@@ -7,36 +13,36 @@ export default [
     navLink: '/apps/user/list'
   },
   {
-    id: 'roster',
-    title: 'Roster',
+    id: 'calender',
+    title: 'Calender',
     icon: <Calendar size={20} />,
-    navLink: '/apps/calendar'
-    // children: [
-    //   {
-    //     id: 'invoiceList',
-    //     title: 'List',
-    //     icon: <Circle size={12} />,
-    //     navLink: '/apps/invoice/list'
-    //   },
-    //   {
-    //     id: 'invoicePreview',
-    //     title: 'Preview',
-    //     icon: <Circle size={12} />,
-    //     navLink: '/apps/invoice/preview'
-    //   },
-    //   {
-    //     id: 'invoiceEdit',
-    //     title: 'Edit',
-    //     icon: <Circle size={12} />,
-    //     navLink: '/apps/invoice/edit'
-    //   },
-    //   {
-    //     id: 'invoiceAdd',
-    //     title: 'Add',
-    //     icon: <Circle size={12} />,
-    //     navLink: '/apps/invoice/add'
-    //   }
-    // ]
+    children: [
+      {
+        id: 'Roster',
+        title: 'Roster',
+        icon: <Calendar size={20}/>,
+        navLink: '/apps/calendar'
+      },
+      {
+        id: 'Upcoming list',
+        title: 'Upcoming Schedules list',
+        icon: <Circle size={12} />,
+        navLink: '/apps/schedule'
+      
+      },
+      {
+        id: 'invoiceEdit',
+        title: 'Edit',
+        icon: <Circle size={12} />,
+        navLink: '/apps/invoice/edit'
+      },
+      {
+        id: 'invoiceAdd',
+        title: 'Add',
+        icon: <Circle size={12} />,
+        navLink: '/apps/invoice/add'
+      }
+    ]
   },
   {
     id: 'invoiceApp',

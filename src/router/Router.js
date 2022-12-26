@@ -21,6 +21,7 @@ import { DefaultRoute, Routes } from './routes'
 import Login from '../views/pages/authentication/Login'
 import VerticalLayout from '@src/layouts/VerticalLayout'
 import HorizontalLayout from '@src/layouts/HorizontalLayout'
+import Invoice from '../views/apps/invoice/list/Invoice'
 const Router = () => {
   // ** Hooks
   const [layout, setLayout] = useLayout()
@@ -210,6 +211,7 @@ const Router = () => {
 
         {/* NotFound Error page */}
         <Route path='*' component={Error} />
+        <Route path='/invoice' component={Invoice} />
       </Switch>
     </AppRouter>
   )

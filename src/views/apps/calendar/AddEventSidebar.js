@@ -69,15 +69,15 @@ const AddEventSidebar = props => {
   const [location, setLocation] = useState('')
   const [endPicker, setEndPicker] = useState(new Date())
   const [startPicker, setStartPicker] = useState(new Date())
-  const [value, setValue] = useState([{ value: 'Business', label: 'Business', color: 'primary' }])
+  const [value, setValue] = useState([{ value: 'Assigned', label: 'Assigned', color: 'success' }])
 
   // ** Select Options
   const options = [
-    { value: 'Business', label: 'Business', color: 'primary' },
-    { value: 'Personal', label: 'Personal', color: 'danger' },
-    { value: 'Family', label: 'Family', color: 'warning' },
-    { value: 'Holiday', label: 'Holiday', color: 'success' },
-    { value: 'ETC', label: 'ETC', color: 'info' }
+    { value: 'Assigned', label: 'Assigned', color: 'primary' },
+    { value: 'Unassigned', label: 'Unassigned', color: 'danger' }
+    // { value: 'Family', label: 'Family', color: 'warning' },
+    // { value: 'Holiday', label: 'Holiday', color: 'success' },
+    // { value: 'ETC', label: 'ETC', color: 'info' }
   ]
 
   const guestsOptions = [
@@ -145,7 +145,7 @@ const AddEventSidebar = props => {
     setLocation('')
     setDesc('')
     setGuests({})
-    setValue([{ value: 'Business', label: 'Business', color: 'primary' }])
+    setValue([{ value: 'Assigned', label: 'Assigned', color: 'primary' }])
     setStartPicker(new Date())
     setEndPicker(new Date())
   }
@@ -159,7 +159,7 @@ const AddEventSidebar = props => {
         if (calendar.length) {
           return { label: calendar, value: calendar, color: calendarsColor[calendar] }
         } else {
-          return { value: 'Business', label: 'Business', color: 'primary' }
+          return { value: 'Assigned', label: 'Assigned', color: 'primary' }
         }
       }
       setTitle(selectedEvent.title || title)
@@ -387,7 +387,7 @@ const AddEventSidebar = props => {
             />
           </FormGroup>
 
-          <FormGroup>
+          {/* <FormGroup>
             <Label for='eventURL'>Event URL</Label>
             <Input
               type='url'
@@ -396,10 +396,10 @@ const AddEventSidebar = props => {
               onChange={e => setUrl(e.target.value)}
               placeholder='https://www.google.com'
             />
-          </FormGroup>
+          </FormGroup> */}
 
           <FormGroup>
-            <Label for='guests'>Guests</Label>
+            <Label for='guests'>Select Client</Label>
             <Select
               isMulti
               id='guests'
@@ -417,12 +417,30 @@ const AddEventSidebar = props => {
           </FormGroup>
 
           <FormGroup>
-            <Label for='location'>Location</Label>
-            <Input id='location' value={location} onChange={e => setLocation(e.target.value)} placeholder='Office' />
+            <Label for='guests'>Select Staffs</Label>
+            <Select
+              isMulti
+              id='guests'
+              className='react-select'
+              classNamePrefix='select'
+              isClearable={false}
+              options={guestsOptions}
+              theme={selectThemeColors}
+              value={guests.length ? [...guests] : null}
+              onChange={data => setGuests([...data])}
+              components={{
+                Option: GuestsComponent
+              }}
+            />
           </FormGroup>
 
+          {/* <FormGroup>
+            <Label for='location'>Location</Label>
+            <Input id='location' value={location} onChange={e => setLocation(e.target.value)} placeholder='Office' />
+          </FormGroup> */}
+
           <FormGroup>
-            <Label for='description'>Description</Label>
+            <Label for='description'>Client Rate</Label>
             <Input
               type='textarea'
               name='text'

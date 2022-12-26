@@ -32,7 +32,7 @@ const calenderReducer = (state = initialState, action) => {
       const value = action.value
       let selected = []
       if (value === true) {
-        selected = ['Personal', 'Business', 'Family', 'Holiday', 'ETC']
+        selected = ['Unassigned', 'Assigned']
       } else {
         selected = []
       }
