@@ -31,16 +31,10 @@ export default [
       
       },
       {
-        id: 'invoiceEdit',
-        title: 'Edit',
+        id: 'Approve',
+        title: 'Approve Tasks',
         icon: <Circle size={12} />,
-        navLink: '/apps/invoice/edit'
-      },
-      {
-        id: 'invoiceAdd',
-        title: 'Add',
-        icon: <Circle size={12} />,
-        navLink: '/apps/invoice/add'
+        navLink: '/apps/approve'
       }
     ]
   },

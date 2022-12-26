@@ -27,6 +27,9 @@ const index = () => {
         },
         {
             name: 'CLIENT PAYMENT'
+        },
+        {
+            name:'ADMIN APPROVAL'
         }
     ]
     const data = [
@@ -44,9 +47,8 @@ const index = () => {
     
     return (
         <div>
-           
-            <DataTable
-            title="Upcomming Schedule List"
+           <DataTable
+            title="Approve Tasks"
                 pagination
                 columns={columns}
                 data={data}
