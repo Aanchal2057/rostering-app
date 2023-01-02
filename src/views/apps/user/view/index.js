@@ -11,11 +11,12 @@ import { Row, Col, Alert } from 'reactstrap'
 
 // ** User View Components
 import UserInfoCard from './UserInfoCard'
-import InvoiceList from '../../invoice/list'
+import InvoiceLists from '../../invoice/list'
 
 
 // ** Styles
 import '@styles/react/apps/app-users.scss'
+
 
 const UserView = props => {
   // ** Vars
@@ -35,7 +36,8 @@ const UserView = props => {
         <UserInfoCard selectedUser={store.selectedUser} />
         </Col>
         <Col sm='9' >
-          <InvoiceList/>
+          <InvoiceLists/>
+          
         </Col>
       </Row>
     </div>

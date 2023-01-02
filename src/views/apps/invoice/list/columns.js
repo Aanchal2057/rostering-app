@@ -50,14 +50,9 @@ const renderClient = row => {
     states = ['light-success', 'light-danger', 'light-warning', 'light-info', 'light-primary', 'light-secondary'],
     color = states[stateNum]
 
-  if (row.avatar.length) {
-    return <Avatar className='mr-50' img={row.avatar} width='32' height='32' />
-  } else {
-    return <Avatar color={color} className='mr-50' content={row.client ? row.client.name : 'John Doe'} initials />
-  }
+ 
 }
 
-// ** Table columns
 export const columns = [
   {
     name: 'Name',
@@ -118,6 +113,128 @@ export const columns = [
  },
  {
   name: 'Staff Payemnt',
+    minWidth: '107px',
+    selector: 'id',
+    cell: row => <Link to={`/apps/invoice/preview/${row.id}`}>{`#${row.id}`}</Link>
+ }
+]
+
+export const columnscompleted = [
+  {
+    name: 'Name',
+    minWidth: '350px',
+    selector: 'client',
+    sortable: true,
+    cell: row => {
+      const name = row.client ? row.client.name : 'John Doe',
+        email = row.client ? row.client.companyEmail : 'johnDoe@email.com'
+      return (
+        <div className='d-flex justify-content-left align-items-center'>
+          {renderClient(row)}
+          <div className='d-flex flex-column'>
+            <h6 className='user-name text-truncate mb-0'>{name}</h6>
+            {/* <small className='text-truncate text-muted mb-0'>{email}</small> */}
+          </div>
+        </div>
+      )
+    }
+  },
+  {
+    name: 'Start Date',
+    selector: 'total',
+    sortable: true,
+    minWidth: '150px',
+    cell: row => <span>${row.total || 0}</span>
+  },
+  {
+    name: 'End Date',
+    selector: 'dueDate',
+    sortable: true,
+    minWidth: '100px',
+    cell: row => row.dueDate
+  },
+  {
+    name: 'Client',
+    selector: 'dueDate',
+    sortable: true,
+    minWidth: '100px',
+    cell: row => row.dueDate
+  },
+ 
+ {
+  name: 'Staff Payemnt',
+    minWidth: '107px',
+    selector: 'id',
+    cell: row => <Link to={`/apps/invoice/preview/${row.id}`}>{`#${row.id}`}</Link>
+ },
+ {
+  name: 'client Payemnt',
+    minWidth: '107px',
+    selector: 'id',
+    cell: row => <Link to={`/apps/invoice/preview/${row.id}`}>{`#${row.id}`}</Link>
+ },
+ {
+  name: 'Approved',
+    minWidth: '107px',
+    selector: 'id',
+    cell: row => <Link to={`/apps/invoice/preview/${row.id}`}>{`#${row.id}`}</Link>
+ }
+]
+
+// ** Table columns
+export const column = [
+  {
+    name: 'Name',
+    minWidth: '350px',
+    selector: 'client',
+    sortable: true,
+    cell: row => {
+      const name = row.client ? row.client.name : 'John Doe'
+      return (
+        <div className='d-flex justify-content-left align-items-center'>
+          {renderClient(row)}
+          <div className='d-flex flex-column'>
+            <h6 className='user-name text-truncate mb-0'>{name}</h6>
+            {/* <small className='text-truncate text-muted mb-0'>{email}</small> */}
+          </div>
+        </div>
+      )
+    }
+  },
+  {
+    name: 'total',
+    selector: 'total',
+    sortable: true,
+    minWidth: '150px',
+    cell: row => <span>${row.total || 0}</span>
+  },
+  {
+    name: 'invoice_Date',
+    selector: 'dueDate',
+    sortable: true,
+    minWidth: '100px',
+    cell: row => row.dueDate
+  },
+  {
+    name: 'status',
+    minWidth: '100px',
+    selector: 'client',
+    sortable: true,
+    cell: row => {
+      const name = row.client ? row.client.name : 'John Doe'
+      return (
+        <div className='d-flex justify-content-left align-items-center'>
+          {renderClient(row)}
+          <div className='d-flex flex-column'>
+            <h6 className='user-name text-truncate mb-0'>{name}</h6>
+            {/* <small className='text-truncate text-muted mb-0'>{email}</small> */}
+          </div>
+        </div>
+      )
+    }
+  },
+ {
+  name: 'action',
     minWidth: '107px',
     selector: 'id',
     cell: row => <Link to={`/apps/invoice/preview/${row.id}`}>{`#${row.id}`}</Link>

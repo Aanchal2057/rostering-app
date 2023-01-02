@@ -1,5 +1,12 @@
-import { Settings, Calendar, FileText, Circle, ShoppingCart, User, Users, Briefcase  } from 'react-feather'
+import { Settings, Calendar, Home, FileText, Circle, ShoppingCart, User, Users, Briefcase  } from 'react-feather'
 export default [
+
+  {
+    id:'dashboards',
+    title:'Dashboard',
+    icon:<Home size={20}/>,
+    navLink: '/dashboard/ecommerce'
+   },
   {
    id:'clients',
    title:'Clients',
@@ -70,41 +77,10 @@ export default [
     ]
   },
   
-  {
-    id: 'payroll',
-    title: 'Payroll',
-    icon: <Users size={20} />,
-    children: [
-      {
-        id: 'shop',
-        title: 'Shop',
-        icon: <Circle size={12} />,
-        navLink: '/apps/ecommerce/shop'
-      },
-      {
-        id: 'detail',
-        title: 'Details',
-        icon: <Circle size={12} />,
-        navLink: '/apps/ecommerce/product-detail'
-      },
-      {
-        id: 'wishList',
-        title: 'Wish List',
-        icon: <Circle size={12} />,
-        navLink: '/apps/ecommerce/wishlist'
-      },
-      {
-        id: 'checkout',
-        title: 'Checkout',
-        icon: <Circle size={12} />,
-        navLink: '/apps/ecommerce/checkout'
-      }
-    ]
-    
-},
 {
   id: 'settings',
   title: 'Settings',
-  icon: <Settings size={20} />
+  icon: <Settings size={20} />,
+  navLink:'/apps/settings'
 }
 ]

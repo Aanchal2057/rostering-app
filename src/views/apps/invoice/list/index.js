@@ -3,11 +3,12 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 // ** Table Columns
-import { columns } from './columns'
-
+import { columns, column, columnscompleted } from './columns'
+import datas from '../../../../@fake-db/fake_data/data_invoice.json'
+import datas_completed from '../../../../@fake-db/fake_data/data_completed.json'
 // ** Third Party Components
 import ReactPaginate from 'react-paginate'
-import { ChevronDown } from 'react-feather'
+import { ChevronDown, Columns } from 'react-feather'
 import DataTable from 'react-data-table-component'
 import { Button, Label, Input, CustomInput, Row, Col, Card } from 'reactstrap'
 
@@ -18,68 +19,37 @@ import { useDispatch, useSelector } from 'react-redux'
 // ** Styles
 import '@styles/react/apps/app-invoice.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
+import { log } from '@craco/craco/lib/logger'
 
-const CustomHeader = ({ handleFilter, value, handleStatusValue, statusValue, handlePerPage, rowsPerPage }) => {
+const CustomHeader = ({clickValue, show, handleFilter, value, handleStatusValue, statusValue, handlePerPage, rowsPerPage }) => {
+  console.log(datas)
+
+  const shoot = () => {
+    alert("Great Shot!")
+  }
+  
   return (
     <>
       <div className='invoice-list-table-header w-100 py-2 bg-light'>
       <Row>
         <Col lg='6' className='d-flex align-items-center px-0 px-lg-1'>
-          {/* <div className='d-flex align-items-center mr-2'>
-            <Label for='rows-per-page'>Show</Label>
-            <CustomInput
-              className='form-control ml-50 pr-3'
-              type='select'
-              id='rows-per-page'
-              value={rowsPerPage}
-              onChange={handlePerPage}
-            >
-              <option value='10'>10</option>
-              <option value='25'>25</option>
-              <option value='50'>50</option>
-            </CustomInput>
-          </div> */}
-          <Button.Ripple tag={Link} className='mx-2' to='/apps/invoice/add' color='primary'>
-           UPCOMMING
-          </Button.Ripple>
-          <Button.Ripple tag={Link} className='mx-2' to='/apps/invoice/add' color='primary'>
+      
+          <Button  className='mx-2 cursor-pointer' onClick={ () => { show('upcoming') } } color='primary'>
+           Upcoming
+          </Button>
+          <Button tag={Link} className='mx-2' onClick={ () => { show('completed') } } color='primary'>
            Completed
-          </Button.Ripple>
-          <Button.Ripple tag={Link} className='mx-2' to='/apps/invoice/add' color='primary'>
+          </Button>
+          <Button tag={Link} onClick={ () => { show('invoice') } } className='mx-2'  color='primary'>
            Invoices
-          </Button.Ripple>
+          </Button>
         </Col>
-        {/* <Col
-          lg='6'
-          className='actions-right d-flex align-items-center justify-content-lg-end flex-lg-nowrap flex-wrap mt-lg-0 mt-1 pr-lg-1 p-0'
-        >
-          <div className='d-flex align-items-center'>
-            <Label for='search-invoice'>Search</Label>
-            <Input
-              id='search-invoice'
-              className='ml-50 mr-2 w-100'
-              type='text'
-              value={value}
-              onChange={e => handleFilter(e.target.value)}
-              placeholder='Search Invoice'
-            />
-          </div>
-          <Input className='w-auto ' type='select' value={statusValue} onChange={handleStatusValue}>
-            <option value=''>Select Status</option>
-            <option value='downloaded'>Downloaded</option>
-            <option value='draft'>Draft</option>
-            <option value='paid'>Paid</option>
-            <option value='partial payment'>Partial Payment</option>
-            <option value='past due'>Past Due</option>
-            <option value='partial payment'>Partial Payment</option>
-          </Input>
-        </Col> */}
       </Row>
     </div>
     <div className='invoice-list-table-header w-100 py-2 bg-white'>
       <Row>
         <Col lg='6' className='d-flex align-items-center px-0 px-lg-1'>
-          <h2>Upcoming<b/></h2>
+          {/* <h2>Upcoming<b/></h2> */}
         </Col>
       </Row>
     </div>
@@ -95,18 +65,59 @@ const InvoiceList = () => {
   const [value, setValue] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [statusValue, setStatusValue] = useState('')
+  const [upComming, setUpComming] = useState(true)
+  const [completed, setCompleted] = useState(false)
+  const [invoice, setInvoice] = useState(false)
   const [rowsPerPage, setRowsPerPage] = useState(10)
 
+// const clickValue = (val) => {
+//   if (val === 'upComming') {
+//     setUpComming(true)
+//     setCompleted(false)
+//     setInvoice(false)
+//     console.log(val)
+//   }
+// }
+
+const display = () => {
+ if (upComming) {
+  return columns
+ } else if (completed) {
+  return columnscompleted
+ } else if (invoice) {
+  return column
+ }
+}
+
   useEffect(() => {
-    dispatch(
-      getData({
-        page: currentPage,
-        perPage: rowsPerPage,
-        status: statusValue,
-        q: value
-      })
-    )
+  
+      dispatch(
+        getData({
+          page: currentPage,
+          perPage: rowsPerPage,
+          status: statusValue,
+          q: value
+        })
+      )
+    
+   
   }, [dispatch, store.data.length])
+
+  const show = (val) => {
+    if (val === 'upcoming') {
+      setCompleted(false)
+      setInvoice(false)
+      setUpComming(true)
+    } else if (val === 'completed') {
+      setCompleted(true)
+      setInvoice(false)
+      setUpComming(false)
+    } else if (val === 'invoice') {
+      setCompleted(false)
+      setInvoice(true)
+      setUpComming(false)
+    }
+  }
 
   const handleFilter = val => {
     setValue(val)
@@ -182,21 +193,55 @@ const InvoiceList = () => {
   }
 
   const dataToRender = () => {
-    const filters = {
-      status: statusValue,
-      q: value
-    }
-
-    const isFiltered = Object.keys(filters).some(function (k) {
-      return filters[k].length > 0
-    })
-
-    if (store.data.length > 0) {
-      return store.data
-    } else if (store.data.length === 0 && isFiltered) {
-      return []
-    } else {
-      return store.allData.slice(0, rowsPerPage)
+    if (upComming) {
+      const filters = {
+        status: statusValue,
+        q: value
+      }
+  
+      const isFiltered = Object.keys(filters).some(function (k) {
+        return filters[k].length > 0
+      })
+  
+      if (store.data.length > 0) {
+        return store.data
+      } else if (store.data.length === 0 && isFiltered) {
+        return []
+      } else {
+        return store.allData.slice(0, rowsPerPage)
+      }
+    } else if (completed) {
+      const filters = {
+        q: datas_completed
+      }
+  
+      const isFiltered = Object.keys(filters).some(function (k) {
+        return filters[k].length > 0
+      })
+  
+      if (datas_completed.length > 0) {
+        return datas
+      } else if (datas_completed.length === 0 && isFiltered) {
+        return []
+      } else {
+        return datas_completed.slice(0, rowsPerPage)
+      }
+    } else if (invoice) {
+      const filters = {
+        q: datas
+      }
+  
+      const isFiltered = Object.keys(filters).some(function (k) {
+        return filters[k].length > 0
+      })
+  
+      if (datas.length > 0) {
+        return datas
+      } else if (datas.length === 0 && isFiltered) {
+        return []
+      } else {
+        return datas.slice(0, rowsPerPage)
+      }
     }
   }
 
@@ -205,11 +250,12 @@ const InvoiceList = () => {
       <Card style={{ width:"1298px" }}>
         <div className='invoice-list-dataTable'>
           <DataTable
-            noHeader
+            title="upcomming"
+            // noHeader
             pagination
             paginationServer
             subHeader={true}
-            columns={columns}
+            columns={display()}
             responsive={true}
             sortIcon={<ChevronDown />}
             className='react-dataTable'
@@ -220,6 +266,7 @@ const InvoiceList = () => {
             subHeaderComponent={
               <CustomHeader
                 value={value}
+                show={show}
                 statusValue={statusValue}
                 rowsPerPage={rowsPerPage}
                 handleFilter={handleFilter}
