@@ -1,14 +1,14 @@
-import { useState, useContext, Fragment } from 'react'
+import { useState, useContext, Fragment, useEffect } from 'react'
 import classnames from 'classnames'
 import Avatar from '@components/avatar'
 import { useSkin } from '@hooks/useSkin'
 import useJwt from '@src/auth/jwt/useJwt'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { toast, Slide } from 'react-toastify'
 import { handleLogin } from '@store/actions/auth'
 import { AbilityContext } from '@src/utility/context/Can'
-import { Link} from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import InputPasswordToggle from '@components/input-password-toggle'
 import { getHomeRouteForLoggedInUser, isObjEmpty } from '@utils'
 import { Facebook, Twitter, Mail, GitHub, HelpCircle, Coffee } from 'react-feather'
@@ -45,19 +45,29 @@ const ToastContent = ({ name, role }) => (
 
 const Login = props => {
   const [skin, setSkin] = useSkin()
-  const ability = useContext(AbilityContext)
   const dispatch = useDispatch()
+    const history = useHistory()
   const [email, setEmail] = useState('admin@demo.com')
   const [password, setPassword] = useState('admin')
   const { register, errors, handleSubmit } = useForm()
   const illustration = skin === 'dark' ? 'login-v2-dark.svg' : 'login-v2.svg',
     source = require(`@src/assets/images/pages/${illustration}`).default
+  
+  const {isAuthenticated} = useSelector(
+(state) => state.authReducer
+)
 
  const loginSubmit = (event) => {
    event.preventDefault()
- dispatch(login(email, password))
+   dispatch(login(email, password))
  }
-
+  
+useEffect(() => {
+  if (isAuthenticated) {
+  localStorage.setItem("userData", isAuthenticated)
+  history.push("/dashboard/ecommerce")
+}
+}, [history, isAuthenticated])
 
   return (
     <div className='auth-wrapper auth-v2'>
