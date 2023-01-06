@@ -134,29 +134,8 @@ useEffect(() => {
               Welcome to Dashboard! 👋 
             </CardTitle>
             <CardText className='mb-2'>Please sign-in to your account and start the adventure</CardText>
-            <Alert color='primary'>
-              <div className='alert-body font-small-2'>
-                <p>
-                  <small className='mr-50'>
-                    <span className='font-weight-bold'>Admin:</span> admin@demo.com | admin
-                  </small>
-                </p>
-                <p>
-                  <small className='mr-50'>
-                    <span className='font-weight-bold'>Client:</span> client@demo.com | client
-                  </small>
-                </p>
-              </div>
-              <HelpCircle
-                id='login-tip'
-                className='position-absolute'
-                size={18}
-                style={{ top: '10px', right: '10px' }}
-              />
-              <UncontrolledTooltip target='login-tip' placement='left'>
-                This is just for ACL demo purpose.
-              </UncontrolledTooltip>
-            </Alert>
+           
+              
             <Form className='auth-login-form mt-2' onSubmit={loginSubmit}>
               <FormGroup>
                 <Label className='form-label' for='login-email'>

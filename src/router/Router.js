@@ -21,14 +21,15 @@ import { DefaultRoute, Routes } from './routes'
 import Login from '../views/pages/authentication/Login'
 import VerticalLayout from '@src/layouts/VerticalLayout'
 import HorizontalLayout from '@src/layouts/HorizontalLayout'
-import Invoice from '../views/apps/invoice/list/Invoice'
+import EcommerceDashboard from '../views/dashboard/ecommerce'
+
 const Router = () => {
   // ** Hooks
   const [layout, setLayout] = useLayout()
   const [transition, setTransition] = useRouterTransition()
 
   // ** ACL Ability Context
-  // const ability = useContext(AbilityContext)
+  const ability = useContext(AbilityContext)
 
   // ** Default Layout
   const DefaultLayout = layout === 'horizontal' ? 'HorizontalLayout' : 'VerticalLayout'
@@ -181,6 +182,8 @@ const Router = () => {
             // console.log('hello')
           }}
         /> 
+         <Route path='/invoice' component={Login} />
+         {/* <Route path='/test' component={Test}/> */}
         <Route path='/login' component={Login} />
         {/* Not Auth Route */}
         <Route
@@ -196,7 +199,9 @@ const Router = () => {
 
         {/* NotFound Error page */}
         <Route path='*' component={Error} />
-        <Route path='/invoice' component={Invoice} />
+      
+      
+        {/* <Route path='/invoice' component={Invoice} /> */}
       </Switch>
     </AppRouter>
   )
