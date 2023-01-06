@@ -53,7 +53,6 @@ const Router = () => {
         }
       })
     }
-
     return { LayoutRoutes, LayoutPaths }
   }
 
@@ -108,6 +107,7 @@ const Router = () => {
           >
             <Switch>
               {LayoutRoutes.map(route => {
+               
                 return (
                   <Route
                     key={route.path}
@@ -131,7 +131,6 @@ const Router = () => {
                             {...(route.appLayout
                               ? {
                                 appLayout: route.appLayout
-                           
                                 }
                               : {})}
                             {...(route.meta
@@ -189,7 +188,6 @@ const Router = () => {
 
         {/* NotFound Error page */}
         <Route path='*' component={Error} />
-        <Route path='/invoice' component={Invoice} />
       </Switch>
     </AppRouter>
   )
