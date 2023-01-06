@@ -67,13 +67,6 @@ const Router = () => {
    */
   const FinalRoute = props => {
     const route = props.route
-    let action, resource
-
-    // ** Assign vars based on route meta
-    if (route.meta) {
-      action = route.meta.action ? route.meta.action : null
-      resource = route.meta.resource ? route.meta.resource : null
-    }
 
     if (
       (isUserLoggedIn()) 
@@ -94,7 +87,7 @@ const Router = () => {
 
       // ** Get Routes and Paths of the Layout
       const { LayoutRoutes, LayoutPaths } = LayoutRoutesAndPaths(layout)
-
+      
       // ** We have freedom to display different layout for different route
       // ** We have made LayoutTag dynamic based on layout, we can also replace it with the only layout component,
       // ** that we want to implement like VerticalLayout or HorizontalLayout
@@ -123,8 +116,7 @@ const Router = () => {
                     render={props => {
                       // ** Assign props to routerProps
                       Object.assign(routerProps, {
-                        ...props,
-                        meta: route.meta
+                        ...props
                       })
 
                       return (
@@ -138,7 +130,8 @@ const Router = () => {
                             /*eslint-disable */
                             {...(route.appLayout
                               ? {
-                                  appLayout: route.appLayout
+                                appLayout: route.appLayout
+                           
                                 }
                               : {})}
                             {...(route.meta

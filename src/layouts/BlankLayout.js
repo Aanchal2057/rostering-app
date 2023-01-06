@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 // ** Custom Hooks
 import { useSkin } from '@hooks/useSkin'
 
-const BlankLayout = ({ children, ...rest }) => {
+const BlankLayout = ({ children }) => {
   // ** Hooks
   const [skin, setSkin] = useSkin()
 
