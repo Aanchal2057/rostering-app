@@ -35,7 +35,7 @@ const UserDropdown = () => {
   const logoutHandeler = (e) => {
     e.preventDefault()
     dispatch(logout())
-    console.log('click')
+    // console.log('click')
   }
   
   //** Vars

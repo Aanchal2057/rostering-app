@@ -24,11 +24,8 @@ import VerticalLayout from '@src/layouts/VerticalLayout'
 import HorizontalLayout from '@src/layouts/HorizontalLayout'
 import EcommerceDashboard from '../views/dashboard/ecommerce'
 
-const Router = () => {
-  
-    const {isAuthenticated} = useSelector(
-(state) => state.authReducer
-)
+const Router = ({isAuthenticated}) => {
+
   // ** Hooks
   const [layout, setLayout] = useLayout()
   const [transition, setTransition] = useRouterTransition()
@@ -184,7 +181,7 @@ const Router = () => {
           exact
           path='/'
           render={() => {
-            return isUserLoggedIn() ? <Redirect to={DefaultRoute} /> : <Redirect to='/login' />
+            return isAuthenticated ? <Redirect to={DefaultRoute} /> : <Redirect to='/login' />
             // return <NotAuthorized/>
             // console.log('hello')
           }}
