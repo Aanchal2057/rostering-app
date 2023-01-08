@@ -1,4 +1,4 @@
-import {LOGIN_FAIL, LOGIN_SUCCESS, LOGIN_REQUEST, LOGOUT_REQUEST, LOGOUT_FAIL} from '../constant/authConstant'
+import {LOGIN_FAIL, LOGIN_SUCCESS, LOGIN_REQUEST, LOGOUT_REQUEST, LOGOUT_FAIL, LOGOUT_SUCCESS} from '../constant/authConstant'
 import axios from 'axios'
 
 export const login = (email, password) => async (dispatch) => {
@@ -19,10 +19,13 @@ payload: data.admin
 dispatch({ type: LOGIN_FAIL, payload: error.response.data.message })
 }
 }
-export const logout = () => {
+export const logout = () => async (dispatch) => {
 try {
-dispatch({ type: LOGOUT_REQUEST })
+    dispatch({ type: LOGOUT_REQUEST })
+    dispatch({
+type: LOGOUT_SUCCESS
+})
 }  catch (error) {
-dispatch({type:LOGOUT_FAIL, payload:error.response.data.message})
+dispatch({type:LOGOUT_FAIL, payload:'cannot logout'})
 }
 }

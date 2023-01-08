@@ -64,7 +64,6 @@ const Login = props => {
   
 useEffect(() => {
   if (isAuthenticated) {
-  localStorage.setItem("userData", isAuthenticated)
   history.push("/dashboard/ecommerce")
 }
 }, [history, isAuthenticated])

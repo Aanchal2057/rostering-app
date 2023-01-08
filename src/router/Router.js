@@ -1,5 +1,6 @@
 // ** React Imports
 import { Suspense, useContext, lazy } from 'react'
+import { useSelector } from 'react-redux'
 
 // ** Utils
 import { isUserLoggedIn } from '@utils'
@@ -24,6 +25,10 @@ import HorizontalLayout from '@src/layouts/HorizontalLayout'
 import EcommerceDashboard from '../views/dashboard/ecommerce'
 
 const Router = () => {
+  
+    const {isAuthenticated} = useSelector(
+(state) => state.authReducer
+)
   // ** Hooks
   const [layout, setLayout] = useLayout()
   const [transition, setTransition] = useRouterTransition()
@@ -77,11 +82,13 @@ const Router = () => {
     }
 
     if (
-      (isUserLoggedIn()) 
+      (isAuthenticated) 
     ) {
       return <route.component {...props} />
 
-      // return <Redirect to='/login' />
+    } else {
+      return <Redirect to='/login' />
+      
     }
   }
 
