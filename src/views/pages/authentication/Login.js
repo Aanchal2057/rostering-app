@@ -28,6 +28,7 @@ import {
 } from 'reactstrap'
 import '@styles/base/pages/page-auth.scss'
 import { login } from '../../../redux1/action/auth'
+import { val } from '../../../App'
 
 const ToastContent = ({ name, role }) => (
   <Fragment>
@@ -52,21 +53,19 @@ const Login = props => {
   const { register, errors, handleSubmit } = useForm()
   const illustration = skin === 'dark' ? 'login-v2-dark.svg' : 'login-v2.svg',
     source = require(`@src/assets/images/pages/${illustration}`).default
-  
-  const {isAuthenticated} = useSelector(
+       const {isAuth} = useSelector(
 (state) => state.authReducer
-)
-
+    )
  const loginSubmit = (event) => {
    event.preventDefault()
    dispatch(login(email, password))
- }
+  }
   
 useEffect(() => {
-  if (isAuthenticated) {
+  if (isAuth) {
   history.push("/dashboard/ecommerce")
 }
-}, [history, isAuthenticated])
+}, [history, isAuth])
 
   return (
     <div className='auth-wrapper auth-v2'>

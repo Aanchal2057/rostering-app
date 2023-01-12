@@ -79,7 +79,8 @@ const UsersList = () => {
   // ** Store Vars
   const dispatch = useDispatch()
   const store = useSelector(state => state.users)
-
+  const data = useSelector(state => state.Clients)
+console.log(data.client?.clients)
   // ** States
   const [searchTerm, setSearchTerm] = useState('')
   const [currentPage, setCurrentPage] = useState(1)

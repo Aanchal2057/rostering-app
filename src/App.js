@@ -1,20 +1,22 @@
 // ** Router Import
-import { useSelector } from 'react-redux'
 import Router from './router/Router'
 import { useEffect } from 'react'
+import { Clients, admin } from './redux1/action/auth'
 import {store} from '../src/redux/storeConfig/store'
-import { isAuth } from './redux1/action/auth'
+import { useSelector } from 'react-redux'
 
-const App = props => {
-      const {isAuthenticated} = useSelector(
+const App = props => {  
+    
+  useEffect(()  => {
+    
+    store.dispatch(admin())
+      store.dispatch(Clients())
+  }, [])
+     const {isAuth} = useSelector(
 (state) => state.authReducer
     )
-    
-useEffect(() => {
-store.dispatch(isAuth())
-}, [])
 
-    return <Router isAuthenticated={isAuthenticated} />
+    return <Router isAuthenticated={isAuth} />
 }
 
 export default App

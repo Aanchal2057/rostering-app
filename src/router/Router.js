@@ -23,9 +23,10 @@ import Login from '../views/pages/authentication/Login'
 import VerticalLayout from '@src/layouts/VerticalLayout'
 import HorizontalLayout from '@src/layouts/HorizontalLayout'
 import EcommerceDashboard from '../views/dashboard/ecommerce'
-
+ 
 const Router = ({isAuthenticated}) => {
-
+  
+console.log(isAuthenticated)
   // ** Hooks
   const [layout, setLayout] = useLayout()
   const [transition, setTransition] = useRouterTransition()
@@ -70,7 +71,6 @@ const Router = ({isAuthenticated}) => {
    */
   const FinalRoute = props => {
     const route = props.route
-    let action, resource
 
     // ** Assign vars based on route meta
     if (route.meta) {
@@ -78,9 +78,8 @@ const Router = ({isAuthenticated}) => {
       resource = route.meta.resource ? route.meta.resource : null
     }
 
-    if (
-      (isAuthenticated) 
-    ) {
+    if 
+      (isAuthenticated) {
       return <route.component {...props} />
 
     } else {
@@ -174,7 +173,7 @@ const Router = ({isAuthenticated}) => {
   }
 
   return (
-    <AppRouter basename={process.env.REACT_APP_BASENAME}>
+    <AppRouter>
       <Switch>
         {/* If user is logged in Redirect user to DefaultRoute else to login */}
         <Route
