@@ -73,10 +73,7 @@ console.log(isAuthenticated)
     const route = props.route
 
     // ** Assign vars based on route meta
-    if (route.meta) {
-      action = route.meta.action ? route.meta.action : null
-      resource = route.meta.resource ? route.meta.resource : null
-    }
+
 
     if 
       (isAuthenticated) {

@@ -128,7 +128,7 @@ export const columns = [
         <DropdownMenu right>
           <DropdownItem
             tag={Link}
-            to={`/apps/user/view/${row.id}`}
+            to={`/apps/user/view/${row.uuid}`}
             className='w-100'
             // onClick={() => store.dispatch(getUser(row.id))}
           >

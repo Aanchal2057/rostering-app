@@ -16,24 +16,27 @@ import InvoiceLists from '../../invoice/list'
 
 // ** Styles
 import '@styles/react/apps/app-users.scss'
+import { ClientDetails } from '../../../../redux1/action/auth'
 
 
 const UserView = props => {
   // ** Vars
-  const store = useSelector(state => state.users),
-    dispatch = useDispatch(),
-    { id } = useParams()
+    const dispatch = useDispatch()
+ const { id } = useParams()
 
   // ** Get suer on mount
   useEffect(() => {
-    dispatch(getUser(parseInt(id)))
+    dispatch(ClientDetails({id}))
   }, [dispatch])
 
-  return store.selectedUser !== null && store.selectedUser !== undefined ? (
+   const datas = useSelector(state => state.Clients)
+  const data = (datas?.client)
+
+  return data !== null ? (
     <div className='app-user-view'>
       <Row>
         <Col sm='no-gutters' >
-        <UserInfoCard selectedUser={store.selectedUser} />
+        <UserInfoCard data={data} />
         </Col>
         <Col sm='9' >
           <InvoiceLists/>

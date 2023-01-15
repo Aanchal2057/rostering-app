@@ -48,6 +48,7 @@ const CustomHeader = ({ toggleSidebar, handleFilter, searchTerm }) => {
 const UsersList = () => {
   // ** Store Vars
   const dispatch = useDispatch()
+  
   const store = useSelector(state => state.users)
 
   const checkpage = useRef()
@@ -115,7 +116,6 @@ const UsersList = () => {
 
   return (
     <Fragment>
-      
 
       <Card>
         <DataTable
