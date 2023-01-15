@@ -48,13 +48,13 @@ dispatch({type:LOGOUT_FAIL, payload:'cannot logout'})
 }
 }
 
-export const Clients = () => async (dispatch) => {
+export const Clients = ({currentPage}) => async (dispatch) => {
 try {
     dispatch({ type: LOAD_CLIENT_REQUEST })
 
     const config = { headers: { 'x-api-key':'23124134' } }
 const { data } = await axios.get(
-`http://rostering.delshagroup.com/client`,
+`http://rostering.delshagroup.com/client?pageSize=10&page=${currentPage}&`,
 config
     )
     

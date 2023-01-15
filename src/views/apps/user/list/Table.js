@@ -1,5 +1,5 @@
 // ** React Imports
-import { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect, useRef  } from 'react'
 
 // ** Invoice List Sidebar
 import Sidebar from './Sidebar'
@@ -22,6 +22,7 @@ import { Card, CardHeader, CardTitle, CardBody, Input, Row, Col, Label, CustomIn
 // ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
+import { Clients } from '../../../../redux1/action/auth'
 
 // ** Table Header
 const CustomHeader = ({ toggleSidebar, handleFilter, searchTerm }) => {
@@ -34,18 +35,7 @@ const CustomHeader = ({ toggleSidebar, handleFilter, searchTerm }) => {
           xl='6'
           className='d-flex align-items-sm-center justify-content-lg-end justify-content-start flex-lg-nowrap flex-wrap flex-sm-row flex-column pr-lg-1 p-0 mt-lg-0 mt-1'
         >
-          <div className='d-flex align-items-center mb-sm-0 mb-1 mr-1'>
-            <Label className='mb-0' for='search-invoice'>
-              Search:
-            </Label>
-            <Input
-              id='search-invoice'
-              className='ml-50 w-100'
-              type='text'
-              value={searchTerm}
-              onChange={e => handleFilter(e.target.value)}
-            />
-          </div>
+         
           <Button.Ripple color='primary' onClick={toggleSidebar}>
             Add New Staffs
           </Button.Ripple>
@@ -59,68 +49,44 @@ const UsersList = () => {
   // ** Store Vars
   const dispatch = useDispatch()
   const store = useSelector(state => state.users)
-  const data = useSelector(state => state.Clients)
-  const datas = (data.client?.clients)
-  
-  console.log(data)
+
+  const checkpage = useRef()
   
   // ** States
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [searchTerm, setSearchTerm] = useState('')
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
-  const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
-
+  
+  console.log(currentPage)
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
-
+  
   // ** Get data on mount
   useEffect(() => {
-    dispatch(getAllData())
-    dispatch(
-      getData({
-        page: currentPage,
-        perPage: rowsPerPage,
-        status: currentStatus.value,
-        q: searchTerm
-      })
-    )
-  }, [dispatch, store.data.length])
-
-
-  // ** Function in get data on page change
-  const handlePagination = page => {
-    dispatch(
-      getData({
-        page: page.selected + 1,
-        perPage: rowsPerPage,
     
-        status: currentStatus.value,
-        q: searchTerm
-      })
-    )
-    setCurrentPage(page.selected + 1)
+    dispatch(Clients({currentPage}))
+   
+  }, [dispatch, currentPage])
+  
+  const data = useSelector(state => state.Clients)
+  const datas = (data.client?.clients)
+  // ** Function in get data on page change
+  const handlePagination = (page) => {
+
+    setCurrentPage((page.selected + checkpage.current.handlePageSelected.length) - 1)
+
+
   }
   // ** Function in get data on search query change
-  const handleFilter = val => {
-    setSearchTerm(val)
-    dispatch(
-      getData({
-        page: currentPage,
-        perPage: rowsPerPage,
-    
-        status: currentStatus.value,
-        q: val
-      })
-    )
-  }
 
-  // ** Custom Pagination
   const CustomPagination = () => {
-    const count = Number(Math.ceil(store.total / rowsPerPage))
+   
+    const count = Number(Math.ceil(data?.client?.totalPage))
 
     return (
       <ReactPaginate
+        ref={checkpage}
         previousLabel={''}
         nextLabel={''}
         pageCount={count || 1}
@@ -140,18 +106,9 @@ const UsersList = () => {
 
   // ** Table data to render
   const dataToRender = () => {
-    const filters = {
-      status: datas,
-      q: searchTerm
-    }
-
-    const isFiltered = Object.keys(filters).some(function (k) {
-      return filters[k].length > 0
-    })
-
-    if (datas.length > 0) {
+    if (datas?.length > 0) {
       return datas
-    } else if (datas.length === 0 && isFiltered) {
+    } else if (datas?.length === 0) {
       return []
     } 
   }
@@ -175,8 +132,7 @@ const UsersList = () => {
           subHeaderComponent={
             <CustomHeader
               toggleSidebar={toggleSidebar}
-              searchTerm={searchTerm}
-              handleFilter={handleFilter}
+             
             />
           }
         />
