@@ -17,6 +17,7 @@ const renderUserImg = () => {
       const stateNum = Math.floor(Math.random() * 6),
         states = ['light-success', 'light-danger', 'light-warning', 'light-info', 'light-primary', 'light-secondary'],
         color = states[stateNum]
+      
       return (
         <Avatar
           initials
