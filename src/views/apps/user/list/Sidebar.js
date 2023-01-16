@@ -7,6 +7,7 @@ import Sidebar from '@components/sidebar'
 // ** Utils
 import { isObjEmpty } from '@utils'
 
+import { useHistory } from 'react-router-dom'
 // ** Third Party Components
 import classnames from 'classnames'
 import { useForm } from 'react-hook-form'
@@ -15,6 +16,7 @@ import { Button, FormGroup, Label, FormText, Form, Input } from 'reactstrap'
 // ** Store & Actions
 import { addUser } from '../store/action'
 import { useDispatch } from 'react-redux'
+import { addClient } from '../../../../redux1/action/auth'
 
 const SidebarNewUsers = ({ open, toggleSidebar }) => {
   // ** States
@@ -23,6 +25,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
 
   // ** Store Vars
   const dispatch = useDispatch()
+    const history = useHistory()
 
   // ** Vars
   const { register, errors, handleSubmit } = useForm()
@@ -32,20 +35,16 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
     if (isObjEmpty(errors)) {
       toggleSidebar()
       dispatch(
-        addUser({
-          fullName: values['full-name'],
-          company: values.company,
-          role,
-          username: values.username,
-          country: values.country,
+        addClient({
+          name: values['full-name'],
+          address: values.country,
           contact: values.contact,
           email: values.email,
-          currentPlan: plan,
-          status: 'active',
-          avatar: ''
+          department: values.department
         })
       )
     }
+    history.push("/apps/clients/list")
   }
 
   return (
@@ -103,7 +102,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
           <Input
             name='country'
             id='country'
-            placeholder='Australia'
+            placeholder='Mechinagar -8, Jhapa'
             innerRef={register({ required: true })}
             className={classnames({ 'is-invalid': errors['country'] })}
           />
@@ -120,6 +119,18 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
             className={classnames({ 'is-invalid': errors['contact'] })}
           />
         </FormGroup>
+         <FormGroup>
+          <Label for='department'>
+            Departmnet<span className='text-danger'>*</span>
+          </Label>
+          <Input
+            name='department'
+            id='department'
+            placeholder='Department'
+            innerRef={register({ required: true })}
+            className={classnames({ 'is-invalid': errors['department'] })}
+          />
+        </FormGroup>
         {/* <FormGroup>
           <Label for='user-role'>User Role</Label>
           <Input type='select' id='user-role' name='user-role' value={role} onChange={e => setRole(e.target.value)}>
@@ -130,7 +141,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
             <option value='admin'>Admin</option>
           </Input>
         </FormGroup> */}
-        <FormGroup className='mb-2' value={plan} onChange={e => setPlan(e.target.value)}>
+        {/* <FormGroup className='mb-2' value={plan} onChange={e => setPlan(e.target.value)}>
           <Label for='select-plan'>Seleact Rate</Label>
           <Input type='select' id='select-plan' name='select-plan'>
             <option value='1000'>1000</option>
@@ -138,7 +149,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
             <option value='company'>Company</option>
             <option value='team'>Team</option>
           </Input>
-        </FormGroup>
+        </FormGroup> */}
         <Button type='submit' className='mr-1' color='primary'>
           Submit
         </Button>

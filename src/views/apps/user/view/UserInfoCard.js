@@ -1,5 +1,5 @@
 // ** React Imports
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 // ** Custom Components
 import Avatar from '@components/avatar'
@@ -9,9 +9,17 @@ import { Card, CardBody, CardText, Button, Row, Col } from 'reactstrap'
 import { DollarSign, TrendingUp, User, Check, Star, Flag, Phone } from 'react-feather'
 import Group from '@src/assets/images/svg/Group 15.svg'
 import Image from '@src/assets/images/svg/Group 16.svg'
-const UserInfoCard = ({ data }) => {
-  // ** render user img
+import { ClientDelete } from '../../../../redux1/action/auth'
+import { useDispatch } from 'react-redux'
 
+const UserInfoCard = ({ data }) => {
+  const dispatch = useDispatch()
+    const history = useHistory()
+  // ** render user img
+  const handelDelete = (id) => {
+    dispatch(ClientDelete({ id }))
+   history.push("/apps/clients/list")
+  }
 const renderUserImg = () => {
     if (data !== null) {
       const stateNum = Math.floor(Math.random() * 6),
@@ -67,8 +75,8 @@ const renderUserImg = () => {
                     <Button.Ripple tag={Link} to={`/apps/user/edit/${data?.uuid}`} color='primary'>
                       Edit
                     </Button.Ripple>
-                    <Button.Ripple className='ml-1' color='danger' outline>
-                      Suspended
+                  <Button.Ripple className='ml-1' color='danger' onClick={() => { handelDelete(data?.uuid) } } outline>
+                      Delete
                     </Button.Ripple>
                   </div>
               </div>
