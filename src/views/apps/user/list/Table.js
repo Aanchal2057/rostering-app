@@ -66,7 +66,7 @@ const UsersList = () => {
   // ** Get data on mount
   useEffect(() => {
     
-    dispatch(Clients({currentPage}))
+    dispatch(Clients(currentPage))
    
   }, [dispatch, currentPage])
   

@@ -16,7 +16,7 @@ import { Button, FormGroup, Label, FormText, Form, Input } from 'reactstrap'
 // ** Store & Actions
 import { addUser } from '../store/action'
 import { useDispatch } from 'react-redux'
-import { addClient } from '../../../../redux1/action/auth'
+import { Clients, addClient } from '../../../../redux1/action/auth'
 
 const SidebarNewUsers = ({ open, toggleSidebar }) => {
   // ** States
@@ -44,14 +44,16 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
         })
       )
     }
+    
     history.push("/apps/clients/list")
+    dispatch(Clients(1))
   }
 
   return (
     <Sidebar
       size='lg'
       open={open}
-      title='New Clients'
+      title='New User'
       headerClassName='mb-1'
       contentClassName='pt-0'
       toggleSidebar={toggleSidebar}
@@ -83,7 +85,18 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
           />
           <FormText color='muted'>You can use letters, numbers & periods</FormText>
         </FormGroup>
-       
+        {/* <FormGroup>
+          <Label for='company'>
+            Company <span className='text-danger'>*</span>
+          </Label>
+          <Input
+            name='company'
+            id='company'
+            placeholder='Company Pvt Ltd'
+            innerRef={register({ required: true })}
+            className={classnames({ 'is-invalid': errors['company'] })}
+          />
+        </FormGroup> */}
         <FormGroup>
           <Label for='country'>
             Address <span className='text-danger'>*</span>
@@ -91,11 +104,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
           <Input
             name='country'
             id='country'
-<<<<<<< HEAD
             placeholder='Mechinagar -8, Jhapa'
-=======
-            placeholder='Country'
->>>>>>> 15287c268ebffebe00f2f47f2ee660022fa4932f
             innerRef={register({ required: true })}
             className={classnames({ 'is-invalid': errors['country'] })}
           />
@@ -107,20 +116,14 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
           <Input
             name='contact'
             id='contact'
-            placeholder='Contact'
+            placeholder='(397) 294-5153'
             innerRef={register({ required: true })}
             className={classnames({ 'is-invalid': errors['contact'] })}
           />
         </FormGroup>
-<<<<<<< HEAD
          <FormGroup>
           <Label for='department'>
             Departmnet<span className='text-danger'>*</span>
-=======
-        <FormGroup>
-          <Label for='department'>
-            Department <span className='text-danger'>*</span>
->>>>>>> 15287c268ebffebe00f2f47f2ee660022fa4932f
           </Label>
           <Input
             name='department'
@@ -130,7 +133,6 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
             className={classnames({ 'is-invalid': errors['department'] })}
           />
         </FormGroup>
-<<<<<<< HEAD
         {/* <FormGroup>
           <Label for='user-role'>User Role</Label>
           <Input type='select' id='user-role' name='user-role' value={role} onChange={e => setRole(e.target.value)}>
@@ -150,8 +152,6 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
             <option value='team'>Team</option>
           </Input>
         </FormGroup> */}
-=======
->>>>>>> 15287c268ebffebe00f2f47f2ee660022fa4932f
         <Button type='submit' className='mr-1' color='primary'>
           Submit
         </Button>

@@ -73,7 +73,7 @@ dispatch({type:LOGOUT_FAIL, payload:'cannot logout'})
 }
 }
 
-export const Clients = ({currentPage}) => async (dispatch) => {
+export const Clients = (currentPage) => async (dispatch) => {
 try {
     dispatch({ type: LOAD_CLIENT_REQUEST })
 
