@@ -23,7 +23,6 @@ const UserView = props => {
   // ** Vars
     const dispatch = useDispatch()
  const { id } = useParams()
-
   // ** Get suer on mount
   useEffect(() => {
     dispatch(ClientDetails({id}))
@@ -31,7 +30,7 @@ const UserView = props => {
 
    const datas = useSelector(state => state.Clients)
   const data = (datas?.client)
-
+console.log(data)
   return data !== null ? (
     <div className='app-user-view'>
       <Row>
