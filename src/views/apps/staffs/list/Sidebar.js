@@ -7,7 +7,6 @@ import Sidebar from '@components/sidebar'
 // ** Utils
 import { isObjEmpty } from '@utils'
 
-import { useHistory } from 'react-router-dom'
 // ** Third Party Components
 import classnames from 'classnames'
 import { useForm } from 'react-hook-form'
@@ -16,7 +15,6 @@ import { Button, FormGroup, Label, FormText, Form, Input } from 'reactstrap'
 // ** Store & Actions
 import { addUser } from '../store/action'
 import { useDispatch } from 'react-redux'
-import { addClient } from '../../../../redux1/action/auth'
 
 const SidebarNewUsers = ({ open, toggleSidebar }) => {
   // ** States
@@ -25,7 +23,6 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
 
   // ** Store Vars
   const dispatch = useDispatch()
-    const history = useHistory()
 
   // ** Vars
   const { register, errors, handleSubmit } = useForm()
@@ -35,23 +32,27 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
     if (isObjEmpty(errors)) {
       toggleSidebar()
       dispatch(
-        addClient({
-          name: values['full-name'],
-          address: values.country,
+        addUser({
+          fullName: values['full-name'],
+          company: values.company,
+          role,
+          username: values.username,
+          country: values.country,
           contact: values.contact,
           email: values.email,
-          department: values.department
+          currentPlan: plan,
+          status: 'active',
+          avatar: ''
         })
       )
     }
-    history.push("/apps/clients/list")
   }
 
   return (
     <Sidebar
       size='lg'
       open={open}
-      title='New Clients'
+      title='New Staffs'
       headerClassName='mb-1'
       contentClassName='pt-0'
       toggleSidebar={toggleSidebar}
@@ -59,7 +60,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
       <Form onSubmit={handleSubmit(onSubmit)}>
         <FormGroup>
           <Label for='full-name'>
-            Full Name <span className='text-danger'>*</span>
+            Name <span className='text-danger'>*</span>
           </Label>
           <Input
             name='full-name'
@@ -91,11 +92,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
           <Input
             name='country'
             id='country'
-<<<<<<< HEAD
-            placeholder='Mechinagar -8, Jhapa'
-=======
-            placeholder='Country'
->>>>>>> 15287c268ebffebe00f2f47f2ee660022fa4932f
+            placeholder='Address'
             innerRef={register({ required: true })}
             className={classnames({ 'is-invalid': errors['country'] })}
           />
@@ -112,15 +109,9 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
             className={classnames({ 'is-invalid': errors['contact'] })}
           />
         </FormGroup>
-<<<<<<< HEAD
-         <FormGroup>
-          <Label for='department'>
-            Departmnet<span className='text-danger'>*</span>
-=======
         <FormGroup>
           <Label for='department'>
             Department <span className='text-danger'>*</span>
->>>>>>> 15287c268ebffebe00f2f47f2ee660022fa4932f
           </Label>
           <Input
             name='department'
@@ -130,28 +121,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
             className={classnames({ 'is-invalid': errors['department'] })}
           />
         </FormGroup>
-<<<<<<< HEAD
-        {/* <FormGroup>
-          <Label for='user-role'>User Role</Label>
-          <Input type='select' id='user-role' name='user-role' value={role} onChange={e => setRole(e.target.value)}>
-            <option value='subscriber'>Subscriber</option>
-            <option value='editor'>Editor</option>
-            <option value='maintainer'>Maintainer</option>
-            <option value='author'>Author</option>
-            <option value='admin'>Admin</option>
-          </Input>
-        </FormGroup> */}
-        {/* <FormGroup className='mb-2' value={plan} onChange={e => setPlan(e.target.value)}>
-          <Label for='select-plan'>Seleact Rate</Label>
-          <Input type='select' id='select-plan' name='select-plan'>
-            <option value='1000'>1000</option>
-            <option value='enterprise'>Enterprise</option>
-            <option value='company'>Company</option>
-            <option value='team'>Team</option>
-          </Input>
-        </FormGroup> */}
-=======
->>>>>>> 15287c268ebffebe00f2f47f2ee660022fa4932f
+       
         <Button type='submit' className='mr-1' color='primary'>
           Submit
         </Button>

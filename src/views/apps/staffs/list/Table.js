@@ -25,7 +25,7 @@ import '@styles/react/libs/tables/react-dataTable-component.scss'
 import { Clients } from '../../../../redux1/action/auth'
 
 // ** Table Header
-const CustomHeader = ({ toggleSidebar }) => {
+const CustomHeader = ({ toggleSidebar, handleFilter, searchTerm }) => {
   return (
     <div className='invoice-list-table-header w-100 mr-1 ml-50 mt-2 mb-75'>
       <Row>
@@ -37,7 +37,7 @@ const CustomHeader = ({ toggleSidebar }) => {
         >
          
           <Button.Ripple color='primary' onClick={toggleSidebar}>
-            Add New Clients
+            Add New Staffs
           </Button.Ripple>
         </Col>
       </Row>
