@@ -52,7 +52,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
     <Sidebar
       size='lg'
       open={open}
-      title='New Clients'
+      title='New Staffs'
       headerClassName='mb-1'
       contentClassName='pt-0'
       toggleSidebar={toggleSidebar}
@@ -60,7 +60,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
       <Form onSubmit={handleSubmit(onSubmit)}>
         <FormGroup>
           <Label for='full-name'>
-            Full Name <span className='text-danger'>*</span>
+            Name <span className='text-danger'>*</span>
           </Label>
           <Input
             name='full-name'
@@ -92,7 +92,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
           <Input
             name='country'
             id='country'
-            placeholder='Country'
+            placeholder='Address'
             innerRef={register({ required: true })}
             className={classnames({ 'is-invalid': errors['country'] })}
           />
@@ -121,6 +121,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
             className={classnames({ 'is-invalid': errors['department'] })}
           />
         </FormGroup>
+       
         <Button type='submit' className='mr-1' color='primary'>
           Submit
         </Button>

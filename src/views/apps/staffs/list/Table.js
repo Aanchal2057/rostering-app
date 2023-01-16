@@ -37,7 +37,7 @@ const CustomHeader = ({ toggleSidebar, handleFilter, searchTerm }) => {
         >
          
           <Button.Ripple color='primary' onClick={toggleSidebar}>
-            Add New Clients
+            Add New Staffs
           </Button.Ripple>
         </Col>
       </Row>

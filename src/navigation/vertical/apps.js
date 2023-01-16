@@ -17,7 +17,7 @@ export default [
     id: 'user',
     title: 'Staffs',
     icon: <User size={20} />,
-    navLink: '/apps/user/list'
+    navLink: '/apps/staffs/list'
   },
   {
     id: 'calender',
