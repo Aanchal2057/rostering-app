@@ -43,10 +43,11 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
           department: values.department
         })
       )
+     dispatch(Clients(1))
     }
     
     history.push("/apps/clients/list")
-    dispatch(Clients(1))
+   
   }
 
   return (
