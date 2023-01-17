@@ -1,5 +1,5 @@
 // ** React Import
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 // ** Custom Components
 import Sidebar from '@components/sidebar'
@@ -15,7 +15,7 @@ import { Button, FormGroup, Label, FormText, Form, Input } from 'reactstrap'
 
 // ** Store & Actions
 import { addUser } from '../store/action'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Clients, addClient } from '../../../../redux1/action/auth'
 
 const SidebarNewUsers = ({ open, toggleSidebar }) => {
@@ -43,12 +43,20 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
           department: values.department
         })
       )
-     dispatch(Clients(1))
     }
-    
-    history.push("/apps/clients/list")
+ 
    
   }
+
+  const datas = useSelector(state => state.Clients)
+const data = (datas?.client)
+
+  useEffect(() => {
+   if (data?.success) {
+    dispatch(Clients(1))
+    history.push("/apps/clients/list")
+   }
+  }, [dispatch, data])
 
   return (
     <Sidebar
