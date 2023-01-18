@@ -30,6 +30,7 @@ const CustomHeader = ({ toggleSidebar }) => {
     <div className='invoice-list-table-header w-100 mr-1 ml-50 mt-2 mb-75'>
       <Row>
         <Col xl='6' className='d-flex align-items-center p-0'>
+        <h4>Clients List</h4>
         </Col>
         <Col
           xl='6'
