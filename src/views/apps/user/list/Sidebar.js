@@ -123,6 +123,7 @@ const data = (datas?.client)
             Contact <span className='text-danger'>*</span>
           </Label>
           <Input
+            type='number'
             name='contact'
             id='contact'
             placeholder='(397) 294-5153'
