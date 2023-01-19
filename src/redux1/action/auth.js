@@ -13,7 +13,8 @@ config
 )
 dispatch({
 type: LOGIN_SUCCESS,
-payload: localStorage.setItem('admin', JSON.stringify(data.admin)),
+    payload: localStorage.setItem('admin', JSON.stringify(data.admin)),
+    token:localStorage.setItem('token', JSON.stringify(data.token)),
 admin: JSON.parse(localStorage.getItem('admin'))
 })
 } catch (error) {
@@ -21,11 +22,28 @@ dispatch({ type: LOGIN_FAIL, payload: error.response.data.message })
 }
 }
 
+export const admin = () => async (dispatch) => {
+try {
+dispatch({ type: LOAD_ADMIN_REQUEST })
+if (localStorage.getItem("admin") === null || localStorage.getItem("admin") === undefined) {
+throw new Error('Whoops!')
+} 
+dispatch({
+type: LOAD_ADMIN_SUCCESS,
+admin: JSON.parse(localStorage.getItem('admin'))
+})     
+} catch (error) {
+dispatch({type:LOAD_ADMIN_FAIL, payload: error.message})
+}
+}
+
 export const addClient = ({name, email, address, department, contact}) => async (dispatch) => {
 try {
-dispatch({ type: ADD_CLIENT_REQUEST })
+    dispatch({ type: ADD_CLIENT_REQUEST })
+    
+    const token = JSON.parse(localStorage.getItem('token'))
 
- const config = { headers: { 'x-api-key':'23124134', Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiMGI1YmE4MjAtNjNmNi00ZDg4LTkwODgtNTcwODI1ZTJlMzU1IiwiaWF0IjoxNjcxNDc0NDE0LCJleHAiOjE2NzQwNjY0MTR9.NcX8AHzZgxWjEEuK0KYBXOWxK3opjOWPDcP_sRQdD9w' } }
+ const config = { headers: { 'x-api-key':'23124134', Authorization: `Bearer ${token}`} }
 const { data } = await axios.post(
 `http://rostering.delshagroup.com/client`,
     {
@@ -48,9 +66,11 @@ dispatch({ type: ADD_CLIENT_FAIL, payload: error.response.data.message })
 
 export const editClient = ({id, name, email, address, department, contact}) => async (dispatch) => {
 try {
-dispatch({ type: EDIT_CLIENT_REQUEST })
+    dispatch({ type: EDIT_CLIENT_REQUEST })
+    
+    const token = JSON.parse(localStorage.getItem('token'))
 
- const config = { headers: { 'x-api-key':'23124134', Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiMGI1YmE4MjAtNjNmNi00ZDg4LTkwODgtNTcwODI1ZTJlMzU1IiwiaWF0IjoxNjcxNDc0NDE0LCJleHAiOjE2NzQwNjY0MTR9.NcX8AHzZgxWjEEuK0KYBXOWxK3opjOWPDcP_sRQdD9w' } }
+ const config = { headers: { 'x-api-key':'23124134', Authorization: `Bearer ${token}`} }
 const { data } = await axios.put(
 `http://rostering.delshagroup.com/client/${id}`,
     {
@@ -68,21 +88,6 @@ type: EDIT_CLIENT_SUCCESS,
 })
 } catch (error) {
 dispatch({ type: EDIT_CLIENT_FAIL, payload: error.response.data.message })
-}
-}
-
-export const admin = () => async (dispatch) => {
-try {
-dispatch({ type: LOAD_ADMIN_REQUEST })
-if (localStorage.getItem("admin") === null || localStorage.getItem("admin") === undefined) {
-throw new Error('Whoops!')
-} 
-dispatch({
-type: LOAD_ADMIN_SUCCESS,
-admin: JSON.parse(localStorage.getItem('admin'))
-})     
-} catch (error) {
-dispatch({type:LOAD_ADMIN_FAIL, payload: error.message})
 }
 }
 
@@ -121,7 +126,9 @@ dispatch({type:LOAD_CLIENT_FAIL, payload:error.message})
 export const ClientDetails = ({id}) => async (dispatch) => {
 try {
     dispatch({ type: LOAD_CLIENT_DETAILS_REQUEST })
-    const config = { headers: { 'x-api-key':'23124134', Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiMGI1YmE4MjAtNjNmNi00ZDg4LTkwODgtNTcwODI1ZTJlMzU1IiwiaWF0IjoxNjcxNDc0NDE0LCJleHAiOjE2NzQwNjY0MTR9.NcX8AHzZgxWjEEuK0KYBXOWxK3opjOWPDcP_sRQdD9w' } }
+    const token = JSON.parse(localStorage.getItem('token'))
+
+ const config = { headers: { 'x-api-key':'23124134', Authorization: `Bearer ${token}`} }
     const { data } = await axios.get(
         `http://rostering.delshagroup.com/client/${id}`,
         config
@@ -140,7 +147,9 @@ dispatch({type:LOAD_CLIENT_DETAILS_FAIL, payload:error.message})
 export const ClientDelete = ({id}) => async (dispatch) => {
 try {
     dispatch({ type: LOAD_CLIENT_DELETE_REQUEST })
-    const config = { headers: { 'x-api-key':'23124134', Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiMGI1YmE4MjAtNjNmNi00ZDg4LTkwODgtNTcwODI1ZTJlMzU1IiwiaWF0IjoxNjcxNDc0NDE0LCJleHAiOjE2NzQwNjY0MTR9.NcX8AHzZgxWjEEuK0KYBXOWxK3opjOWPDcP_sRQdD9w' } }
+        const token = JSON.parse(localStorage.getItem('token'))
+
+ const config = { headers: { 'x-api-key':'23124134', Authorization: `Bearer ${token}`} }
     const { data } = await axios.delete(
         `http://rostering.delshagroup.com/client/${id}`,
         config
