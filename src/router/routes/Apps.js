@@ -69,10 +69,22 @@ const AppRoutes = [
     component: () => <Redirect to='/apps/user/edit/1' />
   },
   {
+    path: '/apps/staffs/edit',
+    exact: true,
+    component: () => <Redirect to='/apps/staffs/edit/1' />
+  },
+  {
     path: '/apps/user/edit/:id',
     component: lazy(() => import('../../views/apps/user/edit')),
     meta: {
       navLink: '/apps/user/edit'
+    }
+  },
+  {
+    path: '/apps/staffs/edit/:id',
+    component: lazy(() => import('../../views/apps/staffs/edit')),
+    meta: {
+      navLink: '/apps/staffs/edit'
     }
   },
   {
@@ -81,10 +93,22 @@ const AppRoutes = [
     component: () => <Redirect to='/apps/user/view/1' />
   },
   {
+    path: '/apps/staffs/view',
+    exact: true,
+    component: () => <Redirect to='/apps/staffs/view/1' />
+  },
+  {
     path: '/apps/user/view/:id',
     component: lazy(() => import('../../views/apps/user/view')),
     meta: {
       navLink: '/apps/user/view'
+    }
+  },
+  {
+    path: '/apps/staffs/view/:id',
+    component: lazy(() => import('../../views/apps/staffs/view')),
+    meta: {
+      navLink: '/apps/staffs/view'
     }
   }
 ]

@@ -1,86 +1,129 @@
-// ** React Imports
-import { useState, useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Card, CardBody, Media, Row, Col, Button, Form, Input, Label, FormGroup, Table, CardHeader } from 'reactstrap'
+import classnames from 'classnames'
+import { isObjEmpty } from '@utils'
+import { useForm } from 'react-hook-form'
+import { editClient } from '../../../../redux1/action/auth'
+import { useDispatch, useSelector } from 'react-redux'
+import { useParams, useHistory } from 'react-router-dom'
 
-// ** User Edit Components
-import SocialTab from './Social'
-import AccountTab from './Account'
-import InfoTab from './Information'
+const index = () => {
+  const { register, errors, handleSubmit } = useForm()
+  const dispatch = useDispatch()
+    const history = useHistory()
 
-// ** Store & Actions
-import { getUser } from '../store/action'
-import { useSelector, useDispatch } from 'react-redux'
+ const { id } = useParams()
+  const onSubmit = values => {
+    if (isObjEmpty(errors)) {
+      dispatch(
+        editClient({
+          id,
+          name: values.names,
+          address: values.country,
+          contact: values.contact,
+          email: values.email,
+          department: values.department
+        })
+      )
+    }
 
-// ** Third Party Components
-import { User, Info, Share2 } from 'react-feather'
-import { Card, CardBody, Row, Col, Nav, NavItem, NavLink, TabContent, TabPane, Alert } from 'reactstrap'
+  } 
 
-// ** Styles
-import '@styles/react/apps/app-users.scss'
-
-const UserEdit = () => {
-  // ** States & Vars
-  const [activeTab, setActiveTab] = useState('1'),
-    store = useSelector(state => state.users),
-    dispatch = useDispatch(),
-    { id } = useParams()
-
-  // ** Function to toggle tabs
-  const toggle = tab => setActiveTab(tab)
-
-  // ** Function to get user on mount
-  useEffect(() => {
-    dispatch(getUser(parseInt(id)))
-    return () => dispatch(getUser(parseInt(0)))
-  }, [dispatch, id])
-
-  return store.selectedUser !== null && store.selectedUser !== undefined ? (
-    <Row className='app-user-edit'>
+   
+  const datas = useSelector(state => state.Clients)
+const data = (datas?.client)
+   
+      useEffect(() => {
+   if (data?.success) {
+    history.push("/apps/staffs/list")
+   }
+  }, [data])
+  return (
+    <>
+    <Card>
+     <CardBody>
+     <CardHeader>
+      <h4>Edit Page</h4>
+     </CardHeader>
+     <Row>
+      
       <Col sm='12'>
-        <Card>
-          <CardBody className='pt-2'>
-            <Nav pills>
-              <NavItem>
-                <NavLink active={activeTab === '1'} onClick={() => toggle('1')}>
-                  <User size={14} />
-                  <span className='align-middle d-none d-sm-block'>Account</span>
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink active={activeTab === '2'} onClick={() => toggle('2')}>
-                  <Info size={14} />
-                  <span className='align-middle d-none d-sm-block'>Information</span>
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink active={activeTab === '3'} onClick={() => toggle('3')}>
-                  <Share2 size={14} />
-                  <span className='align-middle d-none d-sm-block'>Social</span>
-                </NavLink>
-              </NavItem>
-            </Nav>
-            <TabContent activeTab={activeTab}>
-              <TabPane tabId='1'>
-                <AccountTab selectedUser={store.selectedUser} />
-              </TabPane>
-              <TabPane tabId='2'>
-                <InfoTab />
-              </TabPane>
-              <TabPane tabId='3'>
-                <SocialTab />
-              </TabPane>
-            </TabContent>
-          </CardBody>
-        </Card>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <Row>
+            <Col md='4' sm='12'>
+              <FormGroup>
+                <Label for='name'>Name</Label>
+                    
+                      <Input type='text'
+                        id='name'
+                        placeholder='Name'
+                        name='names'
+                        innerRef={register()}
+                        className={classnames({ 'is-invalid': errors['name'] })}
+                      />
+              </FormGroup>
+            </Col>
+                  <Col md='4' sm='12'>
+                    
+              <FormGroup>
+                <Label for='email'>Email</Label>
+                      <Input type='email' id='email' placeholder='Email'
+                       name='email'
+                        innerRef={register()}
+                        className={classnames({ 'is-invalid': errors['email'] })}
+                      />
+              </FormGroup>
+            </Col>
+            <Col md='4' sm='12'>
+              <FormGroup>
+                <Label for='address'>Address</Label>
+                      <Input type='text' id='address' placeholder='Address'
+                       name='address'
+                        innerRef={register()}
+                        className={classnames({ 'is-invalid': errors['address'] })}
+                      />
+              </FormGroup>
+            </Col>
+           
+            <Col md='4' sm='12'>
+              <FormGroup>
+                <Label for='contact'>Contact</Label>
+                      <Input type='number' id='contact' placeholder='Contact'
+                       name='contact'
+                        innerRef={register()}
+                        className={classnames({ 'is-invalid': errors['contact'] })}
+                      />
+              </FormGroup>
+            </Col>
+           
+            <Col md='4' sm='12'>
+              <FormGroup>
+                <Label for='department'>Department</Label>
+                      <Input type='text' id='department' placeholder='Department'
+                       name='department'
+                        innerRef={register()}
+                        className={classnames({ 'is-invalid': errors['department'] })}
+                      />
+              </FormGroup>
+            </Col>
+            
+
+            <Col className='d-flex flex-sm-row flex-column mt-2' sm='12'>
+              <Button.Ripple className='mb-1 mb-sm-0 mr-0 mr-sm-1' type='submit' color='primary'>
+                Save Changes
+              </Button.Ripple>
+              <Button.Ripple type='reset' color='secondary' outline>
+                Reset
+              </Button.Ripple>
+            </Col>
+          </Row>
+        </Form>
       </Col>
     </Row>
-  ) : (
-    <Alert color='danger'>
-      <h4 className='alert-heading'>User not found</h4>
-      <div className='alert-body'>
-        User with id: {id} doesn't exist. Check list of all Users: <Link to='/apps/user/list'>Users List</Link>
-      </div>
-    </Alert>
+     </CardBody>
+    </Card>
+    </>
   )
 }
-export default UserEdit
+
+export default index

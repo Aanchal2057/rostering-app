@@ -1,17 +1,25 @@
 // ** React Imports
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 // ** Custom Components
 import Avatar from '@components/avatar'
+import { User } from 'react-feather'
 
 // ** Third Party Components
 import { Card, CardBody, CardText, Button, Row, Col } from 'reactstrap'
-import { DollarSign, TrendingUp, User, Check, Star, Flag, Phone } from 'react-feather'
 import Group from '@src/assets/images/svg/Group 15.svg'
 import Image from '@src/assets/images/svg/Group 16.svg'
-const UserInfoCard = ({ data }) => {
-  // ** render user img
+import { ClientDelete } from '../../../../redux1/action/auth'
+import { useDispatch } from 'react-redux'
 
+const UserInfoCard = ({ data }) => {
+  const dispatch = useDispatch()
+    const history = useHistory()
+  // ** render user img
+  const handelDelete = (id) => {
+    dispatch(ClientDelete({ id }))
+   history.push("/apps/staffs/list")
+  }
 const renderUserImg = () => {
     if (data !== null) {
       const stateNum = Math.floor(Math.random() * 6),
@@ -19,24 +27,24 @@ const renderUserImg = () => {
         color = states[stateNum]
       
       return (
-        <Avatar
+        <User
           initials
-          color={color}
-          className='rounded'
-          content={data?.name}
-          contentStyles={{
+          color='#7367f0'
+             contentStyles={{
             borderRadius: 0,
             fontSize: 'calc(36px)',
             width: '100%',
             height: '100%'
           }}
-          style={{
+             style={{
             height: '86px',
             width: '82px',
             marginLeft: '90px',
             marginRight:'100px'
           }}
+         
         />
+       
       )
     }
   }
@@ -46,7 +54,7 @@ const renderUserImg = () => {
       <CardBody>
         <Row>
          <Col >
-          {/* <Col xl='12' lg='12' className='d-flex flex-column justify-content-between align-items-center border-container-lg' style={{ height: '800px' }}> */}
+         
             <div className='user-avatar-section'>
             <div className='text-center' style={{ marginTop:'50px' }}>
            {renderUserImg()}
@@ -64,11 +72,11 @@ const renderUserImg = () => {
                   <p>Address: {data?.address}</p>
                 </div>
                 <div className='d-flex flex-wrap align-items-center'>
-                    <Button.Ripple tag={Link} to={`/apps/user/edit/${data?.uuid}`} color='primary'>
+                    <Button.Ripple tag={Link} to={`/apps/staffs/edit/${data?.uuid}`} color='primary'>
                       Edit
                     </Button.Ripple>
-                    <Button.Ripple className='ml-1' color='danger' outline>
-                      Suspended
+                  <Button.Ripple className='ml-1' color='danger' onClick={() => { handelDelete(data?.uuid) } } outline>
+                      Delete
                     </Button.Ripple>
                   </div>
               </div>

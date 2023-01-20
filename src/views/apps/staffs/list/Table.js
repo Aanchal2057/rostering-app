@@ -25,7 +25,7 @@ import '@styles/react/libs/tables/react-dataTable-component.scss'
 import { Clients } from '../../../../redux1/action/auth'
 
 // ** Table Header
-const CustomHeader = ({ toggleSidebar, handleFilter, searchTerm }) => {
+const CustomHeader = ({ toggleSidebar }) => {
   return (
     <div className='invoice-list-table-header w-100 mr-1 ml-50 mt-2 mb-75'>
       <Row>
@@ -67,7 +67,7 @@ const UsersList = () => {
   // ** Get data on mount
   useEffect(() => {
     
-    dispatch(Clients({currentPage}))
+    dispatch(Clients(currentPage))
    
   }, [dispatch, currentPage])
   

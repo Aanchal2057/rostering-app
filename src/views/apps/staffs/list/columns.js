@@ -78,7 +78,7 @@ export const columns = [
         {/* {renderClient(row)} */}
         <div className='d-flex flex-column'>
           <Link
-            to={`/apps/user/view/${row.id}`}
+            to={`/apps/staffs/view/${row.id}`}
             className='user-name text-truncate mb-0'
             // onClick={() => store.dispatch(getUser(row.id))}
           >
@@ -128,7 +128,7 @@ export const columns = [
         <DropdownMenu right>
           <DropdownItem
             tag={Link}
-            to={`/apps/user/view/${row.uuid}`}
+            to={`/apps/staffs/view/${row.uuid}`}
             className='w-100'
             // onClick={() => store.dispatch(getUser(row.id))}
           >
@@ -137,7 +137,7 @@ export const columns = [
           </DropdownItem>
           <DropdownItem
             tag={Link}
-            to={`/apps/user/edit/${row.id}`}
+            to={`/apps/staffs/edit/${row.uuid}`}
             className='w-100'
             // onClick={() => store.dispatch(getUser(row.id))}
           >

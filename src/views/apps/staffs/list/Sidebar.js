@@ -1,5 +1,5 @@
 // ** React Import
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 // ** Custom Components
 import Sidebar from '@components/sidebar'
@@ -7,6 +7,7 @@ import Sidebar from '@components/sidebar'
 // ** Utils
 import { isObjEmpty } from '@utils'
 
+import { useHistory } from 'react-router-dom'
 // ** Third Party Components
 import classnames from 'classnames'
 import { useForm } from 'react-hook-form'
@@ -14,7 +15,8 @@ import { Button, FormGroup, Label, FormText, Form, Input } from 'reactstrap'
 
 // ** Store & Actions
 import { addUser } from '../store/action'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { Clients, addClient } from '../../../../redux1/action/auth'
 
 const SidebarNewUsers = ({ open, toggleSidebar }) => {
   // ** States
@@ -23,6 +25,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
 
   // ** Store Vars
   const dispatch = useDispatch()
+    const history = useHistory()
 
   // ** Vars
   const { register, errors, handleSubmit } = useForm()
@@ -32,27 +35,34 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
     if (isObjEmpty(errors)) {
       toggleSidebar()
       dispatch(
-        addUser({
-          fullName: values['full-name'],
-          company: values.company,
-          role,
-          username: values.username,
-          country: values.country,
+        addClient({
+          name: values['full-name'],
+          address: values.country,
           contact: values.contact,
           email: values.email,
-          currentPlan: plan,
-          status: 'active',
-          avatar: ''
+          department: values.department
         })
       )
     }
+ 
+   
   }
+
+  const datas = useSelector(state => state.Clients)
+const data = (datas?.client)
+
+  useEffect(() => {
+   if (data?.success) {
+    dispatch(Clients(1))
+    history.push("/apps/clients/list")
+   }
+  }, [dispatch, data])
 
   return (
     <Sidebar
       size='lg'
       open={open}
-      title='New Staffs'
+      title='New User'
       headerClassName='mb-1'
       contentClassName='pt-0'
       toggleSidebar={toggleSidebar}
@@ -60,7 +70,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
       <Form onSubmit={handleSubmit(onSubmit)}>
         <FormGroup>
           <Label for='full-name'>
-            Name <span className='text-danger'>*</span>
+            Full Name <span className='text-danger'>*</span>
           </Label>
           <Input
             name='full-name'
@@ -84,7 +94,18 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
           />
           <FormText color='muted'>You can use letters, numbers & periods</FormText>
         </FormGroup>
-       
+        {/* <FormGroup>
+          <Label for='company'>
+            Company <span className='text-danger'>*</span>
+          </Label>
+          <Input
+            name='company'
+            id='company'
+            placeholder='Company Pvt Ltd'
+            innerRef={register({ required: true })}
+            className={classnames({ 'is-invalid': errors['company'] })}
+          />
+        </FormGroup> */}
         <FormGroup>
           <Label for='country'>
             Address <span className='text-danger'>*</span>
@@ -92,7 +113,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
           <Input
             name='country'
             id='country'
-            placeholder='Address'
+            placeholder='Mechinagar -8, Jhapa'
             innerRef={register({ required: true })}
             className={classnames({ 'is-invalid': errors['country'] })}
           />
@@ -102,16 +123,17 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
             Contact <span className='text-danger'>*</span>
           </Label>
           <Input
+            type='number'
             name='contact'
             id='contact'
-            placeholder='Contact'
+            placeholder='(397) 294-5153'
             innerRef={register({ required: true })}
             className={classnames({ 'is-invalid': errors['contact'] })}
           />
         </FormGroup>
-        <FormGroup>
+         <FormGroup>
           <Label for='department'>
-            Department <span className='text-danger'>*</span>
+            Departmnet<span className='text-danger'>*</span>
           </Label>
           <Input
             name='department'
@@ -121,7 +143,25 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
             className={classnames({ 'is-invalid': errors['department'] })}
           />
         </FormGroup>
-       
+        {/* <FormGroup>
+          <Label for='user-role'>User Role</Label>
+          <Input type='select' id='user-role' name='user-role' value={role} onChange={e => setRole(e.target.value)}>
+            <option value='subscriber'>Subscriber</option>
+            <option value='editor'>Editor</option>
+            <option value='maintainer'>Maintainer</option>
+            <option value='author'>Author</option>
+            <option value='admin'>Admin</option>
+          </Input>
+        </FormGroup> */}
+        {/* <FormGroup className='mb-2' value={plan} onChange={e => setPlan(e.target.value)}>
+          <Label for='select-plan'>Seleact Rate</Label>
+          <Input type='select' id='select-plan' name='select-plan'>
+            <option value='1000'>1000</option>
+            <option value='enterprise'>Enterprise</option>
+            <option value='company'>Company</option>
+            <option value='team'>Team</option>
+          </Input>
+        </FormGroup> */}
         <Button type='submit' className='mr-1' color='primary'>
           Submit
         </Button>
