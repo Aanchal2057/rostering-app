@@ -22,7 +22,8 @@ import { Card, CardHeader, CardTitle, CardBody, Input, Row, Col, Label, CustomIn
 // ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
-import { Clients } from '../../../../redux1/action/auth'
+// import { Clients } from '../../../../redux1/action/auth'
+import { Staffs } from '../../../../redux1/action/auth'
 
 // ** Table Header
 const CustomHeader = ({ toggleSidebar }) => {
@@ -67,12 +68,12 @@ const UsersList = () => {
   // ** Get data on mount
   useEffect(() => {
     
-    dispatch(Clients(currentPage))
+    dispatch(Staffs(currentPage))
    
   }, [dispatch, currentPage])
   
-  const data = useSelector(state => state.Clients)
-  const datas = (data.client?.clients)
+  const data = useSelector(state => state.Staffs)
+   const datas = (data.staffs?.staffs)
   // ** Function in get data on page change
   const handlePagination = (page) => {
 
@@ -84,7 +85,7 @@ const UsersList = () => {
 
   const CustomPagination = () => {
    
-    const count = Number(Math.ceil(data?.client?.totalPage))
+     const count = Number(Math.ceil(data?.client?.totalPage))
 
     return (
       <ReactPaginate
