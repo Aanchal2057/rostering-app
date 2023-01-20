@@ -9,7 +9,7 @@ import { User } from 'react-feather'
 import { Card, CardBody, CardText, Button, Row, Col } from 'reactstrap'
 import Group from '@src/assets/images/svg/Group 15.svg'
 import Image from '@src/assets/images/svg/Group 16.svg'
-import { ClientDelete } from '../../../../redux1/action/auth'
+import { StaffsDelete } from '../../../../redux1/action/auth'
 import { useDispatch } from 'react-redux'
 
 const UserInfoCard = ({ data }) => {
@@ -17,7 +17,7 @@ const UserInfoCard = ({ data }) => {
     const history = useHistory()
   // ** render user img
   const handelDelete = (id) => {
-    dispatch(ClientDelete({ id }))
+    dispatch(StaffsDelete({ id }))
    history.push("/apps/staffs/list")
   }
 const renderUserImg = () => {

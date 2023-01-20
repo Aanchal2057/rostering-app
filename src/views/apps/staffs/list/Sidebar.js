@@ -16,7 +16,7 @@ import { Button, FormGroup, Label, FormText, Form, Input } from 'reactstrap'
 // ** Store & Actions
 import { addUser } from '../store/action'
 import { useDispatch, useSelector } from 'react-redux'
-import { Clients, addClient } from '../../../../redux1/action/auth'
+import { Staffs, addStaffs } from '../../../../redux1/action/auth'
 
 const SidebarNewUsers = ({ open, toggleSidebar }) => {
   // ** States
@@ -35,7 +35,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
     if (isObjEmpty(errors)) {
       toggleSidebar()
       dispatch(
-        addClient({
+        addStaffs({
           name: values['full-name'],
           address: values.country,
           contact: values.contact,
@@ -48,13 +48,13 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
    
   }
 
-  const datas = useSelector(state => state.Clients)
-const data = (datas?.client)
+  const datas = useSelector(state => state.Staffs)
+const data = (datas?.staff)
 
   useEffect(() => {
    if (data?.success) {
-    dispatch(Clients(1))
-    history.push("/apps/clients/list")
+    dispatch(Staffs(1))
+    history.push("/apps/staffs/list")
    }
   }, [dispatch, data])
 
@@ -143,25 +143,7 @@ const data = (datas?.client)
             className={classnames({ 'is-invalid': errors['department'] })}
           />
         </FormGroup>
-        {/* <FormGroup>
-          <Label for='user-role'>User Role</Label>
-          <Input type='select' id='user-role' name='user-role' value={role} onChange={e => setRole(e.target.value)}>
-            <option value='subscriber'>Subscriber</option>
-            <option value='editor'>Editor</option>
-            <option value='maintainer'>Maintainer</option>
-            <option value='author'>Author</option>
-            <option value='admin'>Admin</option>
-          </Input>
-        </FormGroup> */}
-        {/* <FormGroup className='mb-2' value={plan} onChange={e => setPlan(e.target.value)}>
-          <Label for='select-plan'>Seleact Rate</Label>
-          <Input type='select' id='select-plan' name='select-plan'>
-            <option value='1000'>1000</option>
-            <option value='enterprise'>Enterprise</option>
-            <option value='company'>Company</option>
-            <option value='team'>Team</option>
-          </Input>
-        </FormGroup> */}
+       
         <Button type='submit' className='mr-1' color='primary'>
           Submit
         </Button>

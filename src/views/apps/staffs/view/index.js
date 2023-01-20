@@ -16,7 +16,7 @@ import InvoiceLists from '../../invoice/list'
 
 // ** Styles
 import '@styles/react/apps/app-users.scss'
-import { ClientDetails } from '../../../../redux1/action/auth'
+import { StaffsDetails } from '../../../../redux1/action/auth'
 
 
 const UserView = props => {
@@ -25,7 +25,7 @@ const UserView = props => {
  const { id } = useParams()
   // ** Get suer on mount
   useEffect(() => {
-    dispatch(ClientDetails({id}))
+    dispatch(StaffsDetails({id}))
   }, [dispatch])
 
    const datas = useSelector(state => state.Staffs)

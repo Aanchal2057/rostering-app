@@ -3,7 +3,7 @@ import { Card, CardBody, Media, Row, Col, Button, Form, Input, Label, FormGroup,
 import classnames from 'classnames'
 import { isObjEmpty } from '@utils'
 import { useForm } from 'react-hook-form'
-import { editClient } from '../../../../redux1/action/auth'
+import { editStaffs } from '../../../../redux1/action/auth'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useHistory } from 'react-router-dom'
 
@@ -16,7 +16,7 @@ const index = () => {
   const onSubmit = values => {
     if (isObjEmpty(errors)) {
       dispatch(
-        editClient({
+        editStaffs({
           id,
           name: values.names,
           address: values.country,
@@ -30,8 +30,8 @@ const index = () => {
   } 
 
    
-  const datas = useSelector(state => state.Clients)
-const data = (datas?.client)
+  const datas = useSelector(state => state.Staffs)
+const data = (datas?.staffs)
    
       useEffect(() => {
    if (data?.success) {
