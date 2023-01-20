@@ -28,8 +28,8 @@ const UserView = props => {
     dispatch(ClientDetails({id}))
   }, [dispatch])
 
-   const datas = useSelector(state => state.Clients)
-  const data = (datas?.client)
+   const datas = useSelector(state => state.Staffs)
+  const data = (datas?.staffs)
 console.log(data)
   return data !== null ? (
     <div className='app-user-view'>

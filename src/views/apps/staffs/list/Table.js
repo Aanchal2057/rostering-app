@@ -51,8 +51,6 @@ const UsersList = () => {
   // ** Store Vars
   const dispatch = useDispatch()
   
-  const store = useSelector(state => state.users)
-
   const checkpage = useRef()
   
   // ** States
@@ -73,7 +71,7 @@ const UsersList = () => {
   }, [dispatch, currentPage])
   
   const data = useSelector(state => state.Staffs)
-   const datas = (data.staffs?.staffs)
+   const datas = (data.staffs?.staff)
   // ** Function in get data on page change
   const handlePagination = (page) => {
 
@@ -85,7 +83,7 @@ const UsersList = () => {
 
   const CustomPagination = () => {
    
-     const count = Number(Math.ceil(data?.client?.totalPage))
+     const count = Number(Math.ceil(data?.staffs?.totalPage))
 
     return (
       <ReactPaginate

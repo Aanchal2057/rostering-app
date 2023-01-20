@@ -73,26 +73,17 @@ return state
 }
 }
 
-export const Staffs = (state = { staffs: {} }, action) => {
+export const Staffs = (state = { staffs: [] }, action) => {
     switch (action.type) {
         case LOAD_STAFFS_REQUEST:
-        case LOAD_STAFFS_DETAILS_REQUEST:
-            case EDIT_STAFFS_REQUEST:
-        case LOAD_STAFFS_DELETE_REQUEST:
-            case ADD_STAFFS_REQUEST:
+    
     return { loading: true}
         case LOAD_STAFFS_SUCCESS:
-            case ADD_STAFFS_SUCCESS:
-        case LOAD_STAFFS_DELETE_SUCCESS:
-            case EDIT_STAFFS_SUCCESS:
-            case LOAD_STAFFS_DETAILS_SUCCESS:
+       
             return { ...state, loading: false, staffs: action.payload }
         
         case LOAD_STAFFS_FAIL:
-            case ADD_STAFFS_FAIL:
-        case LOAD_STAFFS_DETAILS_FAIL:
-            case EDIT_STAFFS_FAIL:
-            case LOAD_STAFFS_DELETE_FAIL:
+   
     return {
     ...state,
     loading: false,

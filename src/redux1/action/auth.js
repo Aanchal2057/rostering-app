@@ -169,7 +169,9 @@ export const Staffs = (currentPage) => async (dispatch) => {
     try {
         dispatch({ type: LOAD_STAFFS_REQUEST })
     
-        const config = { headers: { 'x-api-key':'23124134' } }
+            const token = JSON.parse(localStorage.getItem('token'))
+
+ const config = { headers: { 'x-api-key':'23124134', Authorization: `Bearer ${token}`} }
     const { data } = await axios.get(
     `http://rostering.delshagroup.com/staff?pageSize=10&page=${currentPage}&`,
     config
@@ -184,30 +186,30 @@ export const Staffs = (currentPage) => async (dispatch) => {
     dispatch({type:LOAD_STAFFS_FAIL, payload:error.message})
     }
     }
-export const addStaffs = ({name, email, address, department, contact}) => async (dispatch) => {
-    try {
-        dispatch({ type: ADD_STAFFS_REQUEST })
+// export const addStaffs = ({name, email, address, department, contact}) => async (dispatch) => {
+//     try {
+//         dispatch({ type: ADD_STAFFS_REQUEST })
         
-        const token = JSON.parse(localStorage.getItem('token'))
+//         const token = JSON.parse(localStorage.getItem('token'))
     
-     const config = { headers: { 'x-api-key':'23124134', Authorization: `Bearer ${token}`} }
-    const { data } = await axios.post(
-    `http://rostering.delshagroup.com/staff`,
-        {
-            name,
-            email,
-            address,
-            contact,
-            department
-        },
-    config
-    )
-    dispatch({
-    type: ADD_STAFFS_SUCCESS,
-     payload:data
-    })
-    } catch (error) {
-    dispatch({ type: ADD_STAFFS_FAIL, payload: error.response.data.message })
-    }
-    }
+//      const config = { headers: { 'x-api-key':'23124134', Authorization: `Bearer ${token}`} }
+//     const { data } = await axios.post(
+//     `http://rostering.delshagroup.com/staff`,
+//         {
+//             name,
+//             email,
+//             address,
+//             contact,
+//             department
+//         },
+//     config
+//     )
+//     dispatch({
+//     type: ADD_STAFFS_SUCCESS,
+//      payload:data
+//     })
+//     } catch (error) {
+//     dispatch({ type: ADD_STAFFS_FAIL, payload: error.response.data.message })
+//     }
+//     }
     
