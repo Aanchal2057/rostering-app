@@ -49,7 +49,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
   }
 
   const datas = useSelector(state => state.Staffs)
-const data = (datas?.staff)
+const data = (datas?.staffs)
 
   useEffect(() => {
    if (data?.success) {
