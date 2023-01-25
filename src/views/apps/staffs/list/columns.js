@@ -62,7 +62,7 @@ export const columns = [
 
   },
   {
-    name: 'Rate',
+    name: 'Rate(Rs)',
     minWidth: '138px',
     selector: 'status',
     sortable: true,
