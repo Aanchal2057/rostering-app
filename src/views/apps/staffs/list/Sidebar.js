@@ -22,7 +22,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
   // ** States
   const [role, setRole] = useState('subscriber')
   const [plan, setPlan] = useState('basic')
-
+  const [rate, setRate] = useState('')
   // ** Store Vars
   const dispatch = useDispatch()
     const history = useHistory()
@@ -44,7 +44,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
         })
       )
     }
- 
+  
    
   }
 
@@ -57,6 +57,9 @@ const data = (datas?.staffs)
     history.push("/apps/staffs/list")
    }
   }, [dispatch, data])
+  // useEffect(()=>{
+
+  // })
 
   return (
     <Sidebar
@@ -143,7 +146,15 @@ const data = (datas?.staffs)
             className={classnames({ 'is-invalid': errors['department'] })}
           />
         </FormGroup>
-       
+       <FormGroup className='mb-2' value={plan} onChange={e => setPlan(e.target.value)}>
+          <Label for='select-plan'>Select Rate</Label>
+          <Input type='select' id='select-plan' name='select-plan'>
+            <option value='1000'>1000</option>
+            <option value='enterprise'>Enterprise</option>
+            <option value='company'>Company</option>
+            <option value='team'>Team</option>
+          </Input>
+        </FormGroup>
         <Button type='submit' className='mr-1' color='primary'>
           Submit
         </Button>

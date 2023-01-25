@@ -82,5 +82,12 @@ export default [
   title: 'Settings',
   icon: <Settings size={20} />,
   navLink:'/apps/settings'
+  // children:[
+  //   {
+  //     id:'Add Staff Rate',
+  //     title:'Staff Rate',
+  //     navLink:'/apps/settings'
+  //   }
+  // ]
 }
 ]

@@ -1,8 +1,6 @@
 // ** React Imports
 import { Link } from 'react-router-dom'
-
-// ** Custom Components
-import Avatar from '@components/avatar'
+import { useState } from 'react'
 
 // ** Store & Actions
 import { getUser, deleteUser } from '../store/action'
@@ -61,6 +59,14 @@ export const columns = [
     selector: 'status',
     sortable: true,
     cell: row => row.department
+
+  },
+  {
+    name: 'Rate',
+    minWidth: '138px',
+    selector: 'status',
+    sortable: true,
+    cell: row => row.rate
 
   },
   {
