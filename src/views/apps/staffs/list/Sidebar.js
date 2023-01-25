@@ -16,7 +16,7 @@ import { Button, FormGroup, Label, FormText, Form, Input } from 'reactstrap'
 // ** Store & Actions
 import { addUser } from '../store/action'
 import { useDispatch, useSelector } from 'react-redux'
-import { Staffs, addStaffs } from '../../../../redux1/action/auth'
+import { Staffs, addStaffs, ShowRate } from '../../../../redux1/action/auth'
 
 const SidebarNewUsers = ({ open, toggleSidebar }) => {
   // ** States
@@ -40,7 +40,8 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
           address: values.country,
           contact: values.contact,
           email: values.email,
-          department: values.department
+          department: values.department,
+          rate:values.rate
         })
       )
     }
@@ -49,13 +50,16 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
   }
 
   const datas = useSelector(state => state.Staffs)
+  const rates = useSelector(state => state.rate.rate)
+  console.log(rates)
 const data = (datas?.staffs)
 
   useEffect(() => {
    if (data?.success) {
     dispatch(Staffs(1))
     history.push("/apps/staffs/list")
-   }
+    }
+     dispatch(ShowRate())
   }, [dispatch, data])
   // useEffect(()=>{
 
@@ -146,15 +150,26 @@ const data = (datas?.staffs)
             className={classnames({ 'is-invalid': errors['department'] })}
           />
         </FormGroup>
-       <FormGroup className='mb-2' value={plan} onChange={e => setPlan(e.target.value)}>
-          <Label for='select-plan'>Select Rate</Label>
-          <Input type='select' id='select-plan' name='select-plan'>
-            <option value='1000'>1000</option>
-            <option value='enterprise'>Enterprise</option>
-            <option value='company'>Company</option>
-            <option value='team'>Team</option>
-          </Input>
+           <FormGroup>
+          <Label for='rate'>
+            Rate<span className='text-danger'>*</span>
+          </Label>
+          <Input
+            type='select'
+            name='rate'
+            id='rate'
+            placeholder='Rate'
+            innerRef={register({ required: true })}
+            className={classnames({ 'is-invalid': errors['rate'] })}
+          >
+                 { rates?.map((rate, i) => {
+return <option key={i} value={rate?.rate}>{rate?.rate}</option>
+            })}
+             
+         
+         </Input>
         </FormGroup>
+     
         <Button type='submit' className='mr-1' color='primary'>
           Submit
         </Button>

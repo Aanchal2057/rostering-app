@@ -3,7 +3,7 @@ import { combineReducers } from 'redux'
 
 // ** Reducers Imports
 // import auth from './auth'
-import authReducer, {Clients, Staffs} from '../../redux1/reducer/authReducer' 
+import authReducer, {Clients, Staffs, rate} from '../../redux1/reducer/authReducer' 
 import navbar from './navbar'
 import layout from './layout'
 import users from '@src/views/apps/user/store/reducer'
@@ -20,6 +20,7 @@ const rootReducer = combineReducers({
   layout,
   invoice,
   calendar,
+  rate,
   dataTables
 })
 

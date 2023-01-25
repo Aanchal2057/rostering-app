@@ -1,5 +1,5 @@
 import {LOGIN_FAIL, LOGIN_SUCCESS, LOGIN_REQUEST, LOGOUT_REQUEST, LOGOUT_FAIL, LOGOUT_SUCCESS, LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOAD_USER_FAIL, LOAD_CLIENT_FAIL, LOAD_CLIENT_REQUEST, LOAD_CLIENT_SUCCESS, LOAD_ADMIN_REQUEST, LOAD_ADMIN_FAIL, LOAD_ADMIN_SUCCESS, LOAD_CLIENT_DETAILS_SUCCESS,
-     LOAD_CLIENT_DETAILS_REQUEST, LOAD_CLIENT_DETAILS_FAIL, LOAD_CLIENT_DELETE_FAIL, LOAD_CLIENT_DELETE_SUCCESS, LOAD_CLIENT_DELETE_REQUEST, ADD_CLIENT_REQUEST, ADD_CLIENT_SUCCESS, ADD_CLIENT_FAIL, EDIT_CLIENT_REQUEST, EDIT_CLIENT_SUCCESS, EDIT_CLIENT_FAIL, ADD_STAFFS_REQUEST, ADD_STAFFS_SUCCESS, ADD_STAFFS_FAIL, LOAD_STAFFS_REQUEST, LOAD_STAFFS_SUCCESS, LOAD_STAFFS_FAIL, EDIT_STAFFS_REQUEST, EDIT_STAFFS_SUCCESS,  EDIT_STAFFS_FAIL, LOAD_STAFFS_DETAILS_REQUEST, LOAD_STAFFS_DETAILS_SUCCESS, LOAD_STAFFS_DETAILS_FAIL,  LOAD_STAFFS_DELETE_REQUEST, LOAD_STAFFS_DELETE_SUCCESS, LOAD_STAFFS_DELETE_FAIL} from '../constant/authConstant'
+     LOAD_CLIENT_DETAILS_REQUEST, LOAD_CLIENT_DETAILS_FAIL, LOAD_CLIENT_DELETE_FAIL, LOAD_CLIENT_DELETE_SUCCESS, LOAD_CLIENT_DELETE_REQUEST, ADD_CLIENT_REQUEST, ADD_CLIENT_SUCCESS, ADD_CLIENT_FAIL, EDIT_CLIENT_REQUEST, EDIT_CLIENT_SUCCESS, EDIT_CLIENT_FAIL, ADD_STAFFS_REQUEST, ADD_STAFFS_SUCCESS, ADD_STAFFS_FAIL, LOAD_STAFFS_REQUEST, LOAD_STAFFS_SUCCESS, LOAD_STAFFS_FAIL, EDIT_STAFFS_REQUEST, EDIT_STAFFS_SUCCESS,  EDIT_STAFFS_FAIL, LOAD_STAFFS_DETAILS_REQUEST, LOAD_STAFFS_DETAILS_SUCCESS, LOAD_STAFFS_DETAILS_FAIL,  LOAD_STAFFS_DELETE_REQUEST, LOAD_STAFFS_DELETE_SUCCESS, LOAD_STAFFS_DELETE_FAIL, LOAD_RATE_REQUEST, LOAD_RATE_SUCCESS, LOAD_RATE_FAIL} from '../constant/authConstant'
 import axios from 'axios'
 
 export const login = (email, password) => async (dispatch) => {
@@ -186,7 +186,7 @@ export const Staffs = (currentPage) => async (dispatch) => {
     dispatch({type:LOAD_STAFFS_FAIL, payload:error.message})
     }
     }
-export const addStaffs = ({name, email, address, department, contact}) => async (dispatch) => {
+export const addStaffs = ({name, email, address, department, contact, rate}) => async (dispatch) => {
     try {
         dispatch({ type: ADD_STAFFS_REQUEST })
         
@@ -200,7 +200,8 @@ export const addStaffs = ({name, email, address, department, contact}) => async 
             email,
             address,
             contact,
-            department
+            department,
+            rate
         },
     config
     )
@@ -280,3 +281,24 @@ export const addStaffs = ({name, email, address, department, contact}) => async 
                 }
                 }
             
+export const ShowRate = () => async (dispatch) => {
+try {
+    dispatch({ type: LOAD_RATE_REQUEST })
+
+    const token = JSON.parse(localStorage.getItem('token'))
+    
+     const config = { headers: { 'x-api-key':'23124134', Authorization: `Bearer ${token}`} }
+const { data } = await axios.get(
+`http://rostering.delshagroup.com/rate`,
+config
+    )
+    
+    dispatch({
+        type: LOAD_RATE_SUCCESS,
+        payload:data.rates
+        
+})
+}  catch (error) {
+dispatch({type:LOAD_RATE_FAIL, payload:error.message})
+}
+}
