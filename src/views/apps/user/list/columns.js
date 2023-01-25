@@ -10,62 +10,8 @@ import { store } from '@store/storeConfig/store'
 
 // ** Third Party Components
 import { Badge, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
-import { Slack, User, Settings, Database, Edit2, MoreVertical, FileText, Trash2, Archive } from 'react-feather'
+import { Slack, User, Settings, Database, Edit2, MoreVertical, FileText, Trash2, Archive, CheckSquare } from 'react-feather'
 import { useSelector } from 'react-redux'
-
-// ** Renders Client Columns
-// const renderClient = row => {
-//   const stateNum = Math.floor(Math.random() * 6),
-//     states = ['light-success', 'light-danger', 'light-warning', 'light-info', 'light-primary', 'light-secondary'],
-//     color = states[stateNum]
-
-//   if (row.avatar.length) {
-//     return <Avatar className='mr-1' img={row.avatar} width='32' height='32' />
-//   } else {
-//     return <Avatar color={color || 'primary'} className='mr-1' content={row.fullName || 'John Doe'} initials />
-//   }
-// }
-
-// ** Renders Role Columns
-// const renderRole = row => {
-//   const roleObj = {
-//     subscriber: {
-//       class: 'text-primary',
-//       icon: User
-//     },
-//     maintainer: {
-//       class: 'text-success',
-//       icon: Database
-//     },
-//     editor: {
-//       class: 'text-info',
-//       icon: Edit2
-//     },
-//     author: {
-//       class: 'text-warning',
-//       icon: Settings
-//     },
-//     admin: {
-//       class: 'text-danger',
-//       icon: Slack
-//     }
-//   }
-
-//   const Icon = roleObj[row.role] ? roleObj[row.role].icon : Edit2
-
-//   return (
-//     <span className='text-truncate text-capitalize align-middle'>
-//       <Icon size={18} className={`${roleObj[row.role] ? roleObj[row.role].class : ''} mr-50`} />
-//       {row.role}
-//     </span>
-//   )
-// }
-
-// const statusObj = {
-//   pending: 'light-warning',
-//   active: 'light-success',
-//   inactive: 'light-secondary'
-// }
 
 export const columns = [
   {
@@ -123,7 +69,8 @@ export const columns = [
     cell: row => (
       <UncontrolledDropdown>
         <DropdownToggle tag='div' className='btn btn-sm'>
-          <MoreVertical size={14} className='cursor-pointer' />
+        <MoreVertical size={14} className='cursor-pointer' color = '#7367f0'/>
+          <CheckSquare size={14} className='cursor-pointer'   color = '#7367f0'/>
         </DropdownToggle>
         <DropdownMenu right>
           <DropdownItem
