@@ -1,9 +1,9 @@
-import { useState, useContext, Fragment } from 'react'
+import { useState, useContext, Fragment, useEffect } from 'react'
 import classnames from 'classnames'
 import Avatar from '@components/avatar'
 import { useSkin } from '@hooks/useSkin'
 import useJwt from '@src/auth/jwt/useJwt'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { toast, Slide } from 'react-toastify'
 import { handleLogin } from '@store/actions/auth'
@@ -26,8 +26,9 @@ import {
   Button,
   UncontrolledTooltip
 } from 'reactstrap'
-
 import '@styles/base/pages/page-auth.scss'
+import { login } from '../../../redux1/action/auth'
+import { val } from '../../../App'
 
 const ToastContent = ({ name, role }) => (
   <Fragment>
@@ -45,33 +46,26 @@ const ToastContent = ({ name, role }) => (
 
 const Login = props => {
   const [skin, setSkin] = useSkin()
-  const ability = useContext(AbilityContext)
   const dispatch = useDispatch()
-  const history = useHistory()
+    const history = useHistory()
   const [email, setEmail] = useState('admin@demo.com')
   const [password, setPassword] = useState('admin')
-
   const { register, errors, handleSubmit } = useForm()
   const illustration = skin === 'dark' ? 'login-v2-dark.svg' : 'login-v2.svg',
     source = require(`@src/assets/images/pages/${illustration}`).default
-
-  const onSubmit = data => {
-    if (isObjEmpty(errors)) {
-      useJwt
-        .login({ email, password })
-        .then(res => {
-          const data = { ...res.data.userData, accessToken: res.data.accessToken, refreshToken: res.data.refreshToken }
-          dispatch(handleLogin(data))
-          ability.update(res.data.userData.ability)
-          history.push(getHomeRouteForLoggedInUser(data.role))
-          toast.success(
-            <ToastContent name={data.fullName || data.username || 'John Doe'} role={data.role || 'admin'} />,
-            { transition: Slide, hideProgressBar: true, autoClose: 2000 }
-          )
-        })
-        .catch(err => console.log(err))
-    }
+       const {isAuth} = useSelector(
+(state) => state.authReducer
+    )
+ const loginSubmit = (event) => {
+   event.preventDefault()
+   dispatch(login(email, password))
   }
+  
+useEffect(() => {
+  if (isAuth) {
+  history.push("/dashboard/ecommerce")
+}
+}, [history, isAuth])
 
   return (
     <div className='auth-wrapper auth-v2'>
@@ -125,7 +119,7 @@ const Login = props => {
               </g>
             </g>
           </svg>
-          <h2 className='brand-text text-primary ml-1'>Vuexy</h2>
+          <h2 className='brand-text text-primary ml-1'>Rostering</h2>
         </Link>
         <Col className='d-none d-lg-flex align-items-center p-5' lg='8' sm='12'>
           <div className='w-100 d-lg-flex align-items-center justify-content-center px-5'>
@@ -135,33 +129,12 @@ const Login = props => {
         <Col className='d-flex align-items-center auth-bg px-2 p-lg-5' lg='4' sm='12'>
           <Col className='px-xl-2 mx-auto' sm='8' md='6' lg='12'>
             <CardTitle tag='h2' className='font-weight-bold mb-1'>
-              Welcome to Vuexy! 👋
+              Welcome to Dashboard! 👋 
             </CardTitle>
             <CardText className='mb-2'>Please sign-in to your account and start the adventure</CardText>
-            <Alert color='primary'>
-              <div className='alert-body font-small-2'>
-                <p>
-                  <small className='mr-50'>
-                    <span className='font-weight-bold'>Admin:</span> admin@demo.com | admin
-                  </small>
-                </p>
-                <p>
-                  <small className='mr-50'>
-                    <span className='font-weight-bold'>Client:</span> client@demo.com | client
-                  </small>
-                </p>
-              </div>
-              <HelpCircle
-                id='login-tip'
-                className='position-absolute'
-                size={18}
-                style={{ top: '10px', right: '10px' }}
-              />
-              <UncontrolledTooltip target='login-tip' placement='left'>
-                This is just for ACL demo purpose.
-              </UncontrolledTooltip>
-            </Alert>
-            <Form className='auth-login-form mt-2' onSubmit={handleSubmit(onSubmit)}>
+           
+              
+            <Form className='auth-login-form mt-2' onSubmit={loginSubmit}>
               <FormGroup>
                 <Label className='form-label' for='login-email'>
                   Email

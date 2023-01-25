@@ -1,6 +1,6 @@
 // ** React Imports
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 // ** Custom Components
 import Avatar from '@components/avatar'
@@ -9,8 +9,9 @@ import Avatar from '@components/avatar'
 import { isUserLoggedIn } from '@utils'
 
 // ** Store & Actions
-import { useDispatch } from 'react-redux'
-import { handleLogout } from '@store/actions/auth'
+import { useDispatch, useSelector } from 'react-redux'
+// import { handleLogout } from '@store/actions/auth'
+import { logout } from '../../../../redux1/action/auth'
 
 // ** Third Party Components
 import { UncontrolledDropdown, DropdownMenu, DropdownToggle, DropdownItem } from 'reactstrap'
@@ -18,20 +19,24 @@ import { User, Mail, CheckSquare, MessageSquare, Settings, CreditCard, HelpCircl
 
 // ** Default Avatar Image
 import defaultAvatar from '@src/assets/images/portrait/small/avatar-s-11.jpg'
+import { val } from '../../../../App'
 
 const UserDropdown = () => {
   // ** Store Vars
   const dispatch = useDispatch()
+    const history = useHistory()
 
   // ** State
   const [userData, setUserData] = useState(null)
 
   //** ComponentDidMount
-  useEffect(() => {
-    if (isUserLoggedIn() !== null) {
-      setUserData(JSON.parse(localStorage.getItem('userData')))
-    }
-  }, [])
+  const logoutHandeler = (e) => {
+    e.preventDefault()
+    dispatch(logout())
+  history.push("/login")
+
+    // console.log('click')
+  }
 
   //** Vars
   const userAvatar = (userData && userData.avatar) || defaultAvatar
@@ -50,7 +55,7 @@ const UserDropdown = () => {
           <User size={14} className='mr-75' />
           <span className='align-middle'>Profile</span>
         </DropdownItem>
-        <DropdownItem tag={Link} to='/login' onClick={() => dispatch(handleLogout())}>
+        <DropdownItem tag={Link}  onClick={logoutHandeler}>
           <Power size={14} className='mr-75' />
           <span className='align-middle'>Logout</span>
         </DropdownItem>

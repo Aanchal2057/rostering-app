@@ -1,5 +1,5 @@
 // ** React Imports
-import { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect, useRef  } from 'react'
 
 // ** Invoice List Sidebar
 import Sidebar from './Sidebar'
@@ -22,52 +22,23 @@ import { Card, CardHeader, CardTitle, CardBody, Input, Row, Col, Label, CustomIn
 // ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
+import { Clients } from '../../../../redux1/action/auth'
 
 // ** Table Header
-const CustomHeader = ({ toggleSidebar, handlePerPage, rowsPerPage, handleFilter, searchTerm }) => {
+const CustomHeader = ({ toggleSidebar }) => {
   return (
     <div className='invoice-list-table-header w-100 mr-1 ml-50 mt-2 mb-75'>
       <Row>
         <Col xl='6' className='d-flex align-items-center p-0'>
-          <div className='d-flex align-items-center w-100'>
-            <Label for='rows-per-page'>Show</Label>
-            <CustomInput
-              className='form-control mx-50'
-              type='select'
-              id='rows-per-page'
-              value={rowsPerPage}
-              onChange={handlePerPage}
-              style={{
-                width: '5rem',
-                padding: '0 0.8rem',
-                backgroundPosition: 'calc(100% - 3px) 11px, calc(100% - 20px) 13px, 100% 0'
-              }}
-            >
-              <option value='10'>10</option>
-              <option value='25'>25</option>
-              <option value='50'>50</option>
-            </CustomInput>
-            <Label for='rows-per-page'>Entries</Label>
-          </div>
+        <h4>Clients List</h4>
         </Col>
         <Col
           xl='6'
           className='d-flex align-items-sm-center justify-content-lg-end justify-content-start flex-lg-nowrap flex-wrap flex-sm-row flex-column pr-lg-1 p-0 mt-lg-0 mt-1'
         >
-          <div className='d-flex align-items-center mb-sm-0 mb-1 mr-1'>
-            <Label className='mb-0' for='search-invoice'>
-              Search:
-            </Label>
-            <Input
-              id='search-invoice'
-              className='ml-50 w-100'
-              type='text'
-              value={searchTerm}
-              onChange={e => handleFilter(e.target.value)}
-            />
-          </div>
+         
           <Button.Ripple color='primary' onClick={toggleSidebar}>
-            Add New Staffs
+            Add New Clients
           </Button.Ripple>
         </Col>
       </Row>
@@ -78,112 +49,46 @@ const CustomHeader = ({ toggleSidebar, handlePerPage, rowsPerPage, handleFilter,
 const UsersList = () => {
   // ** Store Vars
   const dispatch = useDispatch()
+  
   const store = useSelector(state => state.users)
 
+  const checkpage = useRef()
+  
   // ** States
-  const [searchTerm, setSearchTerm] = useState('')
-  const [currentPage, setCurrentPage] = useState(1)
   const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [searchTerm, setSearchTerm] = useState('')
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [currentRole, setCurrentRole] = useState({ value: '', label: 'Select Role' })
-  const [currentPlan, setCurrentPlan] = useState({ value: '', label: 'Select Plan' })
-  const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
-
+  const [currentPage, setCurrentPage] = useState(1)
+  
+  console.log(currentPage)
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
-
+  
   // ** Get data on mount
   useEffect(() => {
-    dispatch(getAllData())
-    dispatch(
-      getData({
-        page: currentPage,
-        perPage: rowsPerPage,
-        role: currentRole.value,
-        currentPlan: currentPlan.value,
-        status: currentStatus.value,
-        q: searchTerm
-      })
-    )
-  }, [dispatch, store.data.length])
-
-  // ** User filter options
-  const roleOptions = [
-    { value: '', label: 'Select Role' },
-    { value: 'admin', label: 'Admin' },
-    { value: 'author', label: 'Author' },
-    { value: 'editor', label: 'Editor' },
-    { value: 'maintainer', label: 'Maintainer' },
-    { value: 'subscriber', label: 'Subscriber' }
-  ]
-
-  const planOptions = [
-    { value: '', label: 'Select Plan' },
-    { value: 'basic', label: 'Basic' },
-    { value: 'company', label: 'Company' },
-    { value: 'enterprise', label: 'Enterprise' },
-    { value: 'team', label: 'Team' }
-  ]
-
-  const statusOptions = [
-    { value: '', label: 'Select Status', number: 0 },
-    { value: 'pending', label: 'Pending', number: 1 },
-    { value: 'active', label: 'Active', number: 2 },
-    { value: 'inactive', label: 'Inactive', number: 3 }
-  ]
-
+    
+    dispatch(Clients(currentPage))
+   
+  }, [dispatch, currentPage])
+  
+  const data = useSelector(state => state.Clients)
+  const datas = (data.client?.clients)
   // ** Function in get data on page change
-  const handlePagination = page => {
-    dispatch(
-      getData({
-        page: page.selected + 1,
-        perPage: rowsPerPage,
-        role: currentRole.value,
-        currentPlan: currentPlan.value,
-        status: currentStatus.value,
-        q: searchTerm
-      })
-    )
-    setCurrentPage(page.selected + 1)
-  }
+  const handlePagination = (page) => {
 
-  // ** Function in get data on rows per page
-  const handlePerPage = e => {
-    const value = parseInt(e.currentTarget.value)
-    dispatch(
-      getData({
-        page: currentPage,
-        perPage: value,
-        role: currentRole.value,
-        currentPlan: currentPlan.value,
-        status: currentStatus.value,
-        q: searchTerm
-      })
-    )
-    setRowsPerPage(value)
-  }
+    setCurrentPage((page.selected + checkpage.current.handlePageSelected.length) - 1)
 
+
+  }
   // ** Function in get data on search query change
-  const handleFilter = val => {
-    setSearchTerm(val)
-    dispatch(
-      getData({
-        page: currentPage,
-        perPage: rowsPerPage,
-        role: currentRole.value,
-        currentPlan: currentPlan.value,
-        status: currentStatus.value,
-        q: val
-      })
-    )
-  }
 
-  // ** Custom Pagination
   const CustomPagination = () => {
-    const count = Number(Math.ceil(store.total / rowsPerPage))
+   
+    const count = Number(Math.ceil(data?.client?.totalPage))
 
     return (
       <ReactPaginate
+        ref={checkpage}
         previousLabel={''}
         nextLabel={''}
         pageCount={count || 1}
@@ -203,29 +108,15 @@ const UsersList = () => {
 
   // ** Table data to render
   const dataToRender = () => {
-    const filters = {
-      role: currentRole.value,
-      currentPlan: currentPlan.value,
-      status: currentStatus.value,
-      q: searchTerm
-    }
-
-    const isFiltered = Object.keys(filters).some(function (k) {
-      return filters[k].length > 0
-    })
-
-    if (store.data.length > 0) {
-      return store.data
-    } else if (store.data.length === 0 && isFiltered) {
+    if (datas?.length > 0) {
+      return datas
+    } else if (datas?.length === 0) {
       return []
-    } else {
-      return store.allData.slice(0, rowsPerPage)
-    }
+    } 
   }
 
   return (
     <Fragment>
-      
 
       <Card>
         <DataTable
@@ -238,14 +129,11 @@ const UsersList = () => {
           sortIcon={<ChevronDown />}
           className='react-dataTable'
           paginationComponent={CustomPagination}
-          data={dataToRender()}
+          data={ dataToRender()}
           subHeaderComponent={
             <CustomHeader
               toggleSidebar={toggleSidebar}
-              handlePerPage={handlePerPage}
-              rowsPerPage={rowsPerPage}
-              searchTerm={searchTerm}
-              handleFilter={handleFilter}
+             
             />
           }
         />

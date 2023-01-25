@@ -1,5 +1,6 @@
 // ** React Imports
 import { Suspense, useContext, lazy } from 'react'
+import { useSelector } from 'react-redux'
 
 // ** Utils
 import { isUserLoggedIn } from '@utils'
@@ -21,8 +22,11 @@ import { DefaultRoute, Routes } from './routes'
 import Login from '../views/pages/authentication/Login'
 import VerticalLayout from '@src/layouts/VerticalLayout'
 import HorizontalLayout from '@src/layouts/HorizontalLayout'
-import Invoice from '../views/apps/invoice/list/Invoice'
-const Router = () => {
+import EcommerceDashboard from '../views/dashboard/ecommerce'
+ 
+const Router = ({isAuthenticated}) => {
+  
+console.log(isAuthenticated)
   // ** Hooks
   const [layout, setLayout] = useLayout()
   const [transition, setTransition] = useRouterTransition()
@@ -67,35 +71,17 @@ const Router = () => {
    */
   const FinalRoute = props => {
     const route = props.route
-    let action, resource
 
     // ** Assign vars based on route meta
-    if (route.meta) {
-      action = route.meta.action ? route.meta.action : null
-      resource = route.meta.resource ? route.meta.resource : null
-    }
 
-    if (
-      (!isUserLoggedIn() && route.meta === undefined) ||
-      (!isUserLoggedIn() && route.meta && !route.meta.authRoute && !route.meta.publicRoute)
-    ) {
-      /**
-       ** If user is not Logged in & route meta is undefined
-       ** OR
-       ** If user is not Logged in & route.meta.authRoute, !route.meta.publicRoute are undefined
-       ** Then redirect user to login
-       */
 
-      // return <Redirect to='/login' />
-    } else if (route.meta && route.meta.authRoute && isUserLoggedIn()) {
-      // ** If route has meta and authRole and user is Logged in then redirect user to home page (DefaultRoute)
-      return <Redirect to='/' />
-    } else if (isUserLoggedIn() && !ability.can(action || 'read', resource)) {
-      // ** If user is Logged in and doesn't have ability to visit the page redirect the user to Not Authorized
-      return <Redirect to='/misc/not-authorized' />
-    } else {
-      // ** If none of the above render component
+    if 
+      (isAuthenticated) {
       return <route.component {...props} />
+
+    } else {
+      return <Redirect to='/login' />
+      
     }
   }
 
@@ -184,18 +170,20 @@ const Router = () => {
   }
 
   return (
-    <AppRouter basename={process.env.REACT_APP_BASENAME}>
+    <AppRouter>
       <Switch>
         {/* If user is logged in Redirect user to DefaultRoute else to login */}
         <Route
           exact
           path='/'
           render={() => {
-            return isUserLoggedIn() ? <Redirect to={DefaultRoute} /> : <Redirect to='/login' />
+            return isAuthenticated ? <Redirect to={DefaultRoute} /> : <Redirect to='/login' />
             // return <NotAuthorized/>
             // console.log('hello')
           }}
         /> 
+         <Route path='/invoice' component={Login} />
+         {/* <Route path='/test' component={Test}/> */}
         <Route path='/login' component={Login} />
         {/* Not Auth Route */}
         <Route
@@ -211,7 +199,9 @@ const Router = () => {
 
         {/* NotFound Error page */}
         <Route path='*' component={Error} />
-        <Route path='/invoice' component={Invoice} />
+      
+      
+        {/* <Route path='/invoice' component={Invoice} /> */}
       </Switch>
     </AppRouter>
   )

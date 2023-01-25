@@ -17,7 +17,7 @@ export default [
     id: 'user',
     title: 'Staffs',
     icon: <User size={20} />,
-    navLink: '/apps/user/list'
+    navLink: '/apps/staffs/list'
   },
   {
     id: 'calender',
@@ -82,5 +82,12 @@ export default [
   title: 'Settings',
   icon: <Settings size={20} />,
   navLink:'/apps/settings'
+  // children:[
+  //   {
+  //     id:'Add Staff Rate',
+  //     title:'Staff Rate',
+  //     navLink:'/apps/settings'
+  //   }
+  // ]
 }
 ]
