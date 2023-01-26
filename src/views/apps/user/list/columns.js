@@ -24,7 +24,7 @@ export const columns = [
         {/* {renderClient(row)} */}
         <div className='d-flex flex-column'>
           <Link
-            to={`/apps/user/view/${row.id}`}
+            to={`/apps/user/view/${row.uuid}`}
             className='user-name text-truncate mb-0'
             // onClick={() => store.dispatch(getUser(row.id))}
           >
