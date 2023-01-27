@@ -28,7 +28,7 @@ import img6 from '@src/assets/images/avatars/11-small.png'
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/flatpickr/flatpickr.scss'
 import { useDispatch, useSelector } from 'react-redux'
-import { Staffs } from '../../../redux1/action/auth'
+import { Staffs, Clients } from '../../../redux1/action/auth'
 // ** Toast Component
 const ToastComponent = ({ title, icon, color }) => (
   <Fragment>
@@ -66,6 +66,7 @@ const AddEventSidebar = props => {
   const [desc, setDesc] = useState('')
   const [title, setTitle] = useState('')
   const [guests, setGuests] = useState({})
+  const [guests1, setGuests1] = useState({})
   const [allDay, setAllDay] = useState(false)
   const [location, setLocation] = useState('')
   const [endPicker, setEndPicker] = useState(new Date())
@@ -73,6 +74,7 @@ const AddEventSidebar = props => {
   const [value, setValue] = useState({ value: 'Unassigned', label: 'Unassigned', color: 'danger' })
   const [showStaff, setShowStaff] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage1, setCurrentPage1] = useState(1)
   useEffect(() => {
     if (value.value === 'Unassigned') {
     setShowStaff(false)
@@ -91,6 +93,16 @@ const data = useSelector(state => state.Staffs)
  const datas = (data.staffs?.staff)
  console.log(datas)
 
+
+ useEffect(() => {
+    
+  dispatch(Clients(currentPage1))
+ 
+}, [dispatch, currentPage1])
+
+const data1 = useSelector(state => state.Clients)
+const datas1 = (data1.client?.clients)
+console.log(datas1)
   // ** Select Options
   const options = [
     { value: 'Assigned', label: 'Assigned', color: 'primary' },
@@ -100,6 +112,11 @@ const data = useSelector(state => state.Staffs)
 const getStaff =   datas?.map((data) => {
     return { value: data?.name, label: data?.name}
   })
+
+const getClient =   datas1?.map((data) => {
+    return { value: data?.name, label: data?.name}
+  })
+
 
   const guestsOptions = [
    
@@ -408,29 +425,18 @@ const getStaff =   datas?.map((data) => {
             />
           </FormGroup>
 
-          {/* <FormGroup>
-            <Label for='eventURL'>Event URL</Label>
-            <Input
-              type='url'
-              id='eventURL'
-              value={url}
-              onChange={e => setUrl(e.target.value)}
-              placeholder='https://www.google.com'
-            />
-          </FormGroup> */}
-
           <FormGroup>
             <Label for='guests'>Select Client</Label>
             <Select
               isMulti
               id='guests'
               className='react-select'
-              classNamePrefix='select'
+              // classNamePrefix='select'
               isClearable={false}
-              options={guestsOptions}
+              options={getClient}
               theme={selectThemeColors}
-              value={guests.length ? [...guests] : null}
-              onChange={data => setGuests([...data])}
+              value={guests1.length ? [...guests1] : null}
+              onChange={data => setGuests1([...data])}
               components={{
                 Option: GuestsComponent
               }}
@@ -443,7 +449,7 @@ const getStaff =   datas?.map((data) => {
               isMulti
               id='guests'
               className='react-select'
-              classNamePrefix='select'
+              // classNamePrefix='select'
               isClearable={false}
               options={showStaff ? getStaff : []}
               theme={selectThemeColors}
@@ -452,12 +458,6 @@ const getStaff =   datas?.map((data) => {
               components={showStaff && ({Option: GuestsComponent})}
             />
           </FormGroup>
-
-          {/* <FormGroup>
-            <Label for='location'>Location</Label>
-            <Input id='location' value={location} onChange={e => setLocation(e.target.value)} placeholder='Office' />
-          </FormGroup> */}
-
           <FormGroup>
             <Label for='description'>Client Rate</Label>
             <Input
