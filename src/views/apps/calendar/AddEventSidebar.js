@@ -1,5 +1,5 @@
 // ** React Imports
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 
 // ** Custom Components
 import Avatar from '@components/avatar'
@@ -69,7 +69,16 @@ const AddEventSidebar = props => {
   const [location, setLocation] = useState('')
   const [endPicker, setEndPicker] = useState(new Date())
   const [startPicker, setStartPicker] = useState(new Date())
-  const [value, setValue] = useState([{ value: 'Assigned', label: 'Assigned', color: 'success' }])
+  const [value, setValue] = useState({ value: 'Unassigned', label: 'Unassigned', color: 'danger' })
+  const [showStaff, setShowStaff] = useState(false)
+
+  useEffect(() => {
+    if (value.value === 'Unassigned') {
+    setShowStaff(false)
+  } else {
+    setShowStaff(true)
+  }
+}, [value])
 
   // ** Select Options
   const options = [
@@ -309,7 +318,7 @@ const AddEventSidebar = props => {
         >
           <FormGroup>
             <Label for='title'>
-              Title <span className='text-danger'>*</span>
+              Title<span className='text-danger'>*</span>
             </Label>
             <Input
               id='title'
@@ -334,7 +343,7 @@ const AddEventSidebar = props => {
               className='react-select'
               classNamePrefix='select'
               isClearable={false}
-              onChange={data => setValue([data])}
+              onChange={data => setValue(data)}
               components={{
                 Option: OptionComponent
               }}
@@ -424,13 +433,11 @@ const AddEventSidebar = props => {
               className='react-select'
               classNamePrefix='select'
               isClearable={false}
-              options={guestsOptions}
+              options={showStaff ? guestsOptions : []}
               theme={selectThemeColors}
               value={guests.length ? [...guests] : null}
               onChange={data => setGuests([...data])}
-              components={{
-                Option: GuestsComponent
-              }}
+              components={showStaff && ({Option: GuestsComponent})}
             />
           </FormGroup>
 
