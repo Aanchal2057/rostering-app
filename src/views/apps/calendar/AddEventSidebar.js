@@ -27,7 +27,8 @@ import img6 from '@src/assets/images/avatars/11-small.png'
 // ** Styles Imports
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/flatpickr/flatpickr.scss'
-
+import { useDispatch, useSelector } from 'react-redux'
+import { Staffs } from '../../../redux1/action/auth'
 // ** Toast Component
 const ToastComponent = ({ title, icon, color }) => (
   <Fragment>
@@ -44,7 +45,7 @@ const AddEventSidebar = props => {
   // ** Props
   const {
     store,
-    dispatch,
+     dispatch,
     open,
     handleAddEventSidebar,
     calendarsColor,
@@ -55,7 +56,7 @@ const AddEventSidebar = props => {
     updateEvent,
     removeEvent
   } = props
-
+  
   // ** Vars
   const selectedEvent = store.selectedEvent
   const { register, errors, handleSubmit } = useForm()
@@ -71,7 +72,7 @@ const AddEventSidebar = props => {
   const [startPicker, setStartPicker] = useState(new Date())
   const [value, setValue] = useState({ value: 'Unassigned', label: 'Unassigned', color: 'danger' })
   const [showStaff, setShowStaff] = useState(false)
-
+  const [currentPage, setCurrentPage] = useState(1)
   useEffect(() => {
     if (value.value === 'Unassigned') {
     setShowStaff(false)
@@ -80,15 +81,22 @@ const AddEventSidebar = props => {
   }
 }, [value])
 
+useEffect(() => {
+    
+  dispatch(Staffs(currentPage))
+ 
+}, [dispatch, currentPage])
+
+const data = useSelector(state => state.Staffs)
+ const datas = (data.staffs?.staff)
+ console.log(datas)
+
   // ** Select Options
   const options = [
     { value: 'Assigned', label: 'Assigned', color: 'primary' },
     { value: 'Unassigned', label: 'Unassigned', color: 'danger' }
-    // { value: 'Family', label: 'Family', color: 'warning' },
-    // { value: 'Holiday', label: 'Holiday', color: 'success' },
-    // { value: 'ETC', label: 'ETC', color: 'info' }
   ]
-
+ 
   const guestsOptions = [
     { value: 'Donna Frank', label: 'Donna Frank', avatar: img1 },
     { value: 'Jane Foster', label: 'Jane Foster', avatar: img2 },

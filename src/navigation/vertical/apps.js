@@ -1,4 +1,4 @@
-import { Settings, Calendar, Home, FileText, Circle, ShoppingCart, User, Users, Briefcase  } from 'react-feather'
+import { Settings, Calendar, Home, FileText, Circle, ShoppingCart, User, Users, Briefcase, Check  } from 'react-feather'
 export default [
 
   {
@@ -81,13 +81,19 @@ export default [
   id: 'settings',
   title: 'Settings',
   icon: <Settings size={20} />,
-  navLink:'/apps/settings'
-  // children:[
-  //   {
-  //     id:'Add Staff Rate',
-  //     title:'Staff Rate',
-  //     navLink:'/apps/settings'
-  //   }
-  // ]
+  children:[
+    {
+      id:'Setting',
+      title:'Setting',
+      icon:<Circle size={20} />,
+      navLink:'/apps/settings'
+    },
+    {
+      id:'Approval page',
+      title:'Approval',
+      icon: <Check size={12} />,
+      navLink:'/apps/approved'
+    }
+  ]
 }
 ]
