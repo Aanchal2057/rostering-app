@@ -430,9 +430,11 @@ const getClient =   datas1?.map((data) => {
             <Select
               isMulti
               id='guests'
-              className='react-select'
-              // classNamePrefix='select'
+              className='react-select '
+              classNamePrefix='select '
               isClearable={false}
+           
+         
               options={getClient}
               theme={selectThemeColors}
               value={guests1.length ? [...guests1] : null}
@@ -447,9 +449,9 @@ const getClient =   datas1?.map((data) => {
             <Label for='guests'>Select Staffs</Label>
             <Select
               isMulti
-              id='guests'
-              className='react-select'
-              // classNamePrefix='select'
+              id='guests' 
+              className='react-select '
+              classNamePrefix='select '
               isClearable={false}
               options={showStaff ? getStaff : []}
               theme={selectThemeColors}
