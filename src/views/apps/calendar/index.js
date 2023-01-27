@@ -15,6 +15,7 @@ import { useRTL } from '@hooks/useRTL'
 
 // ** Store & Actions
 import { useSelector, useDispatch } from 'react-redux'
+
 import {
   fetchEvents,
   selectEvent,
@@ -27,6 +28,7 @@ import {
 
 // ** Styles
 import '@styles/react/apps/app-calendar.scss'
+import { loadEvent } from '../../../redux1/action/auth'
 
 // ** CalendarColors
 const calendarsColor = {
@@ -79,7 +81,7 @@ const CalendarComponent = () => {
 
   // ** Fetch Events On Mount
   useEffect(() => {
-    dispatch(fetchEvents(store.selectedCalendars))
+dispatch(loadEvent())
   }, [])
 
   return (
