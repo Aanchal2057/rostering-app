@@ -97,7 +97,12 @@ const data = useSelector(state => state.Staffs)
     { value: 'Unassigned', label: 'Unassigned', color: 'danger' }
   ]
  
+const getStaff =   datas?.map((data) => {
+    return { value: data?.name, label: data?.name}
+  })
+
   const guestsOptions = [
+   
     { value: 'Donna Frank', label: 'Donna Frank', avatar: img1 },
     { value: 'Jane Foster', label: 'Jane Foster', avatar: img2 },
     { value: 'Gabrielle Robertson', label: 'Gabrielle Robertson', avatar: img3 },
@@ -120,7 +125,6 @@ const data = useSelector(state => state.Staffs)
     return (
       <components.Option {...props}>
         <div className='d-flex flex-wrap align-items-center'>
-          <Avatar className='my-0 mr-1' size='sm' img={data.avatar} />
           <div>{data.label}</div>
         </div>
       </components.Option>
@@ -441,7 +445,7 @@ const data = useSelector(state => state.Staffs)
               className='react-select'
               classNamePrefix='select'
               isClearable={false}
-              options={showStaff ? guestsOptions : []}
+              options={showStaff ? getStaff : []}
               theme={selectThemeColors}
               value={guests.length ? [...guests] : null}
               onChange={data => setGuests([...data])}
