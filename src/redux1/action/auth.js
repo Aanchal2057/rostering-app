@@ -325,25 +325,28 @@ dispatch({type:LOAD_EVENT_FAIL, payload:error.message})
 }
 }
 
-export const addEvent = (label) => async (dispatch) => {
+export const addEvents = (obj) => async (dispatch) => {
 try {
     dispatch({ type: ADD_EVENT_REQUEST })
-
+const {title, start_date, end_date, client_id, staff_id, description} = obj
     const token = JSON.parse(localStorage.getItem('token'))
+    const config = { headers: { 'x-api-key': '23124134', Authorization: `Bearer ${token}` } }
+    console.log(obj)
     
-     const config = { headers: { 'x-api-key':'23124134', Authorization: `Bearer ${token}`} }
 const { data } = await axios.post(
     `http://rostering.delshagroup.com/event`,
     { title,
-      start_date,
+        start_date,
+        department:'',
       end_date,
       client_id,
       staff_id,
-      description
+        description,
+        client_rate: '',
+        staff_rate:''
     },
 config
     )
-    
     dispatch({
         type: ADD_EVENT_SUCCESS,
         payload:data

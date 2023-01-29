@@ -28,7 +28,7 @@ import img6 from '@src/assets/images/avatars/11-small.png'
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/flatpickr/flatpickr.scss'
 import { useDispatch, useSelector } from 'react-redux'
-import { Staffs, Clients } from '../../../redux1/action/auth'
+import { Staffs, Clients, addEvents } from '../../../redux1/action/auth'
 // ** Toast Component
 const ToastComponent = ({ title, icon, color }) => (
   <Fragment>
@@ -69,8 +69,8 @@ const AddEventSidebar = props => {
   const [guests1, setGuests1] = useState({})
   const [allDay, setAllDay] = useState(false)
   const [location, setLocation] = useState('')
-  const [endPicker, setEndPicker] = useState(new Date())
-  const [startPicker, setStartPicker] = useState(new Date())
+  const [endPicker, setEndPicker] = useState(new Date().toDateString())
+  const [startPicker, setStartPicker] = useState(new Date().toDateString())
   const [value, setValue] = useState({ value: 'Unassigned', label: 'Unassigned', color: 'danger' })
   const [showStaff, setShowStaff] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
@@ -91,7 +91,6 @@ useEffect(() => {
 
 const data = useSelector(state => state.Staffs)
  const datas = (data.staffs?.staff)
- console.log(datas)
 
 
  useEffect(() => {
@@ -102,7 +101,6 @@ const data = useSelector(state => state.Staffs)
 
 const data1 = useSelector(state => state.Clients)
 const datas1 = (data1.client?.clients)
-console.log(datas1)
   // ** Select Options
   const options = [
     { value: 'Assigned', label: 'Assigned', color: 'primary' },
@@ -110,12 +108,23 @@ console.log(datas1)
   ]
  
 const getStaff =   datas?.map((data) => {
-    return { value: data?.name, label: data?.name}
+    return { value: data?.name, label: data?.name, id:data?.uuid}
   })
 
 const getClient =   datas1?.map((data) => {
-    return { value: data?.name, label: data?.name}
+    return { value: data?.name, label: data?.name, id:data?.uuid}
   })
+
+
+  const guestsOptions = [
+   
+    { value: 'Donna Frank', label: 'Donna Frank', avatar: img1 },
+    { value: 'Jane Foster', label: 'Jane Foster', avatar: img2 },
+    { value: 'Gabrielle Robertson', label: 'Gabrielle Robertson', avatar: img3 },
+    { value: 'Lori Spears', label: 'Lori Spears', avatar: img4 },
+    { value: 'Sandy Vega', label: 'Sandy Vega', avatar: img5 },
+    { value: 'Cheryl May', label: 'Cheryl May', avatar: img6 }
+  ]
 
   // ** Custom select components
   const OptionComponent = ({ data, ...props }) => {
@@ -139,21 +148,24 @@ const getClient =   datas1?.map((data) => {
 
   // ** Adds New Event
   const handleAddEvent = () => {
-    const obj = {
-      title,
-      start: startPicker,
-      end: endPicker,
-      allDay,
-      display: 'block',
-      extendedProps: {
-        calendar: value[0].label,
-        url: url.length ? url : undefined,
-        guests: guests.length ? guests : undefined,
-        location: location.length ? location : undefined,
+    
+    guests1.forEach(element => {
+      guests.forEach((e) => {
+           const obj = {
+         title,
+      start_date: startPicker,
+      end_date: endPicker,
+        client_id: element.id,
+        staff_id: e.id,
         desc: desc.length ? desc : undefined
-      }
-    }
-    dispatch(addEvent(obj))
+        }
+        console.log(obj)
+        console.log(element)
+        console.log(e)
+        dispatch(addEvents(obj))
+      })
+    })
+
     refetchEvents()
     handleAddEventSidebar()
     toast.success(<ToastComponent title='Event Added' color='success' icon={<Check />} />, {
@@ -399,18 +411,6 @@ const getClient =   datas1?.map((data) => {
                 enableTime: allDay === false,
                 dateFormat: 'Y-m-d H:i'
               }}
-            />
-          </FormGroup>
-
-          <FormGroup>
-            <CustomInput
-              type='switch'
-              id='allDay'
-              name='customSwitch'
-              label='All Day'
-              checked={allDay}
-              onChange={e => setAllDay(e.target.checked)}
-              inline
             />
           </FormGroup>
 
