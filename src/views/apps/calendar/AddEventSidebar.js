@@ -150,21 +150,31 @@ const getClient =   datas1?.map((data) => {
   const handleAddEvent = () => {
     
     guests1.forEach(element => {
-      guests.forEach((e) => {
-           const obj = {
-         title,
-      start_date: startPicker,
-      end_date: endPicker,
-        client_id: element.id,
-        staff_id: e.id,
-        desc: desc.length ? desc : undefined
+      if (Object.keys(guests).length === 0) {
+        const obj = {
+          title,
+          start_date: startPicker,
+          end_date: endPicker,
+          client_id: element.id,
+          staff_id: '',
+          desc: desc.length ? desc : undefined
         }
-        console.log(obj)
-        console.log(element)
-        console.log(e)
         dispatch(addEvents(obj))
+      } else {
+        guests.forEach((e) => {
+          const obj = {
+            title,
+            start_date: startPicker,
+            end_date: endPicker,
+            client_id: element.id,
+            staff_id: e.id,
+            desc: desc.length ? desc : undefined
+          }
+          dispatch(addEvents(obj))
+        })
+        }
       })
-    })
+
 
     refetchEvents()
     handleAddEventSidebar()
