@@ -334,7 +334,13 @@ try {
      const config = { headers: { 'x-api-key':'23124134', Authorization: `Bearer ${token}`} }
 const { data } = await axios.post(
     `http://rostering.delshagroup.com/event`,
-    { label },
+    { title,
+      start_date,
+      end_date,
+      client_id,
+      staff_id,
+      description
+    },
 config
     )
     

@@ -117,17 +117,6 @@ const getClient =   datas1?.map((data) => {
     return { value: data?.name, label: data?.name}
   })
 
-
-  const guestsOptions = [
-   
-    { value: 'Donna Frank', label: 'Donna Frank', avatar: img1 },
-    { value: 'Jane Foster', label: 'Jane Foster', avatar: img2 },
-    { value: 'Gabrielle Robertson', label: 'Gabrielle Robertson', avatar: img3 },
-    { value: 'Lori Spears', label: 'Lori Spears', avatar: img4 },
-    { value: 'Sandy Vega', label: 'Sandy Vega', avatar: img5 },
-    { value: 'Cheryl May', label: 'Cheryl May', avatar: img6 }
-  ]
-
   // ** Custom select components
   const OptionComponent = ({ data, ...props }) => {
     return (
