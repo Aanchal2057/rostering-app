@@ -157,7 +157,7 @@ const getClient =   datas1?.map((data) => {
           end_date: endPicker,
           client_id: element.id,
           staff_id: '',
-          desc: desc.length ? desc : undefined
+          client_rate: desc
         }
         dispatch(addEvents(obj))
       } else {
@@ -168,7 +168,8 @@ const getClient =   datas1?.map((data) => {
             end_date: endPicker,
             client_id: element.id,
             staff_id: e.id,
-            desc: desc.length ? desc : undefined
+            client_rate: desc
+
           }
           dispatch(addEvents(obj))
         })
