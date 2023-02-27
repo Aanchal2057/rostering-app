@@ -63,7 +63,7 @@ const AddEventSidebar = props => {
 
   // ** States
   const [url, setUrl] = useState('')
-  const [desc, setDesc] = useState('')
+  const [desc, setDesc] = useState()
   const [title, setTitle] = useState('')
   const [guests, setGuests] = useState({})
   const [guests1, setGuests1] = useState({})
@@ -460,15 +460,18 @@ const getClient =   datas1?.map((data) => {
             />
           </FormGroup>
           <FormGroup>
-            <Label for='description'>Client Rate</Label>
+            <Label for='client-rate'>Client Rate<span className='text-danger'>*</span></Label>
             <Input
-              type='textarea'
-              name='text'
-              id='description'
-              rows='3'
+              name='client-rate'
+              type='number'
+              id='client-rate'
               value={desc}
               onChange={e => setDesc(e.target.value)}
-              placeholder='Description'
+               innerRef={register({ register: true, validate: value => value !== '' })}
+              placeholder='Client Rate'
+                className={classnames({
+                'is-invalid': errors.title
+              })}
             />
           </FormGroup>
           <FormGroup className='d-flex'>
