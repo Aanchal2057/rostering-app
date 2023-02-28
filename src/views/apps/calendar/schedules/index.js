@@ -11,6 +11,7 @@ const index = () => {
     const data = useSelector(state => state?.Event?.event)
     console.log(data)
     const displaydata = data?.filter(word => word.statusUpcomming)
+    // const user = alluser?.find(user => user.name === ) 
    
     const columns = [
         {
@@ -29,7 +30,7 @@ const index = () => {
         },
         {
             name: 'CLIENT',
-            selector: row => row.client.name
+            selector: row => row.client?.name
             
 
         },

@@ -104,6 +104,27 @@ dispatch({type:LOGOUT_FAIL, payload:'cannot logout'})
 }
 }
 
+export const ClientsList = () => async (dispatch) => {
+try {
+    dispatch({ type: LOAD_CLIENT_REQUEST })
+
+    const config = { headers: { 'x-api-key':'23124134' } }
+const { data } = await axios.get(
+`http://rostering.delshagroup.com/client`,
+config
+    )
+    
+    dispatch({
+        type: LOAD_CLIENT_SUCCESS,
+        payload:data
+        
+})
+}  catch (error) {
+dispatch({type:LOAD_CLIENT_FAIL, payload:error.message})
+}
+}
+
+
 export const Clients = (currentPage) => async (dispatch) => {
 try {
     dispatch({ type: LOAD_CLIENT_REQUEST })
