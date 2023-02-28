@@ -13,6 +13,7 @@ const index = () => {
     console.log(data)
     const datas = (data.event)
     console.log(datas)
+    console.log(datas[0])
     
     // const list = useSelector(state => state.loadEvents)
     // console.log(list)
