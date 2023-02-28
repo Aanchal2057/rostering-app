@@ -10,39 +10,40 @@ const index = () => {
     }, [dispatch])
     const data = useSelector(state => state?.Event?.event)
     console.log(data)
-    // console.log(datas[0])
-    
-    // const list = useSelector(state => state.loadEvents)
-    // console.log(list)
-    // const datas = (list.event?.events)
-    // console.log(datas)
-    // console.log(showData);
-
-    const displaydata = data?.filter(word => word.statusUpcomming);
+    const displaydata = data?.filter(word => word.statusUpcomming)
+   
     const columns = [
         {
             name: 'NAME',
+            
             selector: row => row.title
         },
         {
             name: 'START DATE',
-            selector: row => row.year
+            selector: row => row.start_date
         },
         {
-            name: 'END DATE'
+            name: 'END DATE',
+            selector: row => row.end_date
 
         },
         {
-            name: 'CLIENT'
+            name: 'CLIENT',
+            selector: row => row.client.name
+            
+
         },
         {
-            name: 'STAFF'
+            name: 'STAFF',
+            selector: row => row.staff_id
         },
         {
-            name: 'STAFF PAYMENT'
+            name: 'STAFF PAYMENT',
+            selector: row => row.staff_rate
         },
         {
-            name: 'CLIENT PAYMENT'
+            name: 'CLIENT PAYMENT',
+            selector: row => row.client_rate
         }
     ]
     // const data = [
