@@ -5,20 +5,20 @@ import { useDispatch, useSelector } from 'react-redux'
 import { loadEvent } from '../../../../redux1/action/auth'
 const index = () => {
     const dispatch = useDispatch()
-    const store = useSelector(state => state.event)
     useEffect(() => {
         dispatch(loadEvent())
-    }, [dispatch, ''])
-    const data = useSelector(state => state.Event)
+    }, [dispatch])
+    const data = useSelector(state => state?.Event?.event)
     console.log(data)
-    const datas = (data.event)
-    console.log(datas)
-    console.log(datas[0])
+    // console.log(datas[0])
     
     // const list = useSelector(state => state.loadEvents)
     // console.log(list)
     // const datas = (list.event?.events)
     // console.log(datas)
+    // console.log(showData);
+
+    const displaydata = data?.filter(word => word.statusUpcomming);
     const columns = [
         {
             name: 'NAME',
@@ -65,7 +65,7 @@ const index = () => {
             title="Upcomming Schedule List"
                 pagination
                 columns={columns}
-                data={data}
+                data={displaydata}
                 responsive
                 selectableRows
                 selectableRowsHighlight
