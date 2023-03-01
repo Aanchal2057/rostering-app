@@ -11,7 +11,7 @@ const index = () => {
     const data = useSelector(state => state?.Event?.event)
     console.log(data)
     const displaydata = data?.filter(word => word.statusUpcomming)
-    // const user = alluser?.find(user => user.name === ) 
+   console.log(displaydata)
    
     const columns = [
         {
@@ -21,11 +21,11 @@ const index = () => {
         },
         {
             name: 'START DATE',
-            selector: row => row.start_date
+            selector: row => row.start_date.slice(0, 10)
         },
         {
             name: 'END DATE',
-            selector: row => row.end_date
+            selector: row => row.end_date.slice(0, 10)
 
         },
         {
@@ -36,7 +36,7 @@ const index = () => {
         },
         {
             name: 'STAFF',
-            selector: row => row.staff_id
+            selector: row => row.staff?.name
         },
         {
             name: 'STAFF PAYMENT',
@@ -47,18 +47,11 @@ const index = () => {
             selector: row => row.client_rate
         }
     ]
-    // const data = [
-    //     {
-    //         id: 1,
-    //         title: 'Beetlejuice',
-    //         year: '1988'
-    //     },
-    //     {
-    //         id: 2,
-    //         title: 'Ghostbusters',
-    //         year: '1984'
-    //     }
-    //]
+    const paginationComponentOptions = {
+        selectAllRowsItem: true,
+        selectAllRowsItemText: "ALL"
+      }
+
     
     return (
         <div>
@@ -71,7 +64,7 @@ const index = () => {
                 responsive
                 selectableRows
                 selectableRowsHighlight
-                paginationServer
+                paginationComponentOptions={paginationComponentOptions}
                 className='react-dataTable'
             />
         </div>
