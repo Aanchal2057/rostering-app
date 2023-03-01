@@ -36,7 +36,7 @@ const index = () => {
         },
         {
             name: 'STAFF',
-            selector: row => row.staff?.name
+            selector: row => (row.staff.length > 0 ? row.staff[0].name : "no name")
         },
         {
             name: 'STAFF PAYMENT',

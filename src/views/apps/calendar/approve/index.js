@@ -32,7 +32,9 @@ const index = () => {
         },
         {
             name: 'STAFF',
-            selector: row => (row.staff.length ? row.staff.name : "no name")
+            selector: row => (row.staff.length > 0 ? row.staff[0].name : "no name")
+            // {event.staff.length > 0 ? event.staff[0].name : "No name"}
+
         },
         {
             name: 'STAFF PAYMENT',
