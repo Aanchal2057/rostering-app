@@ -33,7 +33,7 @@ const Table = () => {
     useEffect(() => {
         dispatch(loadEmploee())
     }, [dispatch])
-    const data = useSelector(state => state?.Employee)
+    const data = useSelector(state => state?.Employee?.employee)
     console.log(data)
 
     return (

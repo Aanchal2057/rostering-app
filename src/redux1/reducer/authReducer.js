@@ -151,7 +151,7 @@ export const Employee = (state = { employee: [] }, action) => {
             return { loading: true }
         case LOAD_EMPLOYEE_SUCCESS:
         case ADD_EMPLOYEE_SUCCESS:
-            return { loading: false, event: action.payload }
+            return { loading: false, employee: action.payload }
         case LOAD_EMPLOYEE_FAIL:
         case ADD_EMPLOYEE_FAIL:
             return {
