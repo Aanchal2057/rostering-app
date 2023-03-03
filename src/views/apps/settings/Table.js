@@ -6,27 +6,18 @@ import { loadEmploee } from '../../../redux1/action/auth'
 const columns = [
     {
         name: 'Name',
-        selector: row => row.title
+        selector: row => row.name
     },
     {
         name: 'Email',
-        selector: row => row.year
+        selector: row => row.email
     }
   
 ]
-
-// const data = [
-//     {
-//         id: 1,
-//         title: 'Beetlejuice',
-//         year: '1988'
-//     },
-//     {
-//         id: 2,
-//         title: 'Ghostbusters',
-//         year: '1984'
-//     }
-// ]
+const paginationComponentOptions = {
+    selectAllRowsItem: true,
+    selectAllRowsItemText: "ALL"
+  }
 
 const Table = () => {
     const dispatch = useDispatch()
@@ -41,8 +32,10 @@ const Table = () => {
          <DataTable
                
                    title='Employee List'
+                   pagination
                     columns={columns}
                     data={data}
+                    paginationComponentOptions={paginationComponentOptions}
                 />
        </Card>
     )

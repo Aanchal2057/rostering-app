@@ -15,26 +15,21 @@ const columns = [
   
 ]
 
-// const data = [
-//     {
-//         id: 1,
-//         title: 'Beetlejuice',
-//         year: '1988'
-//     },
-//     {
-//         id: 2,
-//         title: 'Ghostbusters',
-//         year: '1984'
-//     }
-// ]
+const data = [
+    {
+        id: 1,
+        title: 'Beetlejuice',
+        year: '1988'
+    },
+    {
+        id: 2,
+        title: 'Ghostbusters',
+        year: '1984'
+    }
+]
 
 const approved = () => {
-    const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(loadEmploee())
-    }, [dispatch])
-    const data = useSelector(state => state?.Employee)
-    console.log(data)
+   
     return (
        <Card>
          <DataTable

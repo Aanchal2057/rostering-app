@@ -127,9 +127,15 @@ const Calendar = props => {
     dateClick(info) {
       const ev = blankEvent
       ev.start = info.date
+      const data = ev.start
+      console.log(data)
       ev.end = info.date
+      const today = new Date()
+      console.log(today)
       dispatch(selectEvent(ev))
-      handleAddEventSidebar()
+      
+      data <= today  ? info.jsEvent.preventDefault() : handleAddEventSidebar()
+      
     },
 
     /*
