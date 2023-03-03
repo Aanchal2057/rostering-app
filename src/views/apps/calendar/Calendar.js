@@ -131,10 +131,15 @@ const Calendar = props => {
       console.log(data)
       ev.end = info.date
       const today = new Date()
-      console.log(today)
+      // console.log(today)
+      const nextDate = today.setDate(today.getDate() - 1)
+      // console.log(nextDate)
       dispatch(selectEvent(ev))
-      
-      data <= today  ? info.jsEvent.preventDefault() : handleAddEventSidebar()
+      if (data > nextDate) {
+        handleAddEventSidebar()
+      } else {
+        info.jsEvent.preventDefault()
+      }
       
     },
 

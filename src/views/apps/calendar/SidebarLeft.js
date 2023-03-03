@@ -57,7 +57,7 @@ const SidebarLeft = props => {
                     className={classnames({
                       [filter.className]: filter.className
                     })}
-                    onChange={e => dispatch(updateFilter(filter.label))}
+                    // onChange={e => dispatch(updateFilter(filter.label))}  
                   />
                 )
               })}
