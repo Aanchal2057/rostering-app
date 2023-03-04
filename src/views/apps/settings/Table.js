@@ -1,38 +1,41 @@
 import DataTable from 'react-data-table-component'
 import { Card } from 'reactstrap'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { loadEmploee } from '../../../redux1/action/auth'
 const columns = [
     {
         name: 'Name',
-        selector: row => row.title
+        selector: row => row.name
     },
     {
         name: 'Email',
-        selector: row => row.year
+        selector: row => row.email
     }
   
 ]
-
-const data = [
-    {
-        id: 1,
-        title: 'Beetlejuice',
-        year: '1988'
-    },
-    {
-        id: 2,
-        title: 'Ghostbusters',
-        year: '1984'
-    }
-]
+const paginationComponentOptions = {
+    selectAllRowsItem: true,
+    selectAllRowsItemText: "ALL"
+  }
 
 const Table = () => {
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(loadEmploee())
+    }, [dispatch])
+    const data = useSelector(state => state?.Employee?.employee)
+    console.log(data)
+
     return (
        <Card style = {{ marginLeft:'-130px' }}>
          <DataTable
                
                    title='Employee List'
+                   pagination
                     columns={columns}
                     data={data}
+                    paginationComponentOptions={paginationComponentOptions}
                 />
        </Card>
     )

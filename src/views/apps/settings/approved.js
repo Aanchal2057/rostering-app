@@ -1,5 +1,8 @@
 import DataTable from 'react-data-table-component'
 import { Card } from 'reactstrap'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { loadEmploee } from '../../../redux1/action/auth'
 const columns = [
     {
         name: 'Name',
@@ -26,6 +29,7 @@ const data = [
 ]
 
 const approved = () => {
+   
     return (
        <Card>
          <DataTable

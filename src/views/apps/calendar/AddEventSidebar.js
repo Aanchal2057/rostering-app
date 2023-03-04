@@ -116,16 +116,6 @@ const getClient =   datas1?.map((data) => {
   })
 
 
-  const guestsOptions = [
-   
-    { value: 'Donna Frank', label: 'Donna Frank', avatar: img1 },
-    { value: 'Jane Foster', label: 'Jane Foster', avatar: img2 },
-    { value: 'Gabrielle Robertson', label: 'Gabrielle Robertson', avatar: img3 },
-    { value: 'Lori Spears', label: 'Lori Spears', avatar: img4 },
-    { value: 'Sandy Vega', label: 'Sandy Vega', avatar: img5 },
-    { value: 'Cheryl May', label: 'Cheryl May', avatar: img6 }
-  ]
-
   // ** Custom select components
   const OptionComponent = ({ data, ...props }) => {
     return (
@@ -157,7 +147,7 @@ const getClient =   datas1?.map((data) => {
           end_date: endPicker,
           client_id: element.id,
           staff_id: '',
-          desc: desc.length ? desc : undefined
+          client_rate: desc
         }
         dispatch(addEvents(obj))
       } else {
@@ -168,7 +158,8 @@ const getClient =   datas1?.map((data) => {
             end_date: endPicker,
             client_id: element.id,
             staff_id: e.id,
-            desc: desc.length ? desc : undefined
+            client_rate: desc
+
           }
           dispatch(addEvents(obj))
         })
@@ -218,7 +209,7 @@ const getClient =   datas1?.map((data) => {
       setDesc(selectedEvent.extendedProps.description || desc)
       setGuests(selectedEvent.extendedProps.guests || guests)
       setStartPicker(new Date(selectedEvent.start))
-      setEndPicker(selectedEvent.allDay ? new Date(selectedEvent.start) : new Date(selectedEvent.end))
+      setEndPicker(selectedEvent.allDay ? new Date(selectedEvent.start) : new Date(selectedEvent.end).toISOString().slice(0, 10))
       setValue([resolveLabel()])
     }
   }
