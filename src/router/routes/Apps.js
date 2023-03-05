@@ -18,10 +18,7 @@ const AppRoutes = [
     path: '/apps/settings',
     component: lazy(() => import('../../views/apps/settings'))
   },
-  {
-    path:'/apps/approved',
-    component: lazy(() => import('../../views/apps/settings/approved'))
-  },
+  
   {
     path: '/apps/invoice/list',
     component: lazy(() => import('../../views/apps/invoice/list'))
