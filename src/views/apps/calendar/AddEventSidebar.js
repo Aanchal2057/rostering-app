@@ -304,7 +304,7 @@ const getClient =   datas1?.map((data) => {
           <Button.Ripple
             className='mr-1'
             color='primary'
-            // onClick={handleUpdateEvent}
+            onClick={handleUpdateEvent}
           >
             Update
           </Button.Ripple>

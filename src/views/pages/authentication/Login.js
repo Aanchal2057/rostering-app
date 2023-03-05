@@ -48,7 +48,7 @@ const Login = props => {
   const [skin, setSkin] = useSkin()
   const dispatch = useDispatch()
     const history = useHistory()
-  const [email, setEmail] = useState('admin@demo.com')
+  const [email, setEmail] = useState('admin@gmail.com')
   const [password, setPassword] = useState('admin')
   const { register, errors, handleSubmit } = useForm()
   const illustration = skin === 'dark' ? 'login-v2-dark.svg' : 'login-v2.svg',

@@ -15,7 +15,7 @@ export const fetchEvents = calendars => {
 // ** Add Event
 export const addEvent = event => {
   return (dispatch, getState) => {
-    axios.post('/apps/calendar/add-event', { event }).then(() => {
+    axios.post('http://rostering.delshagroup.com/event', { event }).then(() => {
       dispatch({
         type: 'ADD_EVENT'
       })

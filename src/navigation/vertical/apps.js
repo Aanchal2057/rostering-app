@@ -87,13 +87,8 @@ export default [
       title:'Setting',
       icon:<Circle size={20} />,
       navLink:'/apps/settings'
-    },
-    {
-      id:'Approval page',
-      title:'Approval',
-      icon: <Check size={12} />,
-      navLink:'/apps/approved'
     }
+   
   ]
 }
 ]
