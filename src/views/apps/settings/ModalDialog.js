@@ -1,9 +1,15 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Modal, Button } from 'react-bootstrap'
+import { addEmployee, addStaffrate } from '../../../redux1/action/auth'
+import { useDispatch, useSelector } from 'react-redux'
 const ModalDialog = () => {
     const [isShow, invokedModal] = useState(false)
     const [isAdd, invokedAdd] = useState(false)
-    const [rate, setRate] = useState('2000')
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [rate, setRate] = useState('')
+    const dispatch = useDispatch()
     const initAdd = () => {
         return invokedAdd(!false)
     }
@@ -17,6 +23,23 @@ const ModalDialog = () => {
         invokedAdd(false)
 
     }
+   const addemployee = () => {
+    const obj = {
+        name,
+        email,
+        password
+    }
+    dispatch(addEmployee(obj))
+    initAdd()
+    alert('Employee added sucessfully')
+   }
+
+   const addRate = () => {
+    const obj = {rate}
+    dispatch(addStaffrate(obj))
+    alert('Rate added sucessfully')
+   }
+
     return (
         <>
             <Button style={{ marginLeft: "-140px", marginTop: "-44px" }} onClick={initModal}>
@@ -24,7 +47,7 @@ const ModalDialog = () => {
             </Button>
             <Button style={{ marginLeft: '30px', marginTop: "-44px" }} onClick={initAdd}>Add Employee</Button>
             <Modal show={isShow}>
-                <Modal.Header closeButton onClick={initModal}>
+                <Modal.Header  onClick={initModal}>
                     <Modal.Title>Add Staff Rate</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -32,7 +55,7 @@ const ModalDialog = () => {
                     <input type="text" id="fname" name="fname" onChange={(e) => setRate(e.target.value)} /><br />
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={initModal} >
+                    <Button onClick = { addRate }>
                         Add
                     </Button>
                     <Button onClick={click}>
@@ -42,29 +65,34 @@ const ModalDialog = () => {
                 </Modal.Footer>
             </Modal>
             <Modal show={isAdd}>
-                <Modal.Header closeButton onClick={initModal}>
+                <Modal.Header  onClick={initModal}>
                     <Modal.Title>Add Employee</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div class="form-group">
                         <label for="name">Name:</label>
-                        <input type="name" class="form-control" id="name" placeholder='Name'/>
+                        <input type="name" 
+                        className="form-control" 
+                        id="name"
+                         placeholder='Name'
+                         onChange={e => setName(e.target.value)}
+                         />
                     </div>
                     <div class="form-group">
                         <label for="email">Email address:</label>
-                        <input type="email" class="form-control" id="email" placeholder='Email'/>
+                        <input type="email" className="form-control" id="email" placeholder='Email'    onChange={e => setEmail(e.target.value)}/>
                     </div>
                     <div class="form-group">
                         <label for="pwd">Password:</label>
-                        <input type="password" class="form-control" id="pwd" placeholder='Password'/>
+                        <input type="password" className="form-control" id="pwd" placeholder='Password'    onChange={e => setPassword(e.target.value)}/>
                     </div>
                     <div class="form-group">
                         <label for="pwd">Confirm Password:</label>
-                        <input type="password" class="form-control" id="pwd" placeholder='Confirm Password' />
+                        <input type="password" className="form-control" id="pwd" placeholder='Confirm Password' />
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={initAdd} >
+                    <Button onClick={addemployee} >
                        Submit
                     </Button>
                     <Button onClick={clickOne}>

@@ -1,6 +1,6 @@
 import {
     LOGIN_FAIL, LOGIN_SUCCESS, LOGIN_REQUEST, LOGOUT_REQUEST, LOGOUT_FAIL, LOGOUT_SUCCESS, LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOAD_USER_FAIL, LOAD_CLIENT_FAIL, LOAD_CLIENT_REQUEST, LOAD_CLIENT_SUCCESS, LOAD_ADMIN_REQUEST, LOAD_ADMIN_FAIL, LOAD_ADMIN_SUCCESS, LOAD_CLIENT_DETAILS_SUCCESS,
-    LOAD_CLIENT_DETAILS_REQUEST, LOAD_CLIENT_DETAILS_FAIL, LOAD_CLIENT_DELETE_FAIL, LOAD_CLIENT_DELETE_SUCCESS, LOAD_CLIENT_DELETE_REQUEST, ADD_CLIENT_REQUEST, ADD_CLIENT_SUCCESS, ADD_CLIENT_FAIL, EDIT_CLIENT_REQUEST, EDIT_CLIENT_SUCCESS, EDIT_CLIENT_FAIL, ADD_STAFFS_REQUEST, ADD_STAFFS_SUCCESS, ADD_STAFFS_FAIL, LOAD_STAFFS_REQUEST, LOAD_STAFFS_SUCCESS, LOAD_STAFFS_FAIL, EDIT_STAFFS_REQUEST, EDIT_STAFFS_SUCCESS, EDIT_STAFFS_FAIL, LOAD_STAFFS_DETAILS_REQUEST, LOAD_STAFFS_DETAILS_SUCCESS, LOAD_STAFFS_DETAILS_FAIL, LOAD_STAFFS_DELETE_REQUEST, LOAD_STAFFS_DELETE_SUCCESS, LOAD_STAFFS_DELETE_FAIL, LOAD_RATE_REQUEST, LOAD_RATE_SUCCESS, LOAD_RATE_FAIL, LOAD_EVENT_SUCCESS, LOAD_EVENT_FAIL, LOAD_EVENT_REQUEST, ADD_EVENT_REQUEST, ADD_EVENT_SUCCESS, ADD_EVENT_FAIL, EVENT_DELETE_REQUEST, EVENT_DELETE_SUCCESS, EVENT_DELETE_FAIL, ADD_EMPLOYEE_FAIL, ADD_EMPLOYEE_REQUEST, ADD_EMPLOYEE_SUCCESS, LOAD_EMPLOYEE_REQUEST, LOAD_EMPLOYEE_FAIL, LOAD_EMPLOYEE_SUCCESS
+    LOAD_CLIENT_DETAILS_REQUEST, LOAD_CLIENT_DETAILS_FAIL, LOAD_CLIENT_DELETE_FAIL, LOAD_CLIENT_DELETE_SUCCESS, LOAD_CLIENT_DELETE_REQUEST, ADD_CLIENT_REQUEST, ADD_CLIENT_SUCCESS, ADD_CLIENT_FAIL, EDIT_CLIENT_REQUEST, EDIT_CLIENT_SUCCESS, EDIT_CLIENT_FAIL, ADD_STAFFS_REQUEST, ADD_STAFFS_SUCCESS, ADD_STAFFS_FAIL, LOAD_STAFFS_REQUEST, LOAD_STAFFS_SUCCESS, LOAD_STAFFS_FAIL, EDIT_STAFFS_REQUEST, EDIT_STAFFS_SUCCESS, EDIT_STAFFS_FAIL, LOAD_STAFFS_DETAILS_REQUEST, LOAD_STAFFS_DETAILS_SUCCESS, LOAD_STAFFS_DETAILS_FAIL, LOAD_STAFFS_DELETE_REQUEST, LOAD_STAFFS_DELETE_SUCCESS, LOAD_STAFFS_DELETE_FAIL, LOAD_RATE_REQUEST, LOAD_RATE_SUCCESS, LOAD_RATE_FAIL, LOAD_EVENT_SUCCESS, LOAD_EVENT_FAIL, LOAD_EVENT_REQUEST, ADD_EVENT_REQUEST, ADD_EVENT_SUCCESS, ADD_EVENT_FAIL, EVENT_DELETE_REQUEST, EVENT_DELETE_SUCCESS, EVENT_DELETE_FAIL, ADD_EMPLOYEE_FAIL, ADD_EMPLOYEE_REQUEST, ADD_EMPLOYEE_SUCCESS, LOAD_EMPLOYEE_REQUEST, LOAD_EMPLOYEE_FAIL, LOAD_EMPLOYEE_SUCCESS, ADD_STAFFRATE_REQUEST, ADD_STAFFRATE_SUCCESS
 } from '../constant/authConstant'
 import axios from 'axios'
 
@@ -379,7 +379,34 @@ export const addEvents = (obj) => async (dispatch) => {
         dispatch({ type: ADD_EVENT_FAIL, payload: error.message })
     }
 }
+export const updateFilter = filter => {
+    return (dispatch, getState) => {
+      dispatch({
+        type: 'UPDATE_FILTERS',
+        filter
+      })
+      dispatch(loadEvent(getState().calendar.selectedCalendars))
+    }
+  }
 
+  export const updateAllFilters = value => {
+    return (dispatch, getState) => {
+      dispatch({
+        type: 'UPDATE_ALL_FILTERS',
+        value
+      })
+      dispatch(loadEvent(getState().calendar.selectedCalendars))
+    }
+  }
+
+  export const selectEvent = event => {
+    return dispatch => {
+      dispatch({
+        type: 'SELECT_EVENT',
+        event
+      })
+    }
+  }
 export const addEmployee = (obj) => async (dispatch) => {
     try {
         dispatch({ type: ADD_EMPLOYEE_REQUEST })
@@ -389,7 +416,7 @@ export const addEmployee = (obj) => async (dispatch) => {
         console.log(obj)
 
         const { data } = await axios.post(
-            `http://rostering.delshagroup.com/event`,
+            `http://rostering.delshagroup.com/admin`,
             {
                 name,
                 email,
@@ -427,5 +454,30 @@ export const loadEmploee = () => async (dispatch) => {
         })
     } catch (error) {
         dispatch({ type: LOAD_EMPLOYEE_FAIL, payload: error.message })
+    }
+}
+
+export const addStaffrate = (obj) => async (dispatch) => {
+    try {
+        dispatch({ type: ADD_STAFFRATE_REQUEST})
+        const {rate} = obj
+        const token = JSON.parse(localStorage.getItem('token'))
+        const config = { headers: { 'x-api-key': '23124134', Authorization: `Bearer ${token}` } }
+        console.log(obj)
+
+        const { data } = await axios.post(
+            `http://rostering.delshagroup.com/rate`,
+            {
+               rate
+            },
+            config
+        )
+        dispatch({
+            type: ADD_STAFFRATE_SUCCESS,
+            payload: data
+
+        })
+    } catch (error) {
+        dispatch({ type: ADD_EMPLOYEE_FAIL, payload: error.message })
     }
 }

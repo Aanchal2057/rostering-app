@@ -1,7 +1,7 @@
 import {
     LOGIN_FAIL, LOGIN_SUCCESS, LOGIN_REQUEST, LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAIL, LOAD_CLIENT_FAIL, LOAD_CLIENT_REQUEST, LOAD_CLIENT_SUCCESS, LOAD_ADMIN_REQUEST, LOAD_ADMIN_SUCCESS, LOAD_ADMIN_FAIL, LOAD_CLIENT_DETAILS_REQUEST, LOAD_CLIENT_DETAILS_SUCCESS, LOAD_CLIENT_DETAILS_FAIL, LOAD_CLIENT_DELETE_FAIL, LOAD_CLIENT_DELETE_SUCCESS, LOAD_CLIENT_DELETE_REQUEST, ADD_CLIENT_REQUEST, ADD_CLIENT_SUCCESS, ADD_CLIENT_FAIL, EDIT_CLIENT_REQUEST, EDIT_CLIENT_SUCCESS, EDIT_CLIENT_FAIL,
     LOAD_STAFFS_FAIL, LOAD_STAFFS_REQUEST, LOAD_STAFFS_SUCCESS, LOAD_STAFFS_DETAILS_REQUEST, LOAD_STAFFS_DETAILS_SUCCESS, LOAD_STAFFS_DETAILS_FAIL, LOAD_STAFFS_DELETE_FAIL, LOAD_STAFFS_DELETE_SUCCESS, LOAD_STAFFS_DELETE_REQUEST, ADD_STAFFS_REQUEST, ADD_STAFFS_SUCCESS, ADD_STAFFS_FAIL, EDIT_STAFFS_REQUEST, EDIT_STAFFS_SUCCESS, EDIT_STAFFS_FAIL, LOAD_RATE_REQUEST,
-    LOAD_RATE_SUCCESS, LOAD_RATE_FAIL, LOAD_EVENT_SUCCESS, LOAD_EVENT_FAIL, LOAD_EVENT_REQUEST, LOAD_EVENT_DETAILS_FAIL, ADD_EVENT_REQUEST, ADD_EVENT_SUCCESS, ADD_EVENT_FAIL, LOAD_EMPLOYEE_REQUEST, ADD_EMPLOYEE_REQUEST, LOAD_EMPLOYEE_SUCCESS, ADD_EMPLOYEE_FAIL, ADD_EMPLOYEE_SUCCESS, LOAD_EMPLOYEE_FAIL
+    LOAD_RATE_SUCCESS, LOAD_RATE_FAIL, LOAD_EVENT_SUCCESS, LOAD_EVENT_FAIL, LOAD_EVENT_REQUEST, LOAD_EVENT_DETAILS_FAIL, ADD_EVENT_REQUEST, ADD_EVENT_SUCCESS, ADD_EVENT_FAIL, LOAD_EMPLOYEE_REQUEST, ADD_EMPLOYEE_REQUEST, LOAD_EMPLOYEE_SUCCESS, ADD_EMPLOYEE_FAIL, ADD_EMPLOYEE_SUCCESS, LOAD_EMPLOYEE_FAIL, ADD_STAFFRATE_SUCCESS, ADD_STAFFRATE_REQUEST, ADD_STAFFRATE_FAIL
 } from '../constant/authConstant'
 
 const authReducer = (state = { admin: {} }, action) => {
@@ -108,14 +108,16 @@ export const Staffs = (state = { staffs: [] }, action) => {
 export const rate = (state = { rate: [] }, action) => {
     switch (action.type) {
         case LOAD_RATE_REQUEST:
+        case ADD_STAFFRATE_REQUEST:
 
             return { loading: true }
         case LOAD_RATE_SUCCESS:
+        case ADD_STAFFRATE_SUCCESS:
 
             return { loading: false, rate: action.payload }
 
         case LOAD_RATE_FAIL:
-
+        case ADD_STAFFRATE_FAIL:
             return {
                 loading: false,
                 error: action.payload
@@ -139,6 +141,32 @@ export const Event = (state = { event: [] }, action) => {
                 loading: false,
                 error: action.payload
             }
+            case 'UPDATE_EVENT':
+                return { ...state }
+              case 'UPDATE_FILTERS':
+                // ** Updates Filters based on action filter
+                const filterIndex = state.selectedCalendars.findIndex(i => i === action.filter)
+                if (state.selectedCalendars.includes(action.filter)) {
+                  state.selectedCalendars.splice(filterIndex, 1)
+                } else {
+                  state.selectedCalendars.push(action.filter)
+                }
+                if (state.selectedCalendars.length === 0) {
+                  state.events.length = 0
+                }
+                return { ...state }
+              case 'UPDATE_ALL_FILTERS':
+                // ** Updates All Filters based on action value
+                const value = action.value
+                let selected = []
+                if (value === true) {
+                  selected = ['Unassigned', 'Assigned']
+                } else {
+                  selected = []
+                }
+                return { ...state, selectedCalendars: selected }
+              case 'SELECT_EVENT':
+                return { ...state, selectedEvent: action.event }
         default:
             return state
     }
