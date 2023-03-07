@@ -175,7 +175,7 @@ const Calendar = props => {
     // Get direction from app state (store)
     direction: isRtl ? 'rtl' : 'ltr'
   }
-
+  console.log(calendarOptions)
   return (
     <Card className='shadow-none border-0 mb-0 rounded-0'>
       <CardBody className='pb-0'>
