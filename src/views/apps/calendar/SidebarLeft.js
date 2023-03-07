@@ -16,7 +16,7 @@ const filters = [
 
 const SidebarLeft = props => {
   // ** Props
-  const { handleAddEventSidebar, toggleSidebar, updateFilter, updateAllFilters, store, dispatch } = props
+  const { handleAddEventSidebar, toggleSidebar, updateAllFilters, store, dispatch } = props
 
   // ** Function to handle Add Event Click
   const handleAddEventClick = () => {
@@ -41,8 +41,8 @@ const SidebarLeft = props => {
             className='mb-1'
             label='View All'
             id='view-all'
-            checked={store.selectedCalendars.length === filters.length}
-            onChange={e => dispatch(updateAllFilters(e.target.checked))}
+            // checked={store?.length === filters.length}
+            // onChange={e => dispatch(updateAllFilters(e.target.checked))}
           />
           <div className='calendar-events-filter'>
             {filters.length &&
@@ -53,7 +53,7 @@ const SidebarLeft = props => {
                     key={filter.label}
                     id={filter.label}
                     label={filter.label}
-                    checked={store.selectedCalendars.includes(filter.label)}
+                    checked={store?.includes(filter.label)}
                     className={classnames({
                       [filter.className]: filter.className
                     })}

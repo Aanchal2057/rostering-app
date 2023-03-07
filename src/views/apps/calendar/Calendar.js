@@ -56,7 +56,7 @@ const Calendar = props => {
 
   // ** calendarOptions(Props)
   const calendarOptions = {
-    events: store.events.length ? store.events : [],
+    events: store?.length ? store : [],
     plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
     initialView: 'dayGridMonth',
     headerToolbar: {
@@ -103,8 +103,8 @@ const Calendar = props => {
       ]
     },
 
-    eventClick({ event: clickedEvent }) {
-      dispatch(selectEvent(clickedEvent))
+    eventClick() {
+      dispatch(selectEvent())
       handleAddEventSidebar()
 
       // * Only grab required field otherwise it goes in infinity loop
@@ -126,15 +126,15 @@ const Calendar = props => {
 
     dateClick(info) {
       const ev = blankEvent
-      ev.start = info.date
-      const data = ev.start
+      ev.start_date = info.date
+      const data = ev.start_date
       console.log(data)
-      ev.end = info.date
+      ev.end_date = info.date
       const today = new Date()
       // console.log(today)
       const nextDate = today.setDate(today.getDate() - 1)
       // console.log(nextDate)
-      dispatch(selectEvent(ev))
+      dispatch(selectEvent())
       if (data > nextDate) {
         handleAddEventSidebar()
       } else {
@@ -175,11 +175,11 @@ const Calendar = props => {
     // Get direction from app state (store)
     direction: isRtl ? 'rtl' : 'ltr'
   }
-  console.log(calendarOptions)
+  console.log(calendarApi)
   return (
     <Card className='shadow-none border-0 mb-0 rounded-0'>
       <CardBody className='pb-0'>
-        <FullCalendar {...calendarOptions} />{' '}
+        <FullCalendar {...calendarOptions} />
       </CardBody>
     </Card>
   )
