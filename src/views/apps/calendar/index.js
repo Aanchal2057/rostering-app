@@ -15,18 +15,20 @@ import { useRTL } from '@hooks/useRTL'
 
 // ** Store & Actions
 import { useSelector, useDispatch } from 'react-redux'
+
 import {
   fetchEvents,
-  selectEvent,
+  // selectEvent,
   updateEvent,
-  updateFilter,
-  updateAllFilters,
-  addEvent,
+  // updateFilter,
+  // updateAllFilters,
+  // addEvent,
   removeEvent
 } from './store/actions/index'
 
 // ** Styles
 import '@styles/react/apps/app-calendar.scss'
+import { loadEvent, addEvents, updateFilter, updateAllFilters, selectEvent} from '../../../redux1/action/auth'
 
 // ** CalendarColors
 const calendarsColor = {
@@ -40,6 +42,7 @@ const CalendarComponent = () => {
   // ** Variables
   const dispatch = useDispatch()
   const store = useSelector(state => state.calendar)
+  const events = useSelector(state => state?.Event?.event)
 
   // ** states
   const [addSidebarOpen, setAddSidebarOpen] = useState(false),
@@ -58,8 +61,8 @@ const CalendarComponent = () => {
   // ** Blank Event Object
   const blankEvent = {
     title: '',
-    start: '',
-    end: '',
+    start_date: '',
+    end_date: '',
     allDay: false,
     url: '',
     extendedProps: {
@@ -79,7 +82,7 @@ const CalendarComponent = () => {
 
   // ** Fetch Events On Mount
   useEffect(() => {
-    dispatch(fetchEvents(store.selectedCalendars))
+dispatch(loadEvent())
   }, [])
 
   return (
@@ -93,7 +96,7 @@ const CalendarComponent = () => {
             })}
           >
             <SidebarLeft
-              store={store}
+              store={events}
               dispatch={dispatch}
               updateFilter={updateFilter}
               toggleSidebar={toggleSidebar}
@@ -101,14 +104,15 @@ const CalendarComponent = () => {
               handleAddEventSidebar={handleAddEventSidebar}
             />
           </Col>
+      
           <Col className='position-relative'>
             <Calendar
               isRtl={isRtl}
-              store={store}
+              store={events}
               dispatch={dispatch}
               blankEvent={blankEvent}
               calendarApi={calendarApi}
-              selectEvent={selectEvent}
+              selectEvent={loadEvent}
               updateEvent={updateEvent}
               toggleSidebar={toggleSidebar}
               calendarsColor={calendarsColor}
@@ -127,9 +131,9 @@ const CalendarComponent = () => {
       <AddEventSidebar
         store={store}
         dispatch={dispatch}
-        addEvent={addEvent}
+        addEvents={addEvents}
         open={addSidebarOpen}
-        selectEvent={selectEvent}
+        selectEvent={loadEvent}
         updateEvent={updateEvent}
         removeEvent={removeEvent}
         calendarApi={calendarApi}
