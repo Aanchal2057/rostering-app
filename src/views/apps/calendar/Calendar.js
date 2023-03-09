@@ -7,6 +7,8 @@ import listPlugin from '@fullcalendar/list'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
+import * as bootstrap from 'bootstrap'
+import "bootstrap/dist/css/bootstrap.min.css"
 
 // ** Custom Components
 import Avatar from '@components/avatar'
@@ -55,8 +57,16 @@ const Calendar = props => {
   }, [calendarApi])
 
   // ** calendarOptions(Props)
+  const events = [
+    {
+      title: "The Title",
+      start: "2023-01-05T08:00:00",
+      end: "2023-01-05T09:00:00"
+    }
+  ]
   const calendarOptions = {
-    events: store?.length ? store : [],
+    // events: store?.length ? store : [],
+    events : {events},
     plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
     initialView: 'dayGridMonth',
     headerToolbar: {
@@ -142,7 +152,8 @@ const Calendar = props => {
       }
       
     },
-
+    
+    
     /*
       Handle event drop (Also include dragged event)
       ? Docs: https://fullcalendar.io/docs/eventDrop
@@ -174,8 +185,9 @@ const Calendar = props => {
 
     // Get direction from app state (store)
     direction: isRtl ? 'rtl' : 'ltr'
+
   }
-  console.log(calendarApi)
+  console.log(calendarOptions)
   return (
     <Card className='shadow-none border-0 mb-0 rounded-0'>
       <CardBody className='pb-0'>
