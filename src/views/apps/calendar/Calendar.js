@@ -60,13 +60,20 @@ const Calendar = props => {
   const events = [
     {
       title: "The Title",
-      start: "2023-01-05T08:00:00",
-      end: "2023-01-05T09:00:00"
+      start: "2023-03-05T08:00:00",
+      end: "2023-03-05T09:00:00"
     }
   ]
+
+  const allevents = store?.map((items, i) => {
+    const events = { title: items.title, start: items.start_date, end: items.end_date }
+    return events
+  })
+
+  console.log(allevents)
   const calendarOptions = {
     // events: store?.length ? store : [],
-    events : {events},
+    events : {allevents},
     plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
     initialView: 'dayGridMonth',
     headerToolbar: {
