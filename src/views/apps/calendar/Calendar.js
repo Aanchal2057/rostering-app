@@ -9,7 +9,7 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import * as bootstrap from 'bootstrap'
 import "bootstrap/dist/css/bootstrap.min.css"
-
+import { useDispatch, useSelector } from 'react-redux'
 // ** Custom Components
 import Avatar from '@components/avatar'
 
@@ -56,16 +56,15 @@ const Calendar = props => {
     }
   }, [calendarApi])
 
+
+  const events = useSelector(state => state?.Event?.event?.map(event => ({
+    title: event.title,
+    start: event.start_date,
+    end: event.end_date
+  })))
   // ** calendarOptions(Props)
-  const events = [
-    {
-      title: "The Title",
-      start: "2023-01-05T08:00:00",
-      end: "2023-01-05T09:00:00"
-    }
-  ]
+  
   const calendarOptions = {
-    // events: store?.length ? store : [],
     events : {events},
     plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
     initialView: 'dayGridMonth',
