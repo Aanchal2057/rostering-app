@@ -75,16 +75,16 @@ const CalendarComponent = () => {
 
   // ** refetchEvents
   const refetchEvents = () => {
-    if (calendarApi !== null) {
-      calendarApi.refetchEvents()
-    }
+    dispatch(loadEvent())
+    
   }
 
   // ** Fetch Events On Mount
   useEffect(() => {
-dispatch(loadEvent())
+    dispatch(loadEvent())
   }, [])
 
+  
   return (
     <Fragment>
       <div className='app-calendar overflow-hidden border'>

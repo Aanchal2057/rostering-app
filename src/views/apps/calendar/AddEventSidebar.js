@@ -28,7 +28,7 @@ import img6 from '@src/assets/images/avatars/11-small.png'
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/flatpickr/flatpickr.scss'
 import { useDispatch, useSelector } from 'react-redux'
-import { Staffs, Clients, addEvents } from '../../../redux1/action/auth'
+import { Staffs, Clients, addEvents, loadEvent } from '../../../redux1/action/auth'
 // ** Toast Component
 const ToastComponent = ({ title, icon, color }) => (
   <Fragment>
@@ -63,7 +63,7 @@ const AddEventSidebar = props => {
 
   // ** States
   const [url, setUrl] = useState('')
-  const [desc, setDesc] = useState()
+  const [desc, setDesc] = useState('')
   const [title, setTitle] = useState('')
   const [guests, setGuests] = useState({})
   const [guests1, setGuests1] = useState({})
@@ -150,6 +150,7 @@ const getClient =   datas1?.map((data) => {
           client_rate: desc
         }
         dispatch(addEvents(obj))
+
       } else {
         guests.forEach((e) => {
           const obj = {
@@ -162,12 +163,12 @@ const getClient =   datas1?.map((data) => {
 
           }
           dispatch(addEvents(obj))
+          
         })
-        }
-      })
-
-
-    refetchEvents()
+      }
+    })
+    
+    dispatch(loadEvent())
     handleAddEventSidebar()
     toast.success(<ToastComponent title='Event Added' color='success' icon={<Check />} />, {
       autoClose: 2000,
@@ -461,7 +462,7 @@ const getClient =   datas1?.map((data) => {
                innerRef={register({ register: true, validate: value => value !== '' })}
               placeholder='Client Rate'
                 className={classnames({
-                'is-invalid': errors.title
+                'is-invalid': errors.desc
               })}
             />
           </FormGroup>

@@ -17,6 +17,7 @@ import Avatar from '@components/avatar'
 import { toast } from 'react-toastify'
 import { Card, CardBody } from 'reactstrap'
 import { Menu, Check } from 'react-feather'
+import { loadEvent } from '../../../redux1/action/auth'
 
 // ** Toast Component
 const ToastComponent = ({ title, icon, color }) => (
@@ -57,15 +58,15 @@ const Calendar = props => {
   }, [calendarApi])
 
 
-  const events = useSelector(state => state?.Event?.event?.map(event => ({
+  const events = Array.isArray(store) && store?.map(event => ({
     title: event.title,
     start: event.start_date,
     end: event.end_date
-  })))
+  }))
   // ** calendarOptions(Props)
   
-  const calendarOptions = {
-    events : {events},
+  const calendarOptions = { 
+    events : events ? events : null,
     plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
     initialView: 'dayGridMonth',
     headerToolbar: {
@@ -113,7 +114,7 @@ const Calendar = props => {
     },
 
     eventClick() {
-      dispatch(selectEvent())
+      dispatch(loadEvent())
       handleAddEventSidebar()
 
       // * Only grab required field otherwise it goes in infinity loop
@@ -143,7 +144,7 @@ const Calendar = props => {
       // console.log(today)
       const nextDate = today.setDate(today.getDate() - 1)
       // console.log(nextDate)
-      dispatch(selectEvent())
+      dispatch(loadEvent())
       if (data > nextDate) {
         handleAddEventSidebar()
       } else {

@@ -1,4 +1,4 @@
-import {useEffect} from 'react'
+import {useEffect, useState} from 'react'
 import DataTable from 'react-data-table-component'
 import ReactPaginate from 'react-paginate'
 import { useDispatch, useSelector } from 'react-redux'
@@ -12,6 +12,18 @@ const index = () => {
     }, [dispatch])
     const data = useSelector(state => state?.Event?.event)
     console.log(data)
+   
+    const [iconStatus, setIconStatus] = useState([])
+      
+      const isAdminApprovals = useSelector(state => state?.Event?.event?.map(event => ({
+        status: event.isAdminApproval
+       })))
+
+      
+      // setIconStatus(isAdminApprovals)
+    // console.log(isAdminApprovals)
+   
+      
     const columns = [
         {
             name: 'NAME',
@@ -45,7 +57,7 @@ const index = () => {
         {
             name:'ADMIN APPROVAL',
             minWidth:'100px',
-            selector:  row => (<CheckSquare size={18} style={{ marginLeft:'24px' }} className='cursor-pointer'   color = '#7367f0'/>)
+            selector:  row => (<CheckSquare size={18}  style={{ color: iconStatus ? 'green' : 'red' }}   className='cursor-pointer'  />)
         }
     ]
     const paginationComponentOptions = {
