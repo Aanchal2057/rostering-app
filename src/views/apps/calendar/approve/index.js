@@ -65,6 +65,7 @@ const index = () => {
         selectAllRowsItemText: "ALL"
       }
 
+      
     return (
         <div>
            <DataTable
