@@ -19,7 +19,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import {
   fetchEvents,
   // selectEvent,
-  updateEvent,
+  //updateEvent,
   // updateFilter,
   // updateAllFilters,
   // addEvent,
@@ -28,7 +28,7 @@ import {
 
 // ** Styles
 import '@styles/react/apps/app-calendar.scss'
-import { loadEvent, addEvents, updateFilter, updateAllFilters, selectEvent} from '../../../redux1/action/auth'
+import { loadEvent, addEvents, updateFilter, updateAllFilters, updateEvent, selectEvent} from '../../../redux1/action/auth'
 
 // ** CalendarColors
 const calendarsColor = {
