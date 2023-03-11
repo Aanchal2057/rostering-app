@@ -21,7 +21,7 @@ const index = () => {
 
       
       // setIconStatus(isAdminApprovals)
-    // console.log(isAdminApprovals)
+     console.log(isAdminApprovals)
    
       
     const columns = [
