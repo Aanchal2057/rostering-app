@@ -3,27 +3,24 @@ import DataTable from 'react-data-table-component'
 import ReactPaginate from 'react-paginate'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button } from 'reactstrap'
-import { loadEvent } from '../../../../redux1/action/auth'
+import { loadEvent, updateAdminApproval} from '../../../../redux1/action/auth'
 import { CheckSquare } from 'react-feather'
 const index = () => {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(loadEvent())
     }, [dispatch])
-    const data = useSelector(state => state?.Event?.event)
-    console.log(data)
-   
-    const [iconStatus, setIconStatus] = useState([])
-      
-      const isAdminApprovals = useSelector(state => state?.Event?.event?.map(event => ({
-        status: event.isAdminApproval
-       })))
+  
 
-      
-      // setIconStatus(isAdminApprovals)
-     console.log(isAdminApprovals)
-   
-      
+    // const data = useSelector(state => state?.Event?.event)
+    const data = useSelector(state => state?.Event?.event || [])
+
+    console.log(data)
+    const handleChange = (row) => {
+        const updatedRow = { ...row, isAdminApproval: !row.isAdminApproval }
+        dispatch(updateAdminApproval(row.uuid, updatedRow))
+      }
+     
     const columns = [
         {
             name: 'NAME',
@@ -57,11 +54,8 @@ const index = () => {
         {
             name:'ADMIN APPROVAL',
             minWidth:'100px',
-<<<<<<< HEAD
-            selector:  row => (<CheckSquare size={18}  style={{ color: iconStatus ? 'green' : 'red' }}   className='cursor-pointer'  />)
-=======
-            selector:  row => (<CheckSquare size={18}  style={{ color: isAdminApprovals ? 'green' : 'red' }}   className='cursor-pointer'  />)
->>>>>>> parent of 6aaad37 (error approve)
+            selector:  row => (<CheckSquare size={18}  style={{ color: row.isAdminApproval ? 'green' : 'red' }}   onClick={() => handleChange(row)}
+                              className='cursor-pointer'  />)
         }
     ]
     const paginationComponentOptions = {
@@ -69,7 +63,7 @@ const index = () => {
         selectAllRowsItemText: "ALL"
       }
 
-      
+
     return (
         <div>
            <DataTable
