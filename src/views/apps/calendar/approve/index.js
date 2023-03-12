@@ -6,20 +6,38 @@ import { Button } from 'reactstrap'
 import { loadEvent, updateAdminApproval} from '../../../../redux1/action/auth'
 import { CheckSquare } from 'react-feather'
 const index = () => {
+ 
     const dispatch = useDispatch()
+
+     // ** refetchEvents
+  const refetchEvents = () => {
+    dispatch(loadEvent())
+    
+  }
+
+    // Load data on component mount
     useEffect(() => {
         dispatch(loadEvent())
     }, [dispatch])
-  
 
-    // const data = useSelector(state => state?.Event?.event)
+    // Get latest data from store
     const data = useSelector(state => state?.Event?.event || [])
 
-    console.log(data)
+    // Use component state to update data in the table
+    const [tableData, setTableData] = useState(data)
+    
+
+    // Update component state when data changes
+    useEffect(() => {
+        setTableData(data)
+    }, [data])
+
     const handleChange = (row) => {
         const updatedRow = { ...row, isAdminApproval: !row.isAdminApproval }
         dispatch(updateAdminApproval(row.uuid, updatedRow))
-      }
+        // window.location.reload()
+    }
+    
      
     const columns = [
         {
@@ -66,18 +84,24 @@ const index = () => {
 
     return (
         <div>
-           <DataTable
-            title="Approve Tasks"
+        {Array.isArray(data) && data.length > 0 ? (
+            <DataTable
+                title="Approve Tasks"
                 pagination
                 columns={columns}
                 data={data}
+                refetchEvents={refetchEvents}
                 responsive
                 selectableRows
                 selectableRowsHighlight
                 paginationComponentOptions={paginationComponentOptions}
                 className='react-dataTable'
             />
-        </div>
+        ) : (
+            <div>No data available</div>
+            
+        )}
+    </div>
     )
 }
 

@@ -3,6 +3,7 @@ import { Card } from 'reactstrap'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { loadEmploee } from '../../../redux1/action/auth'
+import { CheckSquare } from 'react-feather'
 const columns = [
     {
         name: 'Name',
@@ -11,6 +12,11 @@ const columns = [
     {
         name: 'Email',
         selector: row => row.email
+    },
+    {
+        name:'Status',
+        selector: row => (<CheckSquare size={18}  style={{ color: row.active ? 'green' : 'red' }}   onClick={() => handleChange(row)}
+        className='cursor-pointer'  />)
     }
   
 ]
@@ -24,6 +30,10 @@ const Table = () => {
     useEffect(() => {
         dispatch(loadEmploee())
     }, [dispatch])
+    const refetchEvents = () => {
+        dispatch(loadEmploee())
+        
+      }
     const data = useSelector(state => state?.Employee?.employee)
     console.log(data)
 
@@ -35,6 +45,7 @@ const Table = () => {
                    pagination
                     columns={columns}
                     data={data}
+                    refetchEvents={refetchEvents}
                     paginationComponentOptions={paginationComponentOptions}
                 />
        </Card>

@@ -33,9 +33,8 @@ import { loadEvent, addEvents, updateFilter, updateAllFilters, updateEvent, sele
 // ** CalendarColors
 const calendarsColor = {
   Assigned: 'success',
-  Unassigned: 'danger',
-  Family: 'warning',
-  ETC: 'info'
+  Unassigned: 'danger'
+
 }
 
 const CalendarComponent = () => {

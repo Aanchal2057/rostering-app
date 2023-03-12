@@ -512,7 +512,7 @@ export const updateEvent = ({ uuid, title, department, start_date, end_date, sta
 }
 
 
-export const updateAdminApproval = (uuid, isAdminApproval) => async (dispatch) => {
+export const updateAdminApproval = (uuid, {isAdminApproval}) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_ISADMINAPPROVAL_REQUEST })
 
@@ -522,7 +522,7 @@ export const updateAdminApproval = (uuid, isAdminApproval) => async (dispatch) =
             `http://rostering.delshagroup.com/event/admin/${uuid}`,
             
             {
-          isAdminApproval: false
+             isAdminApproval
             },
             config
         )
