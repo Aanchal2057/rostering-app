@@ -57,7 +57,11 @@ const index = () => {
         {
             name:'ADMIN APPROVAL',
             minWidth:'100px',
+<<<<<<< HEAD
             selector:  row => (<CheckSquare size={18}  style={{ color: iconStatus ? 'green' : 'red' }}   className='cursor-pointer'  />)
+=======
+            selector:  row => (<CheckSquare size={18}  style={{ color: isAdminApprovals ? 'green' : 'red' }}   className='cursor-pointer'  />)
+>>>>>>> parent of 6aaad37 (error approve)
         }
     ]
     const paginationComponentOptions = {
@@ -65,7 +69,7 @@ const index = () => {
         selectAllRowsItemText: "ALL"
       }
 
-
+      
     return (
         <div>
            <DataTable

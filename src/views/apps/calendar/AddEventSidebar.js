@@ -12,7 +12,6 @@ import { X, Check, Trash } from 'react-feather'
 import Select, { components } from 'react-select'
 import { useForm, Controller } from 'react-hook-form'
 import { Button, Modal, ModalHeader, ModalBody, FormGroup, Label, CustomInput, Input, Form } from 'reactstrap'
-import { Staffs, Clients, addEvents, loadEvent } from '../../../redux1/action/auth'
 
 // ** Utils
 import { selectThemeColors, isObjEmpty } from '@utils'
