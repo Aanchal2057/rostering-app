@@ -482,23 +482,24 @@ export const addStaffrate = (obj) => async (dispatch) => {
     }
 }
 
-export const updateEvent = ({ uuid, title, department, start_date, end_date, staff_id, client_rate, despription }) => async (dispatch) => {
+export const updateEvent = (obj) => async (dispatch) => {
     try {
         dispatch({ type: EDIT_EVENT_REQUEST })
 
         const token = JSON.parse(localStorage.getItem('token'))
-
+        const { title, start_date, end_date, client_id, staff_id, client_rate, uuidd } = obj
         const config = { headers: { 'x-api-key': '23124134', Authorization: `Bearer ${token}` } }
         const { data } = await axios.put(
-            `http://rostering.delshagroup.com/event/${uuid}`,
+            `http://rostering.delshagroup.com/event/${uuidd}`,
             {
-                title,
-                department,
+                   title,
                 start_date,
+                department: '',
                 end_date,
+                client_id,
                 staff_id,
                 client_rate,
-                despription
+                staff_rate: ''
             },
             config
         )
@@ -510,7 +511,6 @@ export const updateEvent = ({ uuid, title, department, start_date, end_date, sta
         dispatch({ type: EDIT_EVENT_FAIL, payload: error.response.data.message })
     }
 }
-
 
 export const updateAdminApproval = (uuid, {isAdminApproval}) => async (dispatch) => {
     try {
