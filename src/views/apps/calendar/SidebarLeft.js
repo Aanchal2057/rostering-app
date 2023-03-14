@@ -41,7 +41,7 @@ const SidebarLeft = props => {
             className='mb-1'
             label='View All'
             id='view-all'
-            // checked={store?.length === filters.length}
+            checked={store?.length === filters.length}
             // onChange={e => dispatch(updateAllFilters(e.target.checked))}
           />
           {/* <div className='calendar-events-filter'>
@@ -62,6 +62,7 @@ const SidebarLeft = props => {
                 )
               })}
           </div> */}
+          
         </CardBody>
       </div>
       <div className='mt-auto'>
