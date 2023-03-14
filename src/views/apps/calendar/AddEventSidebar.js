@@ -28,7 +28,7 @@ import img6 from '@src/assets/images/avatars/11-small.png'
 // ** Styles Imports
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/flatpickr/flatpickr.scss'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { setScrollbarWidth } from 'reactstrap/lib/utils'
 
 // ** Toast Component
@@ -65,6 +65,7 @@ const AddEventSidebar = props => {
 
   // ** States
   const [url, setUrl] = useState('')
+  const [uuidd, setUuidd] = useState('')
   const [desc, setDesc] = useState('')
   const [title, setTitle] = useState('')
   const [guests, setGuests] = useState({})
@@ -100,6 +101,7 @@ const data = useSelector(state => state.Staffs)
   dispatch(Clients(currentPage1))
  
 }, [dispatch, currentPage1])
+  const events = useSelector(state => state?.Event?.event)
 
 const data1 = useSelector(state => state.Clients)
 const datas1 = (data1.client?.clients)
@@ -114,7 +116,7 @@ const getStaff =   datas?.map((data) => {
   })
 
 const getClient =   datas1?.map((data) => {
-    return { value: data?.name, label: data?.name, id:data?.uuid}
+    return { value: data?.name, label: data?.name, id:data?.id}
   })
 
 
@@ -137,6 +139,7 @@ const getClient =   datas1?.map((data) => {
       </components.Option>
     )
   }
+  console.log(guests1)
 
   // ** Adds New Event
   const handleAddEvent = () => {
@@ -151,6 +154,7 @@ const getClient =   datas1?.map((data) => {
           staff_id: '',
           client_rate: desc
         }
+
         dispatch(addEvents(obj))
 
       } else {
@@ -162,8 +166,8 @@ const getClient =   datas1?.map((data) => {
             client_id: element.id,
             staff_id: e.id,
             client_rate: desc
-
           }
+             console.log(obj)
           dispatch(addEvents(obj))
           
         })
@@ -192,25 +196,33 @@ const getClient =   datas1?.map((data) => {
     setStartPicker(new Date())
     setEndPicker(new Date())
   }
-
+console.log(guests)
   // ** Set sidebar fields
   const handleSelectedEvent = () => {
     if (!isObjEmpty(selectedEvent)) {
       const calendar = selectedEvent.extendedProps.calendar
-
+      const id = selectedEvent.id
+      const data = events.find((event) => event.uuid === id)
+      const staffname = datas.find(({ uuid }) => uuid === data.staff_id)
+      const clientname = datas1.find(({id}) => id === data.client_id)
+      const staffdata = [{value: staffname?.name, label: staffname?.name, id: staffname?.uuid}]
+      const clientdata = [{ value: clientname?.name, label: clientname?.name, id: clientname?.id }]
+      console.log(clientdata)
       const resolveLabel = () => {
-        if (calendar.length) {
-          return { label: calendar, value: calendar, color: calendarsColor[calendar] }
+        if (data?.statusUnassigned) {
+          return { value: 'Unassigned', label: 'Unassigned', color: 'danger' }
         } else {
           return { value: 'Assigned', label: 'Assigned', color: 'primary' }
         }
       }
+      setUuidd(id)
       setTitle(selectedEvent.title || title)
       setAllDay(selectedEvent.allDay || allDay)
       setUrl(selectedEvent.url || url)
       setLocation(selectedEvent.extendedProps.location || location)
-      setDesc(selectedEvent.extendedProps.description || desc)
-      setGuests(selectedEvent.extendedProps.guests || guests)
+      setDesc(data.client_rate || desc)
+     data?.statusUnassigned ?  setGuests('') :  setGuests(staffdata || guests)
+      setGuests1(clientdata || guests1)
       setStartPicker(new Date(selectedEvent.start))
       setEndPicker(selectedEvent.allDay ? new Date(selectedEvent.start) : new Date(selectedEvent.end).toISOString().slice(0, 10))
       setValue([resolveLabel()])
@@ -245,26 +257,40 @@ const getClient =   datas1?.map((data) => {
 
   // ** Updates Event in Store
   const handleUpdateEvent = () => {
-    const eventToUpdate = {
-      id: selectedEvent.id,
-      title,
-      allDay,
-      start: startPicker,
-      end: endPicker,
-      url,
-      extendedProps: {
-        location,
-        description: desc,
-        guests,
-        calendar: value[0].label
+   guests1.forEach(element => {
+      if (Object.keys(guests).length === 0) {
+        const obj = {
+            uuidd,
+          title,
+          start_date: startPicker,
+          end_date: endPicker,
+          client_id: element.id,
+          staff_id: '',
+          client_rate: desc
+        }
+      console.log(obj)
+
+        dispatch(updateEvent(obj, uuid))
+
+      } else {
+        guests.forEach((e) => {
+          const obj = {
+            uuidd,
+            title,
+            start_date: startPicker,
+            end_date: endPicker,
+            client_id: element.id,
+            staff_id: e.id,
+            client_rate: desc
+          }
+      console.log(obj)
+          dispatch(updateEvent(obj))
+          
+        })
       }
-    }
+    })
 
-    const propsToUpdate = ['id', 'title', 'url']
-    const extendedPropsToUpdate = ['calendar', 'guests', 'location', 'description']
-
-    dispatch(updateEvent(eventToUpdate))
-    updateEventInCalendar(eventToUpdate, propsToUpdate, extendedPropsToUpdate)
+    // updateEventInCalendar(eventToUpdate, propsToUpdate, extendedPropsToUpdate)
     handleAddEventSidebar()
     toast.success(<ToastComponent title='Event Updated' color='success' icon={<Check />} />, {
       autoClose: 2000,

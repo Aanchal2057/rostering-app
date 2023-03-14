@@ -111,7 +111,7 @@ const CalendarComponent = () => {
               dispatch={dispatch}
               blankEvent={blankEvent}
               calendarApi={calendarApi}
-              selectEvent={loadEvent}
+              selectEvent={selectEvent}
               updateEvent={updateEvent}
               toggleSidebar={toggleSidebar}
               calendarsColor={calendarsColor}
@@ -132,7 +132,7 @@ const CalendarComponent = () => {
         dispatch={dispatch}
         addEvents={addEvents}
         open={addSidebarOpen}
-        selectEvent={loadEvent}
+        selectEvent={selectEvent}
         updateEvent={updateEvent}
         removeEvent={removeEvent}
         calendarApi={calendarApi}

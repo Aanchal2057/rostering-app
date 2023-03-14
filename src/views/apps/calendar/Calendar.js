@@ -59,6 +59,7 @@ const Calendar = props => {
 
 
   const events = Array.isArray(store) && store?.map(event => ({
+    id:event.uuid,
     title: event.title,
     start: event.start_date,
     end: event.end_date
@@ -112,9 +113,8 @@ const Calendar = props => {
         `bg-light-${colorName}`
       ]
     },
-
-    eventClick() {
-      dispatch(loadEvent())
+    eventClick({ event: clickedEvent }) {
+      dispatch(selectEvent(clickedEvent))
       handleAddEventSidebar()
 
       // * Only grab required field otherwise it goes in infinity loop
@@ -187,7 +187,6 @@ const Calendar = props => {
     direction: isRtl ? 'rtl' : 'ltr'
 
   }
-  console.log(calendarOptions)
   return (
     <Card className='shadow-none border-0 mb-0 rounded-0'>
       <CardBody className='pb-0'>
