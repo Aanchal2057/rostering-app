@@ -126,7 +126,6 @@ export const ClientsList = () => async (dispatch) => {
     }
 }
 
-
 export const Clients = (currentPage) => async (dispatch) => {
     try {
         dispatch({ type: LOAD_CLIENT_REQUEST })
@@ -209,6 +208,7 @@ export const Staffs = (currentPage) => async (dispatch) => {
         dispatch({ type: LOAD_STAFFS_FAIL, payload: error.message })
     }
 }
+
 export const addStaffs = ({ name, email, address, department, contact, rate }) => async (dispatch) => {
     try {
         dispatch({ type: ADD_STAFFS_REQUEST })
@@ -263,6 +263,7 @@ export const editStaffs = ({ id, name, email, address, department, contact }) =>
         dispatch({ type: EDIT_STAFFS_FAIL, payload: error.response.data.message })
     }
 }
+
 export const StaffsDetails = ({ id }) => async (dispatch) => {
     try {
         dispatch({ type: LOAD_STAFFS_DETAILS_REQUEST })
@@ -283,6 +284,7 @@ export const StaffsDetails = ({ id }) => async (dispatch) => {
         dispatch({ type: LOAD_STAFFS_DETAILS_FAIL, payload: error.message })
     }
 }
+
 export const StaffsDelete = ({ id }) => async (dispatch) => {
     try {
         dispatch({ type: LOAD_STAFFS_DELETE_REQUEST })
@@ -379,6 +381,7 @@ export const addEvents = (obj) => async (dispatch) => {
         dispatch({ type: ADD_EVENT_FAIL, payload: error.message })
     }
 }
+
 export const updateFilter = filter => {
     return (dispatch, getState) => {
       dispatch({
@@ -406,7 +409,8 @@ export const updateFilter = filter => {
         event
       })
     }
-  }
+}
+  
 export const addEmployee = (obj) => async (dispatch) => {
     try {
         dispatch({ type: ADD_EMPLOYEE_REQUEST })
