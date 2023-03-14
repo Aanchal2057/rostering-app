@@ -35,7 +35,6 @@ const index = () => {
     const handleChange = (row) => {
         const updatedRow = { ...row, isAdminApproval: !row.isAdminApproval }
         dispatch(updateAdminApproval(row.uuid, updatedRow))
-        // window.location.reload()
     }
     
      
