@@ -38,9 +38,11 @@ console.log(eventData)
 const displaydata = eventData?.filter(word => word.statusUpcomming)
 const totalUpcomming = Array.isArray(displaydata) ? displaydata.length : 0
 //completed
-const completed = eventData?.filter(word => word.isAdminApproval)
-console.log(completed)
-
+const completed = eventData?.filter(word => word.statusComplete)
+const totalCompleted = Array.isArray(completed) ? completed.length : 0
+//failed
+const failed = eventData?.filter(word => word.statusFailed)
+const totalFailed = Array.isArray(completed) ? completed.length : 0
 
   return (
     <div id='dashboard-ecommerce'>
@@ -90,7 +92,7 @@ console.log(completed)
             <div className="card" style={{ padding:'60px' }}>
               <div className="card-block text-center">
                 <h4 className="card-title">Completed <br></br>Schedules</h4>
-                <p className="card-text">5</p>
+                <p className="card-text">{totalCompleted}</p>
               </div>
             </div>
           </div>
@@ -98,7 +100,7 @@ console.log(completed)
             <div className="card" style={{ padding:'60px' }}>
               <div className="card-block text-center">
                 <h4 className="card-title">Failed <br></br>Schedules</h4>
-                <p className="card-text">5</p>
+                <p className="card-text">{totalFailed}</p>
               </div>
             </div>
           </div>

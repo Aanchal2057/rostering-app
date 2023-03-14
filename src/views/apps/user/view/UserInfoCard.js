@@ -44,29 +44,12 @@ const renderUserImg = () => {
           }}
          
         />
-        // <Avatar
-        //   initials
-        //   color={color}
-        //   className='rounded'
-        //   contentStyles={{
-        //     borderRadius: 0,
-        //     fontSize: 'calc(36px)',
-        //     width: '100%',
-        //     height: '100%'
-        //   }}
-        //   style={{
-        //     height: '86px',
-        //     width: '82px',
-        //     marginLeft: '90px',
-        //     marginRight:'100px'
-        //   }}
-        // />
       )
     }
   }
 
   return (
-    <Card style={{ width:"380px", marginLeft:'16px'}}>
+    <Card style={{ marginLeft:'20px'}}>
       <CardBody>
         <Row>
          <Col >

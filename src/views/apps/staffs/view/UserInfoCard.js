@@ -50,7 +50,7 @@ const renderUserImg = () => {
   }
 
   return (
-    <Card style={{ width:"380px", marginLeft:'16px'}}>
+    <Card style={{ marginLeft:'20px'}}>
       <CardBody>
         <Row>
          <Col >
