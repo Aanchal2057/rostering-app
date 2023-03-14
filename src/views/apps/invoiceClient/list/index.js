@@ -244,13 +244,12 @@ const display = () => {
       }
     }
   }
-
   return (
     <div className='invoice-list-wrapper'>
       <Card style={{ width:"1298px" }}>
         <div className='invoice-list-dataTable'>
           <DataTable
-            title="Client ko"
+            title="Client"
             // noHeader
             pagination
             paginationServer

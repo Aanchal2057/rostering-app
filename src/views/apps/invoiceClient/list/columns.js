@@ -172,12 +172,6 @@ export const columnscompleted = [
     minWidth: '107px',
     selector: 'id',
     cell: row => <Link to={`/apps/invoice/preview/${row.id}`}>{`#${row.id}`}</Link>
- },
- {
-  name: 'Approved',
-    minWidth: '107px',
-    selector: 'id',
-    cell: row => <Link to={`/apps/invoice/preview/${row.id}`}>{`#${row.id}`}</Link>
  }
 ]
 
