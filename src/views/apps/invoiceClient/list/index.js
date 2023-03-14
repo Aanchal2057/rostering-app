@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 // ** Table Columns
@@ -69,7 +69,6 @@ const InvoiceList = () => {
   const [completed, setCompleted] = useState(false)
   const [invoice, setInvoice] = useState(false)
   const [rowsPerPage, setRowsPerPage] = useState(10)
-  const checkpage = useRef()
 
 // const clickValue = (val) => {
 //   if (val === 'upComming') {
@@ -155,10 +154,6 @@ const display = () => {
       })
     )
   }
-  const paginationComponentOptions = {
-    selectAllRowsItem: true,
-    selectAllRowsItemText: 'ALL'
-}
 
   const handlePagination = page => {
     dispatch(
@@ -177,11 +172,13 @@ const display = () => {
 
     return (
       <ReactPaginate
-         ref={checkpage}
-        previousLabel={''}
-        nextLabel={''}
         pageCount={count || 1}
+        nextLabel=''
+        breakLabel='...'
+        previousLabel=''
         activeClassName='active'
+        breakClassName='page-item'
+        breakLinkClassName='page-link'
         forcePage={currentPage !== 0 ? currentPage - 1 : 0}
         onPageChange={page => handlePagination(page)}
         pageClassName={'page-item'}
@@ -190,7 +187,7 @@ const display = () => {
         previousClassName={'page-item prev'}
         previousLinkClassName={'page-link'}
         pageLinkClassName={'page-link'}
-        containerClassName={'pagination react-paginate justify-content-end my-2 pr-1'}
+        containerClassName={'pagination react-paginate justify-content-end p-1'}
       />
     )
   }
@@ -247,25 +244,23 @@ const display = () => {
       }
     }
   }
-
   return (
     <div className='invoice-list-wrapper'>
-      {/* <Card style={{ width:"1298px" }}> */}
+      <Card style={{ width:"1298px" }}>
         <div className='invoice-list-dataTable'>
           <DataTable
-            // title="upcomming"
-      
+            title="Client"
+            // noHeader
             pagination
-            responsive
             paginationServer
             subHeader={true}
             columns={display()}
+            responsive={true}
             sortIcon={<ChevronDown />}
             className='react-dataTable'
             defaultSortField='invoiceId'
             paginationDefaultPage={currentPage}
             paginationComponent={CustomPagination}
-            // paginationComponentOptions={paginationComponentOptions}
             data={dataToRender()}
             subHeaderComponent={
               <CustomHeader
@@ -280,7 +275,7 @@ const display = () => {
             }
           />
         </div>
-      {/* </Card> */}
+      </Card>
     </div>
   )
 }

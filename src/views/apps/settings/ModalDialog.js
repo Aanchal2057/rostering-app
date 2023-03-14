@@ -42,10 +42,10 @@ const ModalDialog = () => {
 
     return (
         <>
-            <Button style={{ marginLeft: "-140px", marginTop: "-44px" }} onClick={initModal}>
+            <Button style={{ marginLeft: "-140px", marginTop: "-20px" }} onClick={initModal}>
                 Add Staff Rate
             </Button>
-            <Button style={{ marginLeft: '30px', marginTop: "-44px" }} onClick={initAdd}>Add Employee</Button>
+            <Button style={{ marginLeft: '30px', marginTop: "-20px" }} onClick={initAdd}>Add Employee</Button>
             <Modal show={isShow}>
                 <Modal.Header  onClick={initModal}>
                     <Modal.Title>Add Staff Rate</Modal.Title>
