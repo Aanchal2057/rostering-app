@@ -154,12 +154,11 @@ const getClient =   datas1?.map((data) => {
           staff_id: '',
           client_rate: desc
         }
-
         dispatch(addEvents(obj))
 
       } else {
         guests.forEach((e) => {
-          const obj = {
+          let obj = {
             title,
             start_date: startPicker,
             end_date: endPicker,
@@ -167,7 +166,14 @@ const getClient =   datas1?.map((data) => {
             staff_id: e.id,
             client_rate: desc
           }
-             console.log(obj)
+      const getarray = datas?.find(({id}) => id === obj.staff_id)
+      const getStaffinfo = [getarray]
+      // const ratedata = getarray.rate
+// console.log(ratedata)
+console.log(getarray)
+
+      
+obj = {...obj, getStaffinfo, getarray}
           dispatch(addEvents(obj))
           
         })
