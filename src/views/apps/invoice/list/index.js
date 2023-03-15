@@ -49,7 +49,6 @@ const CustomHeader = ({clickValue, show, handleFilter, value, handleStatusValue,
     <div className='invoice-list-table-header w-100 py-2 bg-white'>
       <Row>
         <Col lg='6' className='d-flex align-items-center px-0 px-lg-1'>
-          {/* <h2>Upcoming<b/></h2> */}
         </Col>
       </Row>
     </div>
@@ -70,15 +69,6 @@ const InvoiceList = () => {
   const [invoice, setInvoice] = useState(false)
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const checkpage = useRef()
-
-// const clickValue = (val) => {
-//   if (val === 'upComming') {
-//     setUpComming(true)
-//     setCompleted(false)
-//     setInvoice(false)
-//     console.log(val)
-//   }
-// }
 
 const display = () => {
  if (upComming) {
