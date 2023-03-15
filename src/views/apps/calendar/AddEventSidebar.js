@@ -29,7 +29,7 @@ import img6 from '@src/assets/images/avatars/11-small.png'
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/flatpickr/flatpickr.scss'
 import { useSelector } from 'react-redux'
-import { setScrollbarWidth } from 'reactstrap/lib/utils'
+
 
 // ** Toast Component
 const ToastComponent = ({ title, icon, color }) => (
