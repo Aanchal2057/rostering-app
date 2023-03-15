@@ -266,7 +266,7 @@ console.log(guests)
    guests1.forEach(element => {
       if (Object.keys(guests).length === 0) {
         const obj = {
-            uuidd,
+          id,
           title,
           start_date: startPicker,
           end_date: endPicker,
@@ -276,12 +276,12 @@ console.log(guests)
         }
       console.log(obj)
 
-        dispatch(updateEvent(obj, uuid))
+        dispatch(updateEvent(obj, id))
 
       } else {
         guests.forEach((e) => {
           const obj = {
-            uuidd,
+            id,
             title,
             start_date: startPicker,
             end_date: endPicker,
