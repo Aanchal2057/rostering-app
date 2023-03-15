@@ -492,7 +492,7 @@ export const updateEvent = (obj) => async (dispatch) => {
         dispatch({ type: EDIT_EVENT_REQUEST })
 
         const token = JSON.parse(localStorage.getItem('token'))
-        const { title, start_date, end_date, client_id, staff_id, client_rate, uuidd } = obj
+        const { title, start_date, end_date, client_id, staff_id, client_rate, uuidd, rateArray} = obj
         const config = { headers: { 'x-api-key': '23124134', Authorization: `Bearer ${token}` } }
         const { data } = await axios.put(
             `http://rostering.delshagroup.com/event/${uuidd}`,
@@ -504,7 +504,7 @@ export const updateEvent = (obj) => async (dispatch) => {
                 client_id,
                 staff_id,
                 client_rate,
-                staff_rate: ''
+                staff_rate:rateArray
             },
             config
         )

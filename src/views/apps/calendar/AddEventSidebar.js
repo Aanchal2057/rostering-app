@@ -112,7 +112,7 @@ const datas1 = (data1.client?.clients)
   ]
  
 const getStaff =   datas?.map((data) => {
-    return { value: data?.name, label: data?.name, id:data?.uuid}
+    return { value: data?.name, label: data?.name, id:data?.id}
   })
 
 const getClient =   datas1?.map((data) => {
@@ -154,6 +154,7 @@ const getClient =   datas1?.map((data) => {
           staff_id: '',
           client_rate: desc
         }
+
         dispatch(addEvents(obj))
 
       } else {
@@ -166,14 +167,11 @@ const getClient =   datas1?.map((data) => {
             staff_id: e.id,
             client_rate: desc
           }
-      const getarray = datas?.find(({id}) => id === obj.staff_id)
-      const getStaffinfo = [getarray]
-      // const ratedata = getarray.rate
-// console.log(ratedata)
-console.log(getarray)
-
-      
-obj = {...obj, getStaffinfo, getarray}
+          const getarray = datas?.find(({id}) => id === obj.staff_id)
+          console.log(getarray)
+          const rateArray = getarray.rate
+          console.log(rateArray)
+          obj = {...obj, rateArray}
           dispatch(addEvents(obj))
           
         })
@@ -266,7 +264,7 @@ console.log(guests)
    guests1.forEach(element => {
       if (Object.keys(guests).length === 0) {
         const obj = {
-          id,
+            uuidd,
           title,
           start_date: startPicker,
           end_date: endPicker,
@@ -276,12 +274,12 @@ console.log(guests)
         }
       console.log(obj)
 
-        dispatch(updateEvent(obj, id))
+        dispatch(updateEvent(obj, uuid))
 
       } else {
         guests.forEach((e) => {
           const obj = {
-            id,
+            uuidd,
             title,
             start_date: startPicker,
             end_date: endPicker,
