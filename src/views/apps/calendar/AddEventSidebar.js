@@ -72,8 +72,8 @@ const AddEventSidebar = props => {
   const [guests1, setGuests1] = useState({})
   const [allDay, setAllDay] = useState(false)
   const [location, setLocation] = useState('')
-  const [endPicker, setEndPicker] = useState(new Date().toDateString())
-  const [startPicker, setStartPicker] = useState(new Date().toDateString())
+  const [endPicker, setEndPicker] = useState(new Date())
+  const [startPicker, setStartPicker] = useState(new Date())
   const [value, setValue] = useState({ value: 'Unassigned', label: 'Unassigned', color: 'danger' })
   const [showStaff, setShowStaff] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
@@ -207,9 +207,9 @@ console.log(guests)
       const calendar = selectedEvent.extendedProps.calendar
       const id = selectedEvent.id
       const data = events.find((event) => event.uuid === id)
-      const staffname = datas.find(({ uuid }) => uuid === data.staff_id)
+      const staffname = datas.find(({ id }) => id === data.staff_id)
       const clientname = datas1.find(({id}) => id === data.client_id)
-      const staffdata = [{value: staffname?.name, label: staffname?.name, id: staffname?.uuid}]
+      const staffdata = [{value: staffname?.name, label: staffname?.name, id: staffname?.id}]
       const clientdata = [{ value: clientname?.name, label: clientname?.name, id: clientname?.id }]
       console.log(clientdata)
       const resolveLabel = () => {

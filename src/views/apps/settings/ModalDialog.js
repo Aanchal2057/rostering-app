@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Modal, Button } from 'react-bootstrap'
-import { addEmployee, addStaffrate } from '../../../redux1/action/auth'
+import { addEmployee, addStaffrate, loadEmploee } from '../../../redux1/action/auth'
 import { useDispatch, useSelector } from 'react-redux'
 const ModalDialog = () => {
     const [isShow, invokedModal] = useState(false)
@@ -18,10 +18,11 @@ const ModalDialog = () => {
     }
     const click = () => {
         invokedModal(false)
+        dispatch(loadEmploee())
     }
     const clickOne = () => {
         invokedAdd(false)
-
+        dispatch(loadEmploee())
     }
    const addemployee = () => {
     const obj = {

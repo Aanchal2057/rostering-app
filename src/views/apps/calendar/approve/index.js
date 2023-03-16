@@ -31,10 +31,12 @@ const index = () => {
     useEffect(() => {
         setTableData(data)
     }, [data])
+  
 
     const handleChange = (row) => {
         const updatedRow = { ...row, isAdminApproval: !row.isAdminApproval }
         dispatch(updateAdminApproval(row.uuid, updatedRow))
+        refetchEvents()
     }
     
      

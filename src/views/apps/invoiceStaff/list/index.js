@@ -6,15 +6,13 @@ import { Fragment, useState, useEffect, useRef  } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 // ** Third Party Components
-import Select from 'react-select'
 import ReactPaginate from 'react-paginate'
 import { ChevronDown, CheckSquare } from 'react-feather'
 import DataTable from 'react-data-table-component'
-import { selectThemeColors } from '@utils'
 import { Card, CardHeader, CardTitle, CardBody, Input, Row, Col, Label, CustomInput, Button } from 'reactstrap'
 
 // import { columns, column, columnscompleted } from './columns'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { loadEvent } from '../../../../redux1/action/auth'
 // ** Table Header
 const CustomHeader = ({ show }) => {
@@ -52,10 +50,10 @@ const CustomHeader = ({ show }) => {
   )
 }
 
-const InvoiceList  = () => {
+const InvoiceList  = ({dataStaff}) => {
   // ** Store Vars
   const dispatch = useDispatch()
-  
+  console.log(dataStaff)
   const checkpage = useRef()
   
   // ** States
@@ -69,14 +67,19 @@ const InvoiceList  = () => {
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
   
   // ** Get data on mount
-
+    const {staff_id} = useParams()
     useEffect(() => {
-        dispatch(loadEvent())
+        dispatch(loadEvent(staff_id))
     }, [dispatch])
 
-    const data = useSelector(state => state?.Event?.event || [])
+    const datas = useSelector(state => state?.Event?.event || [])
+    // const staffId = datas.length > 0 ? datas.map(item => item.staff_id[0]) : []
+    const staffId = datas.length > 0 ? datas[0].staff_id : null
+     console.log(staffId)
+     const data = datas.filter(item => item.staff_id === staffId)
+     console.log(data)
+
     
-  
   // ** Function in get data on search query change
   const columns = [
     {
@@ -205,7 +208,7 @@ const display = () => {
 
   const CustomPagination = () => {
   
-     const count = Number(Math.ceil(data?.Employee?.employee.totalPage))
+     const count = Number(Math.ceil(data?.Event?.event.totalPage))
      
 
     return (
@@ -238,6 +241,7 @@ const display = () => {
 
       <Card>
         <DataTable
+          title='staff'
           pagination
           subHeader
           responsive

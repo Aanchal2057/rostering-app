@@ -144,7 +144,7 @@ const Calendar = props => {
       // console.log(today)
       const nextDate = today.setDate(today.getDate() - 1)
       // console.log(nextDate)
-      dispatch(loadEvent())
+      dispatch(loadEvent(ev))
       if (data > nextDate) {
         handleAddEventSidebar()
       } else {
@@ -152,7 +152,6 @@ const Calendar = props => {
       }
       
     },
-    
     
     /*
       Handle event drop (Also include dragged event)

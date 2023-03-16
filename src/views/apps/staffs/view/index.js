@@ -30,15 +30,16 @@ const UserView = props => {
 
    const datas = useSelector(state => state.Staffs)
   const data = (datas?.staffs)
+  const dataStaff = data
 console.log(data)
   return data !== null ? (
     <div className='app-user-view'>
       <Row>
         <Col sm='no-gutters' >
-        <UserInfoCard data={data} />
+        <UserInfoCard data = {data} />
         </Col>
         <Col sm='9' >
-          <InvoiceLists/>
+          <InvoiceLists dataStaff = {dataStaff}/>
           
         </Col>
       </Row>

@@ -15,6 +15,7 @@ import { useDispatch } from 'react-redux'
 const UserInfoCard = ({ data }) => {
   const dispatch = useDispatch()
     const history = useHistory()
+
   // ** render user img
   const handelDelete = (id) => {
     dispatch(StaffsDelete({ id }))
@@ -47,6 +48,7 @@ const renderUserImg = () => {
        
       )
     }
+    console.log(data)
   }
 
   return (
