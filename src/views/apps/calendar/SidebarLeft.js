@@ -1,5 +1,5 @@
 // ** React Imports
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 
 // ** Custom Components
 import classnames from 'classnames'
@@ -9,21 +9,50 @@ import { CardBody, Button, CustomInput } from 'reactstrap'
 import illustration from '@src/assets/images/pages/calendar-illustration.png'
 
 // ** Filters Checkbox Array
-const filters = [
-  { label: 'Unassigned', color: 'danger', className: 'custom-control-danger mb-1' },
-  { label: 'Assigned', color: 'primary', className: 'custom-control-primary mb-1' }
-]
+
 
 const SidebarLeft = props => {
   // ** Props
-  const { handleAddEventSidebar, toggleSidebar, updateAllFilters, store, dispatch } = props
+  const { handleAddEventSidebar, toggleSidebar, updateAllFilters, updateFilter, store, dispatch } = props
+  const [Assigned, setAssigned] = useState({
+    all: true,
+    Assigned: false,
+    unAssigned:false
+  })
 
+  const filters = [
+  { label: 'Unassigned', color: 'danger', className: 'custom-control-danger mb-1', val:1, statusUnassigned:Assigned.unAssigned },
+  { label: 'Assigned', color: 'primary', className: 'custom-control-primary mb-1', val:0, statusUnassigned:Assigned.Assigned }
+]
   // ** Function to handle Add Event Click
   const handleAddEventClick = () => {
     toggleSidebar(false)
     handleAddEventSidebar()
   }
 
+  const handleChecked = (val) => {
+    if (val === 'all') {
+      setAssigned({
+          all: true,
+    Assigned: false,
+    unAssigned:false
+      })
+    } else if (val === 'Assigned') {
+        setAssigned({
+          all: false,
+    Assigned: true,
+    unAssigned:false
+      })
+    } else {
+          setAssigned({
+          all: false,
+    Assigned: false,
+    unAssigned:true
+      })
+    }
+  }
+  console.log(store?.includes(store?.statusUnassigned))
+  console.log(Assigned)
   return (
     <Fragment>
       <div className='sidebar-wrapper'>
@@ -41,27 +70,30 @@ const SidebarLeft = props => {
             className='mb-1'
             label='View All'
             id='view-all'
-            checked={store?.length === filters.length}
-            // onChange={e => dispatch(updateAllFilters(e.target.checked))}
-          />
-          {/* <div className='calendar-events-filter'>
+            onClick={() => handleChecked('all')}
+            checked={Assigned.all}
+            onChange={e => dispatch(updateAllFilters())}
+            />
+          <div className='calendar-events-filter'>
             {filters.length &&
               filters.map(filter => {
+                console.log(filter)
                 return (
                   <CustomInput
                     type='checkbox'
                     key={filter.label}
                     id={filter.label}
                     label={filter.label}
-                    checked={store?.includes(filter.label)}
+                    onClick={() => handleChecked(filter.label)}
+                    checked={filter.statusUnassigned}
                     className={classnames({
                       [filter.className]: filter.className
                     })}
-                    // onChange={e => dispatch(updateFilter(filter.label))}  
+                    onChange={e => dispatch(updateFilter(filter.val))}  
                   />
                 )
               })}
-          </div> */}
+          </div>
           
         </CardBody>
       </div>
