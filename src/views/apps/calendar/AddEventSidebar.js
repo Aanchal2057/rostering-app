@@ -152,7 +152,8 @@ const getClient =   datas1?.map((data) => {
           end_date: endPicker,
           client_id: element.id,
           staff_id: '',
-          client_rate: desc
+          client_rate: desc,
+          rateArray:''
         }
 
         dispatch(addEvents(obj))
