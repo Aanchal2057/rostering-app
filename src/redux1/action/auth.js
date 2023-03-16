@@ -354,7 +354,7 @@ export const loadEvent = () => async (dispatch) => {
 export const addEvents = (obj) => async (dispatch) => {
     try {
         dispatch({ type: ADD_EVENT_REQUEST })
-        const { title, start_date, end_date, client_id, staff_id, client_rate} = obj
+        const { title, start_date, end_date, client_id, staff_id, client_rate, rateArray} = obj
         const token = JSON.parse(localStorage.getItem('token'))
         const config = { headers: { 'x-api-key': '23124134', Authorization: `Bearer ${token}` } }
         console.log(obj)
@@ -369,7 +369,7 @@ export const addEvents = (obj) => async (dispatch) => {
                 client_id,
                 staff_id,
                 client_rate,
-                staff_rate: ''
+                staff_rate:rateArray
             },
             config
         )
