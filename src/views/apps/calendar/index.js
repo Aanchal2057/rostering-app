@@ -28,7 +28,7 @@ import {
 
 // ** Styles
 import '@styles/react/apps/app-calendar.scss'
-import { loadEvent, addEvents, updateFilter, updateAllFilters, updateEvent, selectEvent} from '../../../redux1/action/auth'
+import { loadEvent, addEvents, updateFilter, updateAllFilters, updateEvent, getEventFilter, selectEvent} from '../../../redux1/action/auth'
 
 // ** CalendarColors
 const calendarsColor = {
@@ -97,9 +97,9 @@ const CalendarComponent = () => {
             <SidebarLeft
               store={events}
               dispatch={dispatch}
-              updateFilter={updateFilter}
+              updateFilter={getEventFilter}
               toggleSidebar={toggleSidebar}
-              updateAllFilters={updateAllFilters}
+              updateAllFilters={loadEvent}
               handleAddEventSidebar={handleAddEventSidebar}
             />
           </Col>
