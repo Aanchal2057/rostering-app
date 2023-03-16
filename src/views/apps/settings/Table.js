@@ -17,11 +17,11 @@ import ModalDialog from './ModalDialog'
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 import { loadEmploee, updateAdminStatus } from '../../../redux1/action/auth'
-
+import { Link } from 'react-router-dom'
 // ** Table Header
 const CustomHeader = ({ toggleSidebar }) => {
   return (
-    <div className='invoice-list-table-header w-100 mr-1 ml-50 mt-2 mb-75'>
+    <div className='invoice-list-table-header w-100 py-2 bg-light'>
       <Row>
         <Col xl='6' className='d-flex align-items-center p-0'>
       
@@ -119,14 +119,6 @@ const Table  = () => {
         selectAllRowsItemText: 'ALL'
     }
 
-  // ** Table data to render
-  const dataToRender = () => {
-    if (data?.length > 0) {
-      return data
-    } else if (data?.length === 0) {
-      return []
-    } 
-  }
 
   return (
     <Fragment>

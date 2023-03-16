@@ -11,7 +11,7 @@ import { Row, Col, Alert } from 'reactstrap'
 
 // ** User View Components
 import UserInfoCard from './UserInfoCard'
-import InvoiceLists from '../../invoice/list'
+import InvoiceLists from '../../invoiceStaff/list'
 
 
 // ** Styles

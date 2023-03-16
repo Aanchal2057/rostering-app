@@ -497,7 +497,7 @@ export const updateEvent = (obj) => async (dispatch) => {
         const { data } = await axios.put(
             `http://rostering.delshagroup.com/event/${uuidd}`,
             {
-                   title,
+                title,
                 start_date,
                 department: '',
                 end_date,
