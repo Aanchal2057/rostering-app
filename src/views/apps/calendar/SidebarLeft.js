@@ -51,8 +51,6 @@ const SidebarLeft = props => {
       })
     }
   }
-  console.log(store?.includes(store?.statusUnassigned))
-  console.log(Assigned)
   return (
     <Fragment>
       <div className='sidebar-wrapper'>
