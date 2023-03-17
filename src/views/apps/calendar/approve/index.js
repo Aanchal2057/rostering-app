@@ -91,7 +91,6 @@ const index = () => {
                 pagination
                 columns={columns}
                 data={data}
-                refetchEvents={refetchEvents}
                 responsive
                 selectableRows
                 selectableRowsHighlight

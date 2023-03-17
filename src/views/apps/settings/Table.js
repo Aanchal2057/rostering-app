@@ -6,18 +6,15 @@ import { Fragment, useState, useEffect, useRef  } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 // ** Third Party Components
-import Select from 'react-select'
 import ReactPaginate from 'react-paginate'
-import { ChevronDown, CheckSquare } from 'react-feather'
+import { CheckSquare } from 'react-feather'
 import DataTable from 'react-data-table-component'
-import { selectThemeColors } from '@utils'
-import { Card, CardHeader, CardTitle, CardBody, Input, Row, Col, Label, CustomInput, Button } from 'reactstrap'
+import { Card, Row, Col} from 'reactstrap'
 import ModalDialog from './ModalDialog'
 // ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 import { loadEmploee, updateAdminStatus } from '../../../redux1/action/auth'
-import { Link } from 'react-router-dom'
 // ** Table Header
 const CustomHeader = ({ toggleSidebar }) => {
   return (
@@ -61,10 +58,13 @@ const Table  = () => {
     }, [dispatch])
 
     const data = useSelector(state => state.Employee.employee)
-    const handleChange = ({ uuid, active }) => {
-        dispatch(updateAdminStatus(uuid, { active: !active }))
-    }
 
+    const handleChange = ({ uuid, active }) => {
+      dispatch(updateAdminStatus(uuid, { active: !active })).then(() => {
+        dispatch(loadEmploee())
+      })
+    }
+    
   
   // ** Function in get data on search query change
   const columns = [

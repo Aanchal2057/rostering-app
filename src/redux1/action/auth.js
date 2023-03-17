@@ -585,7 +585,7 @@ export const updateAdminStatus = (uuid, {active}) => async (dispatch) => {
     }
 }
 
-export const getInvoice = (uuid, getdate) => async (dispatch) => {
+export const getStaffInvoice = (uuid, getdate) => async (dispatch) => {
     try {
         dispatch({ type: GET_INVOICE_REQUEST})
 console.log(uuid, getdate)
