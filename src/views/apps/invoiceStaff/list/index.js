@@ -53,7 +53,6 @@ const CustomHeader = ({ show }) => {
 const InvoiceList  = ({dataStaff}) => {
   // ** Store Vars
   const dispatch = useDispatch()
-  console.log(dataStaff)
   const checkpage = useRef()
   
   // ** States
@@ -62,24 +61,21 @@ const InvoiceList  = ({dataStaff}) => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   
-  console.log(currentPage)
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
   
   // ** Get data on mount
-    const {staff_id} = useParams()
-    useEffect(() => {
-        dispatch(loadEvent(staff_id))
-    }, [dispatch])
+  const {staff_id} = useParams()
+  useEffect(() => {
+    dispatch(loadEvent(staff_id))
+  }, [dispatch])
+  
+  const datas = useSelector(state => state?.Event?.event)
+  const userId = String(dataStaff?.id)
+  const data = datas?.filter((el) => el?.staff_id === userId)
 
-    const datas = useSelector(state => state?.Event?.event || [])
-    // const staffId = datas.length > 0 ? datas.map(item => item.staff_id[0]) : []
-    const staffId = datas.length > 0 ? datas[0].staff_id : null
-     console.log(staffId)
-     const data = datas.filter(item => item.staff_id === staffId)
-     console.log(data)
-
-    
+  console.log(data)
+  
   // ** Function in get data on search query change
   const columns = [
     {
@@ -189,7 +185,8 @@ const display = () => {
   } else if (invoice) {
    return column
   }
- }
+  }
+  
  const show = (val) => {
   if (val === 'upcoming') {
     setCompleted(false)
@@ -234,8 +231,20 @@ const display = () => {
         selectAllRowsItem: true,
         selectAllRowsItemText: 'ALL'
     }
-
-
+let showevent
+const displayEvents = () => {
+  if (upComming) {
+   showevent = data?.filter((el) => el?.statusUpcomming === true)
+return showevent
+  } else if (completed) {
+   showevent =  data?.filter((el) => el?.statusComplete === true)
+return showevent
+  } else if (invoice) {
+   showevent =  data?.filter((el) => el?.statusUpcomming === false && el?.statusComplete === false)
+return showevent
+  }
+  }
+  
   return (
     <Fragment>
 
@@ -248,7 +257,7 @@ const display = () => {
           columns={display()}
           className='react-dataTable'
           paginationComponentOptions={paginationComponentOptions}
-          data={data}
+          data={displayEvents()}
           subHeaderComponent={
               <CustomHeader
                 value={value}
