@@ -15,6 +15,7 @@ const index = () => {
 
     // Get latest data from store
     const data = useSelector(state => state?.Event?.event || [])
+    // const data = datas?.filter(word => word.statusUpcomming)
     const handleChange = ({ uuid, isAdminApproval }) => {
         dispatch(updateAdminApproval(uuid, { isAdminApproval: !isAdminApproval })).then(() => {
           dispatch(loadEvent())
