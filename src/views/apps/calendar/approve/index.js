@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react'
 import DataTable from 'react-data-table-component'
 import { useDispatch, useSelector } from 'react-redux'
-import { loadEvent, updateAdminApproval} from '../../../../redux1/action/auth'
+import { getCompleted, updateAdminApproval} from '../../../../redux1/action/auth'
 import { CheckSquare } from 'react-feather'
 const index = () => {
  
@@ -10,7 +10,7 @@ const index = () => {
 
     // Load data on component mount
     useEffect(() => {
-        dispatch(loadEvent())
+        dispatch(getCompleted())
     }, [dispatch])
 
     // Get latest data from store
@@ -18,7 +18,7 @@ const index = () => {
     // const data = datas?.filter(word => word.statusUpcomming)
     const handleChange = ({ uuid, isAdminApproval }) => {
         dispatch(updateAdminApproval(uuid, { isAdminApproval: !isAdminApproval })).then(() => {
-          dispatch(loadEvent())
+          dispatch(getCompleted())
         })
       }
       
