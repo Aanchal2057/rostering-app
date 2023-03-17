@@ -30,6 +30,7 @@ const UserView = props => {
 
    const datas = useSelector(state => state.Clients)
   const data = (datas?.client)
+  const dataClient = data
 console.log(data)
   return data !== null ? (
     <div className='app-user-view'>
@@ -38,7 +39,7 @@ console.log(data)
         <UserInfoCard data={data} />
         </Col>
         <Col sm='9' >
-          <InvoiceLists/>
+          <InvoiceLists dataClient={dataClient}/>
           
         </Col>
       </Row>

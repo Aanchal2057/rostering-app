@@ -13,7 +13,7 @@ import { Card, CardHeader, CardTitle, CardBody, Input, Row, Col, Label, CustomIn
 
 // import { columns, column, columnscompleted } from './columns'
 import { Link, useParams } from 'react-router-dom'
-import { loadEvent } from '../../../../redux1/action/auth'
+import { getStaffInvoice, loadEvent } from '../../../../redux1/action/auth'
 // ** Table Header
 const CustomHeader = ({ show }) => {
 
@@ -50,10 +50,9 @@ const CustomHeader = ({ show }) => {
   )
 }
 
-const InvoiceList  = () => {
+const InvoiceList  = ({dataClient}) => {
   // ** Store Vars
   const dispatch = useDispatch()
-  
   const checkpage = useRef()
   
   // ** States
@@ -62,24 +61,12 @@ const InvoiceList  = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   
-  console.log(currentPage)
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
   
   // ** Get data on mount
-    const {staff_id} = useParams()
-    useEffect(() => {
-        dispatch(loadEvent(staff_id))
-    }, [dispatch])
-
-    const datas = useSelector(state => state?.Event?.event || [])
-    // const staffId = datas.length > 0 ? datas.map(item => item.staff_id[0]) : []
-    const staffId = datas.length > 0 ? datas[0].staff_id : null
-     console.log(staffId)
-     const data = datas.filter(item => item.staff_id === staffId)
-     console.log(data)
-
-    
+  const {client_id} = useParams()
+  
   // ** Function in get data on search query change
   const columns = [
     {
@@ -148,32 +135,24 @@ const columnscompleted = [
 const column = [
   {
       name: 'NAME2',
-      selector: row => row.title
+      selector: row => row?.name
   },
   {
-      name: 'START DATE',
-      selector: row => row.start_date.slice(0, 10)
+      name: 'Email',
+      selector: row => row?.email
   },
   {
-      name: 'END DATE',
-      selector: row => row.end_date.slice(0, 10)
+      name: 'Address',
+      selector: row => row?.address
 
   },
   {
-      name: 'CLIENT',
-      selector: row => row.client?.name
+      name: 'Contact',
+      selector: row => row?.contact
   },
   {
-      name: 'STAFF',
-      selector: row => (row.staff.length > 0 ? row.staff[0].name : "no name")
-  },
-  {
-      name: 'STAFF PAYMENT',
-      selector: row => row.staff_rate
-  },
-  {
-      name: 'CLIENT PAYMENT',
-      selector: row => row.client_rate
+      name: 'department',
+      selector: row => row?.department
   }
  
 ]
@@ -189,7 +168,8 @@ const display = () => {
   } else if (invoice) {
    return column
   }
- }
+  }
+  
  const show = (val) => {
   if (val === 'upcoming') {
     setCompleted(false)
@@ -208,7 +188,7 @@ const display = () => {
 
   const CustomPagination = () => {
   
-     const count = Number(Math.ceil(data?.Employee?.employee.totalPage))
+     const count = Number(Math.ceil(data?.Event?.event.totalPage))
      
 
     return (
@@ -233,22 +213,61 @@ const display = () => {
       const paginationComponentOptions = {
         selectAllRowsItem: true,
         selectAllRowsItemText: 'ALL'
-    }
+  }
+  
+    const datas = useSelector(state => state?.Event?.event) 
+    const datass = useSelector(state => state?.Event?.event) 
 
+  console.log(invoice, upComming, completed)
+    useEffect(() => {
+      if (upComming) {
+            setInvoice(false)
+      dispatch(loadEvent(client_id))
+      } else if (completed) {
+            setInvoice(false)
+      dispatch(loadEvent(client_id))
+      } else if (invoice) {
+    //           const date = new Date()
+    // const currentDate = `${date.getFullYear()}-${date.getMonth()}`
+    // const uuid = dataClient?.uuid
+    //     dispatch(getStaffInvoice(uuid, currentDate))
+    return "hello"
+   }
+  }, [dispatch, invoice, upComming, completed])
+  
+let showevent
+  const displayEvents = () => {
+    if (upComming) {
+      
+     const userId = String(dataClient?.id)
+  const data = Array.isArray(datas) && datas?.filter((el) => el?.client_id === userId)
+   showevent = Array.isArray(data) && data?.filter((el) => el?.statusUpcomming === true)
+return showevent
+    } else if (completed) {
+       const userId = String(dataClient?.id)
+  const data =  Array.isArray(datas) && datas?.filter((el) => el?.client_id === userId)
+   showevent =  Array.isArray(data) && data?.filter((el) => el?.statusComplete === true)
+return showevent
+  } else if (invoice) {
+
+showevent = datass
+    return showevent
+  }
+  }
 
   return (
     <Fragment>
 
       <Card>
         <DataTable
-          title='client ko'
+          title='Client ko'
           pagination
           subHeader
           responsive
           columns={display()}
           className='react-dataTable'
           paginationComponentOptions={paginationComponentOptions}
-          data={data}
+          data={displayEvents()}
           subHeaderComponent={
               <CustomHeader
                 value={value}
