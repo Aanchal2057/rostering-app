@@ -1,19 +1,12 @@
 import {useEffect, useState} from 'react'
 import DataTable from 'react-data-table-component'
-import ReactPaginate from 'react-paginate'
 import { useDispatch, useSelector } from 'react-redux'
-import { Button } from 'reactstrap'
 import { loadEvent, updateAdminApproval} from '../../../../redux1/action/auth'
 import { CheckSquare } from 'react-feather'
 const index = () => {
  
     const dispatch = useDispatch()
 
-     // ** refetchEvents
-  const refetchEvents = () => {
-    dispatch(loadEvent())
-    
-  }
 
     // Load data on component mount
     useEffect(() => {
@@ -22,24 +15,12 @@ const index = () => {
 
     // Get latest data from store
     const data = useSelector(state => state?.Event?.event || [])
-
-    // Use component state to update data in the table
-    const [tableData, setTableData] = useState(data)
-    
-
-    // Update component state when data changes
-    useEffect(() => {
-        setTableData(data)
-    }, [data])
-  
-
-    const handleChange = (row) => {
-        const updatedRow = { ...row, isAdminApproval: !row.isAdminApproval }
-        dispatch(updateAdminApproval(row.uuid, updatedRow))
-        refetchEvents()
-    }
-    
-     
+    const handleChange = ({ uuid, isAdminApproval }) => {
+        dispatch(updateAdminApproval(uuid, { isAdminApproval: !isAdminApproval })).then(() => {
+          dispatch(loadEvent())
+        })
+      }
+      
     const columns = [
         {
             name: 'NAME',
@@ -73,8 +54,14 @@ const index = () => {
         {
             name:'ADMIN APPROVAL',
             minWidth:'100px',
-            selector:  row => (<CheckSquare size={18}  style={{ color: row.isAdminApproval ? 'green' : 'red' }}   onClick={() => handleChange(row)}
-                              className='cursor-pointer'  />)
+            selector: ({ isAdminApproval, uuid }) => (
+                <CheckSquare
+                    size={18}
+                    style={{ color:isAdminApproval ? 'green' : 'red' }}
+                    onClick={() => handleChange({ uuid, isAdminApproval })}
+                    className='cursor-pointer'
+                />
+            )
         }
     ]
     const paginationComponentOptions = {

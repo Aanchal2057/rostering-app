@@ -42,8 +42,6 @@ const Table  = () => {
   const checkpage = useRef()
   
   // ** States
-  const [rowsPerPage, setRowsPerPage] = useState(10)
-  const [searchTerm, setSearchTerm] = useState('')
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   
