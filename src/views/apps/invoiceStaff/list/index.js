@@ -13,7 +13,7 @@ import { Card, CardHeader, CardTitle, CardBody, Input, Row, Col, Label, CustomIn
 
 // import { columns, column, columnscompleted } from './columns'
 import { Link, useParams } from 'react-router-dom'
-import { loadEvent } from '../../../../redux1/action/auth'
+import { getInvoice, loadEvent } from '../../../../redux1/action/auth'
 // ** Table Header
 const CustomHeader = ({ show }) => {
 
@@ -66,15 +66,6 @@ const InvoiceList  = ({dataStaff}) => {
   
   // ** Get data on mount
   const {staff_id} = useParams()
-  useEffect(() => {
-    dispatch(loadEvent(staff_id))
-  }, [dispatch])
-  
-  const datas = useSelector(state => state?.Event?.event)
-  const userId = String(dataStaff?.id)
-  const data = datas?.filter((el) => el?.staff_id === userId)
-
-  console.log(data)
   
   // ** Function in get data on search query change
   const columns = [
@@ -144,32 +135,24 @@ const columnscompleted = [
 const column = [
   {
       name: 'NAME2',
-      selector: row => row.title
+      selector: row => row?.name
   },
   {
-      name: 'START DATE',
-      selector: row => row.start_date.slice(0, 10)
+      name: 'Email',
+      selector: row => row?.email
   },
   {
-      name: 'END DATE',
-      selector: row => row.end_date.slice(0, 10)
+      name: 'Address',
+      selector: row => row?.address
 
   },
   {
-      name: 'CLIENT',
-      selector: row => row.client?.name
+      name: 'Contact',
+      selector: row => row?.contact
   },
   {
-      name: 'STAFF',
-      selector: row => (row.staff.length > 0 ? row.staff[0].name : "no name")
-  },
-  {
-      name: 'STAFF PAYMENT',
-      selector: row => row.staff_rate
-  },
-  {
-      name: 'CLIENT PAYMENT',
-      selector: row => row.client_rate
+      name: 'department',
+      selector: row => row?.department
   }
  
 ]
@@ -230,21 +213,47 @@ const display = () => {
       const paginationComponentOptions = {
         selectAllRowsItem: true,
         selectAllRowsItemText: 'ALL'
-    }
-let showevent
-const displayEvents = () => {
-  if (upComming) {
-   showevent = data?.filter((el) => el?.statusUpcomming === true)
-return showevent
-  } else if (completed) {
-   showevent =  data?.filter((el) => el?.statusComplete === true)
-return showevent
-  } else if (invoice) {
-   showevent =  data?.filter((el) => el?.statusUpcomming === false && el?.statusComplete === false)
-return showevent
-  }
   }
   
+    const datas = useSelector(state => state?.Event?.event) 
+    const datass = useSelector(state => state?.Event?.event) 
+
+  console.log(invoice, upComming, completed)
+    useEffect(() => {
+      if (upComming) {
+            setInvoice(false)
+      dispatch(loadEvent(staff_id))
+      } else if (completed) {
+            setInvoice(false)
+      dispatch(loadEvent(staff_id))
+      } else if (invoice) {
+              const date = new Date()
+    const currentDate = `${date.getFullYear()}-${date.getMonth()}`
+    const uuid = dataStaff?.uuid
+        dispatch(getInvoice(uuid, currentDate))
+   }
+  }, [dispatch, invoice, upComming, completed])
+  
+let showevent
+  const displayEvents = () => {
+    if (upComming) {
+      
+     const userId = String(dataStaff?.id)
+  const data = Array.isArray(datas) && datas?.filter((el) => el?.staff_id === userId)
+   showevent = Array.isArray(data) && data?.filter((el) => el?.statusUpcomming === true)
+return showevent
+    } else if (completed) {
+       const userId = String(dataStaff?.id)
+  const data =  Array.isArray(datas) && datas?.filter((el) => el?.staff_id === userId)
+   showevent =  Array.isArray(data) && data?.filter((el) => el?.statusComplete === true)
+return showevent
+  } else if (invoice) {
+
+showevent = datass
+    return showevent
+  }
+  }
+
   return (
     <Fragment>
 
