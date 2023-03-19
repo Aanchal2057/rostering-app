@@ -13,7 +13,7 @@ import { Card, CardHeader, CardTitle, CardBody, Input, Row, Col, Label, CustomIn
 
 // import { columns, column, columnscompleted } from './columns'
 import { Link, useParams } from 'react-router-dom'
-import { getStaffInvoice, loadEvent } from '../../../../redux1/action/auth'
+import {  loadEvent } from '../../../../redux1/action/auth'
 // ** Table Header
 const CustomHeader = ({ show }) => {
 
@@ -54,7 +54,7 @@ const InvoiceList  = ({dataClient}) => {
   // ** Store Vars
   const dispatch = useDispatch()
   const checkpage = useRef()
-  
+  console.log(dataClient)
   // ** States
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [searchTerm, setSearchTerm] = useState('')
@@ -240,6 +240,7 @@ let showevent
     if (upComming) {
       
      const userId = String(dataClient?.id)
+     console.log(userId)
   const data = Array.isArray(datas) && datas?.filter((el) => el?.client_id === userId)
    showevent = Array.isArray(data) && data?.filter((el) => el?.statusUpcomming === true)
 return showevent

@@ -52,6 +52,7 @@ const CustomHeader = ({ show }) => {
 
 const InvoiceList  = ({dataStaff}) => {
   // ** Store Vars
+  console.log(dataStaff)
   const dispatch = useDispatch()
   const checkpage = useRef()
   
@@ -239,6 +240,7 @@ let showevent
     if (upComming) {
       
      const userId = String(dataStaff?.id)
+     console.log(userId)
   const data = Array.isArray(datas) && datas?.filter((el) => el?.staff_id === userId)
    showevent = Array.isArray(data) && data?.filter((el) => el?.statusUpcomming === true)
 return showevent

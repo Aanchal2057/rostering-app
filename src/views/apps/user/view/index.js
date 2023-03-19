@@ -31,7 +31,7 @@ const UserView = props => {
    const datas = useSelector(state => state.Clients)
   const data = (datas?.client)
   const dataClient = data
-console.log(data)
+console.log(dataClient)
   return data !== null ? (
     <div className='app-user-view'>
       <Row>

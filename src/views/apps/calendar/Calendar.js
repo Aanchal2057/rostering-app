@@ -12,6 +12,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import { useDispatch, useSelector } from 'react-redux'
 // ** Custom Components
 import Avatar from '@components/avatar'
+import './fullcalendar.css'
 
 // ** Third Party Components
 import { toast } from 'react-toastify'
@@ -79,7 +80,7 @@ const Calendar = props => {
       ? Docs: https://fullcalendar.io/docs/editable
     */
     editable: true,
-
+    
     /*
       Enable resizing event from start
       ? Docs: https://fullcalendar.io/docs/eventResizableFromStart
@@ -189,7 +190,7 @@ const Calendar = props => {
   return (
     <Card className='shadow-none border-0 mb-0 rounded-0'>
       <CardBody className='pb-0'>
-        <FullCalendar {...calendarOptions} />
+        <FullCalendar {...calendarOptions} eventBackgroundColor='#7367FD' eventTextColor='white'/>
       </CardBody>
     </Card>
   )
