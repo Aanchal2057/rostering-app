@@ -238,11 +238,12 @@ const display = () => {
 let showevent
   const displayEvents = () => {
     if (upComming) {
-      
      const userId = String(dataClient?.id)
      console.log(userId)
   const data = Array.isArray(datas) && datas?.filter((el) => el?.client_id === userId)
+  console.log(data)
    showevent = Array.isArray(data) && data?.filter((el) => el?.statusUpcomming === true)
+  console.log(showevent)
 return showevent
     } else if (completed) {
        const userId = String(dataClient?.id)
