@@ -87,11 +87,13 @@ const Calendar = props => {
     */
     eventResizableFromStart: true,
     displayEventTime: false,
+
     /*
       Automatically scroll the scroll-containers during event drag-and-drop and date selecting
       ? Docs: https://fullcalendar.io/docs/dragScroll
     */
     dragScroll: true,
+    
 
     /*
       Max number of events within a given day
@@ -104,7 +106,7 @@ const Calendar = props => {
       ? Docs: https://fullcalendar.io/docs/navLinks
     */
     navLinks: true,
-
+    
     eventClassNames({ event: calendarEvent }) {
       // eslint-disable-next-line no-underscore-dangle
       const colorName = calendarsColor[calendarEvent._def.extendedProps.calendar]
@@ -190,7 +192,7 @@ const Calendar = props => {
   return (
     <Card className='shadow-none border-0 mb-0 rounded-0'>
       <CardBody className='pb-0'>
-        <FullCalendar {...calendarOptions} eventBackgroundColor='#7367FD' eventTextColor='white' />
+        <FullCalendar {...calendarOptions} eventBackgroundColor='#7367FD' eventTextColor='white'  height='700'/>
       </CardBody>
     </Card>
   )
