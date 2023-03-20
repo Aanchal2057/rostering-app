@@ -12,6 +12,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import { useDispatch, useSelector } from 'react-redux'
 // ** Custom Components
 import Avatar from '@components/avatar'
+import './fullcalendar.css'
 
 // ** Third Party Components
 import { toast } from 'react-toastify'
@@ -79,18 +80,20 @@ const Calendar = props => {
       ? Docs: https://fullcalendar.io/docs/editable
     */
     editable: true,
-
+    
     /*
       Enable resizing event from start
       ? Docs: https://fullcalendar.io/docs/eventResizableFromStart
     */
     eventResizableFromStart: true,
+    displayEventTime: false,
 
     /*
       Automatically scroll the scroll-containers during event drag-and-drop and date selecting
       ? Docs: https://fullcalendar.io/docs/dragScroll
     */
     dragScroll: true,
+    
 
     /*
       Max number of events within a given day
@@ -103,7 +106,7 @@ const Calendar = props => {
       ? Docs: https://fullcalendar.io/docs/navLinks
     */
     navLinks: true,
-
+    
     eventClassNames({ event: calendarEvent }) {
       // eslint-disable-next-line no-underscore-dangle
       const colorName = calendarsColor[calendarEvent._def.extendedProps.calendar]
@@ -189,7 +192,7 @@ const Calendar = props => {
   return (
     <Card className='shadow-none border-0 mb-0 rounded-0'>
       <CardBody className='pb-0'>
-        <FullCalendar {...calendarOptions} />
+        <FullCalendar {...calendarOptions} eventBackgroundColor='#7367FD' eventTextColor='white'  height='700'/>
       </CardBody>
     </Card>
   )

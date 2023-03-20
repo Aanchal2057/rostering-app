@@ -94,18 +94,6 @@ const data = (datas?.client)
           />
           <FormText color='muted'>You can use letters, numbers & periods</FormText>
         </FormGroup>
-        {/* <FormGroup>
-          <Label for='company'>
-            Company <span className='text-danger'>*</span>
-          </Label>
-          <Input
-            name='company'
-            id='company'
-            placeholder='Company Pvt Ltd'
-            innerRef={register({ required: true })}
-            className={classnames({ 'is-invalid': errors['company'] })}
-          />
-        </FormGroup> */}
         <FormGroup>
           <Label for='country'>
             Address <span className='text-danger'>*</span>
@@ -113,7 +101,7 @@ const data = (datas?.client)
           <Input
             name='country'
             id='country'
-            placeholder='Mechinagar -8, Jhapa'
+            placeholder='address'
             innerRef={register({ required: true })}
             className={classnames({ 'is-invalid': errors['country'] })}
           />
@@ -143,25 +131,6 @@ const data = (datas?.client)
             className={classnames({ 'is-invalid': errors['department'] })}
           />
         </FormGroup>
-        {/* <FormGroup>
-          <Label for='user-role'>User Role</Label>
-          <Input type='select' id='user-role' name='user-role' value={role} onChange={e => setRole(e.target.value)}>
-            <option value='subscriber'>Subscriber</option>
-            <option value='editor'>Editor</option>
-            <option value='maintainer'>Maintainer</option>
-            <option value='author'>Author</option>
-            <option value='admin'>Admin</option>
-          </Input>
-        </FormGroup> */}
-        {/* <FormGroup className='mb-2' value={plan} onChange={e => setPlan(e.target.value)}>
-          <Label for='select-plan'>Seleact Rate</Label>
-          <Input type='select' id='select-plan' name='select-plan'>
-            <option value='1000'>1000</option>
-            <option value='enterprise'>Enterprise</option>
-            <option value='company'>Company</option>
-            <option value='team'>Team</option>
-          </Input>
-        </FormGroup> */}
         <Button type='submit' className='mr-1' color='primary'>
           Submit
         </Button>

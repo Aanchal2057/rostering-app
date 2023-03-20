@@ -62,7 +62,6 @@ const index = () => {
                 columns={columns}
                 data={displaydata}
                 responsive
-                selectableRows
                 selectableRowsHighlight
                 paginationComponentOptions={paginationComponentOptions}
                 className='react-dataTable'

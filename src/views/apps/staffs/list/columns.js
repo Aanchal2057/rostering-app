@@ -76,14 +76,12 @@ export const columns = [
       <UncontrolledDropdown> 
         <DropdownToggle tag='div' className='btn btn-sm'>
           <MoreVertical size={14} className='cursor-pointer' color = '#7367f0'/>
-          <CheckSquare size={14} className='cursor-pointer'   color = '#7367f0'/>
         </DropdownToggle>
         <DropdownMenu right>
           <DropdownItem
             tag={Link}
             to={`/apps/staffs/view/${row.uuid}`} 
             className='w-100'
-            // onClick={() => store.dispatch(getUser(row.id))}
           >
             <FileText size={14} className='mr-50' />
             <span className='align-middle'>Details</span>
@@ -92,15 +90,10 @@ export const columns = [
             tag={Link}
             to={`/apps/staffs/edit/${row.uuid}`}
             className='w-100'
-            // onClick={() => store.dispatch(getUser(row.id))}
           >
             <Archive size={14} className='mr-50'  />
             <span className='align-middle'>Edit</span>
           </DropdownItem>
-          {/* <DropdownItem className='w-100' onClick={() => store.dispatch(deleteUser(row.id))}>
-            <Trash2 size={14} className='mr-50' />
-            <span className='align-middle'>Delete</span>
-          </DropdownItem> */}
         </DropdownMenu>
       </UncontrolledDropdown>
 

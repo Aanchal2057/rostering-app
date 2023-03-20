@@ -13,7 +13,7 @@ import { Card, CardHeader, CardTitle, CardBody, Input, Row, Col, Label, CustomIn
 
 // import { columns, column, columnscompleted } from './columns'
 import { Link, useParams } from 'react-router-dom'
-import { getInvoice, loadEvent } from '../../../../redux1/action/auth'
+import { getStaffInvoice, loadEvent } from '../../../../redux1/action/auth'
 // ** Table Header
 const CustomHeader = ({ show }) => {
 
@@ -237,7 +237,7 @@ const display = () => {
           const date = new Date()
           const currentDate = `${date.getFullYear()}-${date.getMonth()}`
           const uuid = dataClient?.uuid
-          dispatch(getInvoice(uuid, currentDate))
+          dispatch(getStaffInvoice(uuid, currentDate))
         }
     }, [dispatch, invoice, upComming, completed])
   
