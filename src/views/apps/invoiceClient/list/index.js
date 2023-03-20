@@ -13,7 +13,7 @@ import { Card, CardHeader, CardTitle, CardBody, Input, Row, Col, Label, CustomIn
 
 // import { columns, column, columnscompleted } from './columns'
 import { Link, useParams } from 'react-router-dom'
-import {  loadEvent } from '../../../../redux1/action/auth'
+import { getStaffInvoice, loadEvent } from '../../../../redux1/action/auth'
 // ** Table Header
 const CustomHeader = ({ show }) => {
 
@@ -53,20 +53,24 @@ const CustomHeader = ({ show }) => {
 const InvoiceList  = ({dataClient}) => {
   // ** Store Vars
   const dispatch = useDispatch()
+  
   const checkpage = useRef()
-  console.log(dataClient)
+  
   // ** States
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [searchTerm, setSearchTerm] = useState('')
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   
+  console.log(currentPage)
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
   
   // ** Get data on mount
-  const {client_id} = useParams()
-  
+    const {staff_id} = useParams()
+
+  const datas = useSelector(state => state?.Event?.event || [])
+     const datass = useSelector(state => state?.Event?.event) 
   // ** Function in get data on search query change
   const columns = [
     {
@@ -135,24 +139,32 @@ const columnscompleted = [
 const column = [
   {
       name: 'NAME2',
-      selector: row => row?.name
+      selector: row => row.title
   },
   {
-      name: 'Email',
-      selector: row => row?.email
+      name: 'START DATE',
+      selector: row => row.start_date.slice(0, 10)
   },
   {
-      name: 'Address',
-      selector: row => row?.address
+      name: 'END DATE',
+      selector: row => row.end_date.slice(0, 10)
 
   },
   {
-      name: 'Contact',
-      selector: row => row?.contact
+      name: 'CLIENT',
+      selector: row => row.client?.name
   },
   {
-      name: 'department',
-      selector: row => row?.department
+      name: 'STAFF',
+      selector: row => (row.staff.length > 0 ? row.staff[0].name : "no name")
+  },
+  {
+      name: 'STAFF PAYMENT',
+      selector: row => row.staff_rate
+  },
+  {
+      name: 'CLIENT PAYMENT',
+      selector: row => row.client_rate
   }
  
 ]
@@ -168,8 +180,7 @@ const display = () => {
   } else if (invoice) {
    return column
   }
-  }
-  
+ }
  const show = (val) => {
   if (val === 'upcoming') {
     setCompleted(false)
@@ -188,7 +199,7 @@ const display = () => {
 
   const CustomPagination = () => {
   
-     const count = Number(Math.ceil(data?.Event?.event.totalPage))
+     const count = Number(Math.ceil(data?.Employee?.employee.totalPage))
      
 
     return (
@@ -215,39 +226,29 @@ const display = () => {
         selectAllRowsItemText: 'ALL'
   }
   
-    const datas = useSelector(state => state?.Event?.event) 
-    const datass = useSelector(state => state?.Event?.event) 
-
-  console.log(invoice, upComming, completed)
-    useEffect(() => {
-      if (upComming) {
-            setInvoice(false)
-      dispatch(loadEvent(client_id))
-      } else if (completed) {
-            setInvoice(false)
-      dispatch(loadEvent(client_id))
-      } else if (invoice) {
-    //           const date = new Date()
-    // const currentDate = `${date.getFullYear()}-${date.getMonth()}`
-    // const uuid = dataClient?.uuid
-    //     dispatch(getStaffInvoice(uuid, currentDate))
-    return "hello"
-   }
-  }, [dispatch, invoice, upComming, completed])
+      useEffect(() => {
+        if (upComming) {
+          setInvoice(false)
+          dispatch(loadEvent(staff_id))
+        } else if (completed) {
+          setInvoice(false)
+          dispatch(loadEvent(staff_id))
+        } else if (invoice) {
+          const date = new Date()
+          const currentDate = `${date.getFullYear()}-${date.getMonth()}`
+          const uuid = dataClient?.uuid
+          dispatch(getStaffInvoice(uuid, currentDate))
+        }
+    }, [dispatch, invoice, upComming, completed])
   
 let showevent
   const displayEvents = () => {
     if (upComming) {
-     const userId = String(dataClient?.id)
-     console.log(userId)
-  const data = Array.isArray(datas) && datas?.filter((el) => el?.client_id === userId)
-  console.log(data)
+  const data = Array.isArray(datas) && datas?.filter((el) => el?.client_id === dataClient?.id)
    showevent = Array.isArray(data) && data?.filter((el) => el?.statusUpcomming === true)
-  console.log(showevent)
 return showevent
     } else if (completed) {
-       const userId = String(dataClient?.id)
-  const data =  Array.isArray(datas) && datas?.filter((el) => el?.client_id === userId)
+  const data =  Array.isArray(datas) && datas?.filter((el) => el?.client_id === dataClient?.id)
    showevent =  Array.isArray(data) && data?.filter((el) => el?.statusComplete === true)
 return showevent
   } else if (invoice) {
@@ -256,13 +257,12 @@ showevent = datass
     return showevent
   }
   }
-
   return (
     <Fragment>
 
       <Card>
         <DataTable
-          title='Client ko'
+          title='client ko'
           pagination
           subHeader
           responsive
