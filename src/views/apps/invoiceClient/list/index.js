@@ -13,7 +13,7 @@ import { Card, CardHeader, CardTitle, CardBody, Input, Row, Col, Label, CustomIn
 
 // import { columns, column, columnscompleted } from './columns'
 import { Link, useParams } from 'react-router-dom'
-import { loadEvent } from '../../../../redux1/action/auth'
+import { getInvoice, loadEvent } from '../../../../redux1/action/auth'
 // ** Table Header
 const CustomHeader = ({ show }) => {
 
@@ -50,7 +50,7 @@ const CustomHeader = ({ show }) => {
   )
 }
 
-const InvoiceList  = () => {
+const InvoiceList  = ({dataClient}) => {
   // ** Store Vars
   const dispatch = useDispatch()
   
@@ -68,18 +68,9 @@ const InvoiceList  = () => {
   
   // ** Get data on mount
     const {staff_id} = useParams()
-    useEffect(() => {
-        dispatch(loadEvent(staff_id))
-    }, [dispatch])
 
-    const datas = useSelector(state => state?.Event?.event || [])
-    // const staffId = datas.length > 0 ? datas.map(item => item.staff_id[0]) : []
-    const staffId = datas.length > 0 ? datas[0].staff_id : null
-     console.log(staffId)
-     const data = datas.filter(item => item.staff_id === staffId)
-     console.log(data)
-
-    
+  const datas = useSelector(state => state?.Event?.event || [])
+     const datass = useSelector(state => state?.Event?.event) 
   // ** Function in get data on search query change
   const columns = [
     {
@@ -233,9 +224,39 @@ const display = () => {
       const paginationComponentOptions = {
         selectAllRowsItem: true,
         selectAllRowsItemText: 'ALL'
-    }
+  }
+  
+      useEffect(() => {
+        if (upComming) {
+          setInvoice(false)
+          dispatch(loadEvent(staff_id))
+        } else if (completed) {
+          setInvoice(false)
+          dispatch(loadEvent(staff_id))
+        } else if (invoice) {
+          const date = new Date()
+          const currentDate = `${date.getFullYear()}-${date.getMonth()}`
+          const uuid = dataClient?.uuid
+          dispatch(getInvoice(uuid, currentDate))
+        }
+    }, [dispatch, invoice, upComming, completed])
+  
+let showevent
+  const displayEvents = () => {
+    if (upComming) {
+  const data = Array.isArray(datas) && datas?.filter((el) => el?.client_id === dataClient?.id)
+   showevent = Array.isArray(data) && data?.filter((el) => el?.statusUpcomming === true)
+return showevent
+    } else if (completed) {
+  const data =  Array.isArray(datas) && datas?.filter((el) => el?.client_id === dataClient?.id)
+   showevent =  Array.isArray(data) && data?.filter((el) => el?.statusComplete === true)
+return showevent
+  } else if (invoice) {
 
-
+showevent = datass
+    return showevent
+  }
+  }
   return (
     <Fragment>
 
@@ -248,7 +269,7 @@ const display = () => {
           columns={display()}
           className='react-dataTable'
           paginationComponentOptions={paginationComponentOptions}
-          data={data}
+          data={displayEvents()}
           subHeaderComponent={
               <CustomHeader
                 value={value}
