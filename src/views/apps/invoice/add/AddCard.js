@@ -184,9 +184,9 @@ const AddCard = () => {
                 </svg>
                 <h3 className='text-primary invoice-logo'>Vuexy</h3>
               </div>
-              <p className='card-text mb-25'>Office 149, 450 South Brand Brooklyn</p>
-              <p className='card-text mb-25'>San Diego County, CA 91905, USA</p>
-              <p className='card-text mb-0'>+1 (123) 456 7891, +44 (876) 543 2198</p>
+              <p className='card-text mb-25'>admin@gmail.com</p>
+              <p className='card-text mb-25'>Nepal</p>
+              <p className='card-text mb-0'>06638821</p>
             </div>
             <div className='invoice-number-date mt-md-0 mt-2'>
               <div className='d-flex align-items-center justify-content-md-end mb-1'>
@@ -264,9 +264,9 @@ const AddCard = () => {
               </div>
             </Col>
             <Col className='pr-0 mt-xl-0 mt-2' lg='4'>
-              <h6 className='mb-2'>Payment Details:</h6>
+              <h6 className='mb-2'>Status</h6>
               <table>
-                <tbody>
+                {/* <tbody>
                   <tr>
                     <td className='pr-1'>Total Due:</td>
                     <td>
@@ -289,7 +289,7 @@ const AddCard = () => {
                     <td className='pr-1'>SWIFT code:</td>
                     <td>BR91905</td>
                   </tr>
-                </tbody>
+                </tbody> */}
               </table>
             </Col>
           </Row>
@@ -307,19 +307,19 @@ const AddCard = () => {
                     <Col className='d-flex product-details-border position-relative pr-0' sm='12'>
                       <Row className='w-100 pr-lg-0 pr-1 py-2'>
                         <Col className='mb-lg-0 mb-2 mt-lg-0 mt-2' lg='5' sm='12'>
-                          <CardText className='col-title mb-md-50 mb-0'>Item</CardText>
+                          <CardText className='col-title mb-md-50 mb-0'>Events</CardText>
                           <Input type='select' className='item-details'>
                             <option>App Design</option>
                             <option>App Customization</option>
                             <option>ABC Template</option>
                             <option>App Development</option>
                           </Input>
-                          <Input className='mt-2' type='textarea' rows='1' defaultValue='Customization & Bug Fixes' />
+                          {/* <Input className='mt-2' type='textarea' rows='1' defaultValue='Customization & Bug Fixes' /> */}
                         </Col>
                         <Col className='my-lg-0 my-2' lg='3' sm='12'>
                           <CardText className='col-title mb-md-2 mb-0'>Cost</CardText>
                           <Input type='number' defaultValue='24' placeholder='24' />
-                          <div className='mt-2'>
+                          {/* <div className='mt-2'>
                             <span>Discount:</span> <span>0%</span>
                             <span id={`tax1-${i}`} className='ml-50'>
                               0%
@@ -329,7 +329,7 @@ const AddCard = () => {
                             </span>
                             <UncontrolledTooltip target={`tax1-${i}`}>Tax 1</UncontrolledTooltip>
                             <UncontrolledTooltip target={`tax2-${i}`}>Tax 2</UncontrolledTooltip>
-                          </div>
+                          </div> */}
                         </Col>
                         <Col className='my-lg-0 my-2' lg='2' sm='12'>
                           <CardText className='col-title mb-md-2 mb-0'>Qty</CardText>
@@ -340,23 +340,23 @@ const AddCard = () => {
                           <CardText className='mb-0'>$24.00</CardText>
                         </Col>
                       </Row>
-                      <div className='d-flex flex-column align-items-center justify-content-start border-left invoice-product-actions py-50 px-25'>
+                      {/* <div className='d-flex flex-column align-items-center justify-content-start border-left invoice-product-actions py-50 px-25'>
                         <X size={18} className='cursor-pointer' onClick={deleteForm} />
-                      </div>
+                      </div> */}
                     </Col>
                   </Row>
                 </Tag>
               )
             }}
           </Repeater>
-          <Row className='mt-1'>
+          {/* <Row className='mt-1'>
             <Col sm='12' className='px-0'>
               <Button.Ripple color='primary' size='sm' className='btn-add-new' onClick={() => setCount(count + 1)}>
                 <Plus size={14} className='mr-25'></Plus>
                 <span className='align-middle'>Add Item</span>
               </Button.Ripple>
             </Col>
-          </Row>
+          </Row> */}
         </CardBody>
 
         {/* /Product Details */}
@@ -365,12 +365,12 @@ const AddCard = () => {
         <CardBody className='invoice-padding'>
           <Row className='invoice-sales-total-wrapper'>
             <Col className='mt-md-0 mt-3' md={{ size: '6', order: 1 }} xs={{ size: 12, order: 2 }}>
-              <div className='d-flex align-items-center mb-1'>
+              {/* <div className='d-flex align-items-center mb-1'>
                 <Label for='salesperson' className='form-label'>
                   Salesperson:
                 </Label>
                 <Input type='text' className='ml-50' id='salesperson' placeholder='Edward Crowley' />
-              </div>
+              </div> */}
             </Col>
             <Col className='d-flex justify-content-end' md={{ size: '6', order: 2 }} xs={{ size: 12, order: 1 }}>
               <div className='invoice-total-wrapper'>

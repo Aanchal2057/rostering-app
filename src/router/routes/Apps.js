@@ -23,30 +23,30 @@ const AppRoutes = [
     path: '/apps/invoice/list',
     component: lazy(() => import('../../views/apps/invoice/list/Invoice'))
   },
-  {
-    path: '/apps/invoice/preview/:id',
-    component: lazy(() => import('../../views/apps/invoice/preview')),
-    meta: {
-      navLink: '/apps/invoice/preview'
-    }
-  },
-  {
-    path: '/apps/invoice/preview',
-    exact: true,
-    component: () => <Redirect to='/apps/invoice/preview/4987' />
-  },
-  {
-    path: '/apps/invoice/edit/:id',
-    component: lazy(() => import('../../views/apps/invoice/edit')),
-    meta: {
-      navLink: '/apps/invoice/edit'
-    }
-  },
-  {
-    path: '/apps/invoice/edit',
-    exact: true,
-    component: () => <Redirect to='/apps/invoice/edit/4987' />
-  },
+  // {
+  //   path: '/apps/invoice/preview/:id',
+  //   component: lazy(() => import('../../views/apps/invoice/preview')),
+  //   meta: {
+  //     navLink: '/apps/invoice/preview'
+  //   }
+  // },
+  // {
+  //   path: '/apps/invoice/preview',
+  //   exact: true,
+  //   component: () => <Redirect to='/apps/invoice/preview/4987' />
+  // },
+  // {
+  //   path: '/apps/invoice/edit/:id',
+  //   component: lazy(() => import('../../views/apps/invoice/edit')),
+  //   meta: {
+  //     navLink: '/apps/invoice/edit'
+  //   }
+  // },
+  // {
+  //   path: '/apps/invoice/edit',
+  //   exact: true,
+  //   component: () => <Redirect to='/apps/invoice/edit/4987' />
+  // },
   {
     path: '/apps/invoice/add',
     component: lazy(() => import('../../views/apps/invoice/add'))
