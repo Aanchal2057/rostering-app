@@ -585,14 +585,15 @@ export const updateAdminStatus = (uuid, {active}) => async (dispatch) => {
     }
 }
 
-export const getStaffInvoice = (uuid, getdate) => async (dispatch) => {
+export const getStaffInvoice = (id) => async (dispatch) => {
     try {
         dispatch({ type: GET_INVOICE_REQUEST})
-console.log(uuid, getdate)
+console.log(id)
         const token = JSON.parse(localStorage.getItem('token'))
         const config = { headers: { 'x-api-key': '23124134', Authorization: `Bearer ${token}` } }
         const { data } = await axios.get(
-            `http://rostering.delshagroup.com/staff/invoice/${uuid}?date=${getdate}`,
+           
+            `http://rostering.delshagroup.com/invoice/staff?staff_id=${id}`,
             config
         )
         dispatch({

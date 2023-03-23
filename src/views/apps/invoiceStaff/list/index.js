@@ -218,7 +218,6 @@ const display = () => {
   
     const datas = useSelector(state => state?.Event?.event) 
     const datass = useSelector(state => state?.Event?.event) 
-
   console.log(invoice, upComming, completed)
     useEffect(() => {
       if (upComming) {
@@ -230,8 +229,8 @@ const display = () => {
       } else if (invoice) {
               const date = new Date()
     const currentDate = `${date.getFullYear()}-${date.getMonth()}`
-    const uuid = dataStaff?.uuid
-        dispatch(getStaffInvoice(uuid, currentDate))
+    const id = dataStaff?.id
+        dispatch(getStaffInvoice(id))
    }
   }, [dispatch, invoice, upComming, completed])
   
