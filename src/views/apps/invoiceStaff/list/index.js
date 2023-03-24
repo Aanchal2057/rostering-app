@@ -53,6 +53,7 @@ const CustomHeader = ({ show }) => {
 const InvoiceList  = ({dataStaff}) => {
   // ** Store Vars
   console.log(dataStaff)
+
   const dispatch = useDispatch()
   const checkpage = useRef()
   
@@ -228,10 +229,8 @@ const display = () => {
             setInvoice(false)
       dispatch(loadEvent(staff_id))
       } else if (invoice) {
-              const date = new Date()
-    const currentDate = `${date.getFullYear()}-${date.getMonth()}`
-    const uuid = dataStaff?.uuid
-        dispatch(getStaffInvoice(uuid, currentDate))
+       
+        dispatch(getStaffInvoice(dataStaff?.id))
    }
   }, [dispatch, invoice, upComming, completed])
   
