@@ -57,20 +57,8 @@ export default [
         navLink: '/apps/invoice/list'
       },
       {
-        id: 'invoicePreview',
-        title: 'Preview',
-        icon: <Circle size={12} />,
-        navLink: '/apps/invoice/preview'
-      },
-      {
-        id: 'invoiceEdit',
-        title: 'Edit',
-        icon: <Circle size={12} />,
-        navLink: '/apps/invoice/edit'
-      },
-      {
         id: 'invoiceAdd',
-        title: 'Add',
+        title: 'Invoice',
         icon: <Circle size={12} />,
         navLink: '/apps/invoice/add'
       }

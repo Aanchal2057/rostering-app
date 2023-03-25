@@ -219,7 +219,6 @@ const display = () => {
   
     const datas = useSelector(state => state?.Event?.event) 
     const datass = useSelector(state => state?.Event?.event) 
-
   console.log(invoice, upComming, completed)
     useEffect(() => {
       if (upComming) {
