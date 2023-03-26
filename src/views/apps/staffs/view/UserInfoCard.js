@@ -9,7 +9,7 @@ import { User } from 'react-feather'
 import { Card, CardBody, CardText, Button, Row, Col } from 'reactstrap'
 import Group from '@src/assets/images/svg/Group 15.svg'
 import Image from '@src/assets/images/svg/Group 16.svg'
-import { StaffsDelete } from '../../../../redux1/action/auth'
+import { StaffsDelete, generateInvoice, getStaffInvoice } from '../../../../redux1/action/auth'
 import { useDispatch } from 'react-redux'
 
 const UserInfoCard = ({ data }) => {
@@ -26,7 +26,6 @@ const renderUserImg = () => {
       const stateNum = Math.floor(Math.random() * 6),
         states = ['light-success', 'light-danger', 'light-warning', 'light-info', 'light-primary', 'light-secondary'],
         color = states[stateNum]
-      
       return (
         <User
           initials
@@ -48,9 +47,14 @@ const renderUserImg = () => {
        
       )
     }
-    console.log(data)
   }
-
+console.log(data)
+  const handleGenerateInvoice = (uuid) => {
+    dispatch(getStaffInvoice(uuid))
+      history.push("/apps/invoice/add")
+   
+    
+  }
   return (
     <Card style={{ marginLeft:'20px'}}>
       <CardBody>
@@ -79,7 +83,12 @@ const renderUserImg = () => {
                     </Button.Ripple>
                   <Button.Ripple className='ml-1' color='danger' onClick={() => { handelDelete(data?.uuid) } } outline>
                       Delete
-                    </Button.Ripple>
+                  </Button.Ripple>
+
+                     <Button.Ripple className='ml-1' color='success' onClick={() => { handleGenerateInvoice(data?.id) } } outline>
+                   Generate Invoice
+                  </Button.Ripple>
+      
                   </div>
               </div>
             </div>

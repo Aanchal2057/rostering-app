@@ -52,7 +52,6 @@ const CustomHeader = ({ show }) => {
 
 const InvoiceList  = ({dataStaff}) => {
   // ** Store Vars
-  console.log(dataStaff)
   const dispatch = useDispatch()
   const checkpage = useRef()
   
@@ -135,25 +134,25 @@ const columnscompleted = [
 ]
 const column = [
   {
-      name: 'NAME2',
-      selector: row => row?.name
+      name: 'NAME',
+      selector: row => dataStaff?.name
   },
   {
-      name: 'Email',
-      selector: row => row?.email
+      name: 'Total',
+      selector: row => row?.total
   },
   {
-      name: 'Address',
-      selector: row => row?.address
+      name: 'Invoice Date',
+      selector: row => row?.invoice_start_date
 
   },
   {
-      name: 'Contact',
-      selector: row => row?.contact
+      name: 'status',
+      selector: row => { return row?.isPaid ? 'paid' : 'unpaid' }
   },
   {
-      name: 'department',
-      selector: row => row?.department
+      name: 'Action',
+      selector: row => 'action'
   }
  
 ]
@@ -217,8 +216,7 @@ const display = () => {
   }
   
     const datas = useSelector(state => state?.Event?.event) 
-    const datass = useSelector(state => state?.Event?.event) 
-  console.log(invoice, upComming, completed)
+    const datass = useSelector(state => state?.invoice?.invoice?.invoices) 
     useEffect(() => {
       if (upComming) {
             setInvoice(false)
@@ -227,10 +225,8 @@ const display = () => {
             setInvoice(false)
       dispatch(loadEvent(staff_id))
       } else if (invoice) {
-              const date = new Date()
-    const currentDate = `${date.getFullYear()}-${date.getMonth()}`
-    const id = dataStaff?.id
-        dispatch(getStaffInvoice(id))
+       
+        dispatch(getStaffInvoice(dataStaff?.id))
    }
   }, [dispatch, invoice, upComming, completed])
   
