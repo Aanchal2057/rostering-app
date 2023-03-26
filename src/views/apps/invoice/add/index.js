@@ -19,6 +19,7 @@ const InvoiceAdd = () => {
 
   const uuid = data?.invoices && data?.invoices[0]?.uuid
 
+  
   useEffect(() => {   
      dispatch(generateInvoice(uuid))
   }, [dispatch])
