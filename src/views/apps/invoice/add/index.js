@@ -19,7 +19,7 @@ const InvoiceAdd = () => {
 
   const uuid = data?.invoices && data?.invoices[0]?.uuid
 
-  
+
   useEffect(() => {   
      dispatch(generateInvoice(uuid))
   }, [dispatch])
@@ -32,7 +32,7 @@ const InvoiceAdd = () => {
     {!data?.invoices ? 'no invoice to display' : <AddCard /> }
         </Col>
         <Col xl={3} md={4} sm={12}>
-  
+          <AddActions />
         </Col>
       </Row>
     </div>
