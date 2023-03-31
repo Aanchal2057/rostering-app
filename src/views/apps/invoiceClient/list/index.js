@@ -13,7 +13,7 @@ import { Card, CardHeader, CardTitle, CardBody, Input, Row, Col, Label, CustomIn
 
 // import { columns, column, columnscompleted } from './columns'
 import { Link, useParams } from 'react-router-dom'
-import { getStaffInvoice, loadEvent } from '../../../../redux1/action/auth'
+import { getCleintInvoice, getStaffInvoice, loadEvent } from '../../../../redux1/action/auth'
 // ** Table Header
 const CustomHeader = ({ show }) => {
 
@@ -69,8 +69,9 @@ const InvoiceList  = ({dataClient}) => {
   // ** Get data on mount
     const {staff_id} = useParams()
 
-  const datas = useSelector(state => state?.Event?.event || [])
-     const datass = useSelector(state => state?.Event?.event) 
+      const datas = useSelector(state => state?.Event?.event) 
+    const datass = useSelector(state => state?.invoice?.invoice?.invoices) 
+    //  const datass = useSelector(state => state?.Event?.event) 
   // ** Function in get data on search query change
   const columns = [
     {
@@ -138,33 +139,25 @@ const columnscompleted = [
 ]
 const column = [
   {
-      name: 'NAME2',
-      selector: row => row.title
+      name: 'NAME',
+      selector: row => dataStaff?.name
   },
   {
-      name: 'START DATE',
-      selector: row => row.start_date.slice(0, 10)
+      name: 'Total',
+      selector: row => row?.total
   },
   {
-      name: 'END DATE',
-      selector: row => row.end_date.slice(0, 10)
+      name: 'Invoice Date',
+      selector: row => row?.invoice_start_date
 
   },
   {
-      name: 'CLIENT',
-      selector: row => row.client?.name
+      name: 'status',
+      selector: row => { return row?.isPaid ? 'paid' : 'unpaid' }
   },
   {
-      name: 'STAFF',
-      selector: row => (row.staff.length > 0 ? row.staff[0].name : "no name")
-  },
-  {
-      name: 'STAFF PAYMENT',
-      selector: row => row.staff_rate
-  },
-  {
-      name: 'CLIENT PAYMENT',
-      selector: row => row.client_rate
+      name: 'Action',
+    selector: row => <Eye color='gray' className='cursor-pointer' />
   }
  
 ]
@@ -234,10 +227,7 @@ const display = () => {
           setInvoice(false)
           dispatch(loadEvent(staff_id))
         } else if (invoice) {
-          const date = new Date()
-          const currentDate = `${date.getFullYear()}-${date.getMonth()}`
-          const uuid = dataClient?.uuid
-          dispatch(getStaffInvoice(uuid, currentDate))
+    dispatch(getCleintInvoice(dataClient?.id))
         }
     }, [dispatch, invoice, upComming, completed])
   

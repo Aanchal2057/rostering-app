@@ -34,13 +34,20 @@ import 'react-slidedown/lib/slidedown.css'
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/flatpickr/flatpickr.scss'
 import '@styles/base/pages/app-invoice.scss'
+import { useSelector } from 'react-redux'
 
-const AddCard = () => {
+const AddCard = ({ datas }) => {
+  
+const clients = useSelector(state => state?.Clients?.client)
+  const data = datas[0]
+  const event = data.events[0]
+  const client = clients?.clients?.find((data) => data?.id === event?.client_id)
+  console.log(data)
+  console.log(client)
   // ** States
   const [count, setCount] = useState(1)
   const [value, setValue] = useState({})
   const [open, setOpen] = useState(false)
-  const [clients, setClients] = useState(null)
   const [selected, setSelected] = useState(null)
   const [picker, setPicker] = useState(new Date())
   const [invoiceNumber, setInvoiceNumber] = useState(false)
@@ -53,39 +60,6 @@ const AddCard = () => {
       color: 'flat-success'
     }
   ])
-
-  useEffect(() => {
-    // ** Get Clients
-    axios.get('/api/invoice/clients').then(response => {
-      const arr = options
-      response.data.map(item => arr.push({ value: item.name, label: item.name }))
-      setOptions([...arr])
-      setClients(response.data)
-    })
-
-    // ** Get Invoices & Set Invoice Number
-    axios
-      .get('/apps/invoice/invoices', {
-        page: 1,
-        perPage: 10,
-        status: '',
-        q: ''
-      })
-      .then(response => {
-        const lastInvoiceNumber = Math.max.apply(
-          Math,
-          response.data.allData.map(i => i.id)
-        )
-        setInvoiceNumber(lastInvoiceNumber + 1)
-      })
-  }, [])
-
-  // ** Deletes form
-  const deleteForm = e => {
-    e.preventDefault()
-    e.target.closest('.repeater-wrapper').remove()
-  }
-
   // ** Function to toggle sidebar
   const toggleSidebar = () => setOpen(!open)
 
@@ -102,25 +76,6 @@ const AddCard = () => {
     { value: 'united-arab-emirates', label: 'United Arab Emirates' },
     { value: 'united-states-of-america', label: 'United States of America' }
   ]
-
-  // ** Custom Options Component
-  const OptionComponent = ({ data, ...props }) => {
-    if (data.type === 'button') {
-      return (
-        <Button className='text-left rounded-0' color={data.color} block onClick={() => setOpen(true)}>
-          <Plus size={14} /> <span className='align-middle ml-50'>{data.label}</span>
-        </Button>
-      )
-    } else {
-      return <components.Option {...props}> {data.label} </components.Option>
-    }
-  }
-
-  // ** Invoice To OnChange
-  const handleInvoiceToChange = data => {
-    setValue(data)
-    setSelected(clients.filter(i => i.name === data.value)[0])
-  }
 
   const note =
     'It was a pleasure working with you and your team. We hope you will keep us in mind for future freelance projects. Thank You!'
@@ -200,8 +155,8 @@ const AddCard = () => {
                   <Input
                     type='number'
                     className='invoice-edit-input'
-                    value={invoiceNumber || 3171}
-                    placeholder='53634'
+                    value={data.id}
+                
                     disabled
                   />
                 </InputGroup>
@@ -209,16 +164,16 @@ const AddCard = () => {
               <div className='d-flex align-items-center mb-1'>
                 <span className='title'>Date:</span>
                 <Flatpickr
-                  value={picker}
-                  onChange={date => setPicker(date)}
+                  value={data.invoice_start_date}
+                
                   className='form-control invoice-edit-input date-picker'
                 />
               </div>
               <div className='d-flex align-items-center'>
                 <span className='title'>Due Date:</span>
                 <Flatpickr
-                  value={dueDatepicker}
-                  onChange={date => setDueDatePicker(date)}
+                  value={data.invoice_end_date}
+              
                   className='form-control invoice-edit-input due-date-picker'
                 />
               </div>
@@ -233,64 +188,10 @@ const AddCard = () => {
         <CardBody className='invoice-padding pt-0'>
           <Row className='row-bill-to invoice-spacing'>
             <Col className='col-bill-to pl-0' lg='8'>
-              <h6 className='invoice-to-title'>Invoice To:</h6>
-              <div className='invoice-customer'>
-                {clients !== null ? (
-                  <Fragment>
-                    <Select
-                      className='react-select'
-                      classNamePrefix='select'
-                      id='label'
-                      value={value}
-                      options={options}
-                      theme={selectThemeColors}
-                      components={{
-                        Option: OptionComponent
-                      }}
-                      onChange={handleInvoiceToChange}
-                    />
-                    {selected !== null ? (
-                      <div className='customer-details mt-1'>
-                        <p className='mb-25'>{selected.name}</p>
-                        <p className='mb-25'>{selected.company}</p>
-                        <p className='mb-25'>{selected.address}</p>
-                        <p className='mb-25'>{selected.country}</p>
-                        <p className='mb-0'>{selected.contact}</p>
-                        <p className='mb-0'>{selected.companyEmail}</p>
-                      </div>
-                    ) : null}
-                  </Fragment>
-                ) : null}
-              </div>
+              <h6 className='invoice-to-title'>Invoice To: {client?.name }</h6>
             </Col>
             <Col className='pr-0 mt-xl-0 mt-2' lg='4'>
-              <h6 className='mb-2'>Status</h6>
-              <table>
-                {/* <tbody>
-                  <tr>
-                    <td className='pr-1'>Total Due:</td>
-                    <td>
-                      <span className='font-weight-bolder'>$12,110.55</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className='pr-1'>Bank name:</td>
-                    <td>American Bank</td>
-                  </tr>
-                  <tr>
-                    <td className='pr-1'>Country:</td>
-                    <td>United States</td>
-                  </tr>
-                  <tr>
-                    <td className='pr-1'>IBAN:</td>
-                    <td>ETD95476213874685</td>
-                  </tr>
-                  <tr>
-                    <td className='pr-1'>SWIFT code:</td>
-                    <td>BR91905</td>
-                  </tr>
-                </tbody> */}
-              </table>
+              <h6 className='mb-2'>Status : {data.isPaid ? 'paid' : 'unpaid' }</h6>
             </Col>
           </Row>
         </CardBody>
@@ -308,36 +209,20 @@ const AddCard = () => {
                       <Row className='w-100 pr-lg-0 pr-1 py-2'>
                         <Col className='mb-lg-0 mb-2 mt-lg-0 mt-2' lg='5' sm='12'>
                           <CardText className='col-title mb-md-50 mb-0'>Events</CardText>
-                          <Input type='select' className='item-details'>
-                            <option>App Design</option>
-                            <option>App Customization</option>
-                            <option>ABC Template</option>
-                            <option>App Development</option>
+                          <Input disabled className='item-details' value={event.title}>
+                   
                           </Input>
                           {/* <Input className='mt-2' type='textarea' rows='1' defaultValue='Customization & Bug Fixes' /> */}
                         </Col>
                         <Col className='my-lg-0 my-2' lg='3' sm='12'>
                           <CardText className='col-title mb-md-2 mb-0'>Cost</CardText>
-                          <Input type='number' defaultValue='24' placeholder='24' />
-                          {/* <div className='mt-2'>
-                            <span>Discount:</span> <span>0%</span>
-                            <span id={`tax1-${i}`} className='ml-50'>
-                              0%
-                            </span>
-                            <span id={`tax2-${i}`} className='ml-50'>
-                              0%
-                            </span>
-                            <UncontrolledTooltip target={`tax1-${i}`}>Tax 1</UncontrolledTooltip>
-                            <UncontrolledTooltip target={`tax2-${i}`}>Tax 2</UncontrolledTooltip>
-                          </div> */}
+                          <Input type='number' defaultValue='24' disabled value=  {event.client_rate} />
+                        
                         </Col>
-                        <Col className='my-lg-0 my-2' lg='2' sm='12'>
-                          <CardText className='col-title mb-md-2 mb-0'>Qty</CardText>
-                          <Input type='number' defaultValue='1' placeholder='1' />
-                        </Col>
+                        
                         <Col className='my-lg-0 mt-2' lg='2' sm='12'>
                           <CardText className='col-title mb-md-50 mb-0'>Price</CardText>
-                          <CardText className='mb-0'>$24.00</CardText>
+                          <CardText className='mb-0'>{event.client_rate}</CardText>
                         </Col>
                       </Row>
                       {/* <div className='d-flex flex-column align-items-center justify-content-start border-left invoice-product-actions py-50 px-25'>
@@ -376,20 +261,12 @@ const AddCard = () => {
               <div className='invoice-total-wrapper'>
                 <div className='invoice-total-item'>
                   <p className='invoice-total-title'>Subtotal:</p>
-                  <p className='invoice-total-amount'>$1800</p>
-                </div>
-                <div className='invoice-total-item'>
-                  <p className='invoice-total-title'>Discount:</p>
-                  <p className='invoice-total-amount'>$28</p>
-                </div>
-                <div className='invoice-total-item'>
-                  <p className='invoice-total-title'>Tax:</p>
-                  <p className='invoice-total-amount'>21%</p>
+                  <p className='invoice-total-amount'>  {event.client_rate}</p>
                 </div>
                 <hr className='my-50' />
                 <div className='invoice-total-item'>
                   <p className='invoice-total-title'>Total:</p>
-                  <p className='invoice-total-amount'>$1690</p>
+                  <p className='invoice-total-amount'>  {event.client_rate}</p>
                 </div>
               </div>
             </Col>

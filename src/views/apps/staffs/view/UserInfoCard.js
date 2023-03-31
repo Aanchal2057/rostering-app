@@ -49,12 +49,7 @@ const renderUserImg = () => {
     }
   }
 console.log(data)
-  const handleGenerateInvoice = (uuid) => {
-    dispatch(getStaffInvoice(uuid))
-      history.push("/apps/invoice/add")
-   
-    
-  }
+
   return (
     <Card style={{ marginLeft:'20px'}}>
       <CardBody>
@@ -85,10 +80,6 @@ console.log(data)
                       Delete
                   </Button.Ripple>
 
-                     <Button.Ripple className='ml-1' color='success' onClick={() => { handleGenerateInvoice(data?.id) } } outline>
-                   Generate Invoice
-                  </Button.Ripple>
-      
                   </div>
               </div>
             </div>
