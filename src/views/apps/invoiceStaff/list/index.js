@@ -18,6 +18,7 @@ import { generateInvoice, getStaffInvoice, loadEvent, createInvoice, StaffsDetai
 const CustomHeader = ({ show, dataStaff }) => {
   const dispatch = useDispatch()
 
+
   const userId = String(dataStaff?.id)
 
   const CreateInvoice = userId => {
@@ -79,7 +80,7 @@ const InvoiceList  = ({dataStaff}) => {
   
   const handleGenerateInvoice = (uuid) => {
     dispatch(generateInvoice(uuid))
-    history.push("/apps/invoice/add") 
+    history.push("/apps/invoiceStaff/add") 
     
   }
 

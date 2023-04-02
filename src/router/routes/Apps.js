@@ -48,8 +48,12 @@ const AppRoutes = [
   //   component: () => <Redirect to='/apps/invoice/edit/4987' />
   // },
   {
-    path: '/apps/invoice/add',
-    component: lazy(() => import('../../views/apps/invoice/add'))
+    path: '/apps/invoiceStaff/add',
+    component: lazy(() => import('../../views/apps/invoiceStaff/add'))
+  },
+  {
+    path:'/apps/invoiceClient/add',
+    component: lazy(() => import('../../views/apps/invoiceClient/add'))
   },
   {
     path: '/apps/invoice/print',

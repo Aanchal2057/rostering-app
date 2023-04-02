@@ -12,8 +12,8 @@ import DataTable from 'react-data-table-component'
 import { Card, CardHeader, CardTitle, CardBody, Input, Row, Col, Label, CustomInput, Button } from 'reactstrap'
 
 // import { columns, column, columnscompleted } from './columns'
-import { Link, useParams } from 'react-router-dom'
-import { getCleintInvoice, getStaffInvoice, loadEvent, createClientInvoice} from '../../../../redux1/action/auth'
+import { Link, useParams, useHistory } from 'react-router-dom'
+import { getCleintInvoice, getStaffInvoice, loadEvent, createClientInvoice, generateClientInvoice} from '../../../../redux1/action/auth'
 // ** Table Header
 const CustomHeader = ({ show, dataClient}) => {
   const dispatch = useDispatch()
@@ -67,7 +67,7 @@ const InvoiceList  = ({dataClient}) => {
   const dispatch = useDispatch()
   
   const checkpage = useRef()
-  
+   const history = useHistory()
   // ** States
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [searchTerm, setSearchTerm] = useState('')
@@ -84,6 +84,12 @@ const InvoiceList  = ({dataClient}) => {
       const datas = useSelector(state => state?.Event?.event) 
     const datass = useSelector(state => state?.invoice?.invoice?.invoices) 
     //  const datass = useSelector(state => state?.Event?.event) 
+   const handleGenerateInvoice = (uuid) => {
+    dispatch(generateClientInvoice(uuid))
+    history.push("/apps/invoiceClient/add") 
+    
+  }
+
   // ** Function in get data on search query change
   const columns = [
     {
@@ -169,7 +175,7 @@ const column = [
   },
   {
       name: 'Action',
-    selector: row => <Eye color='gray' className='cursor-pointer' />
+      selector: row => <Eye color='gray' className='cursor-pointer' onClick={() => { handleGenerateInvoice(row?.uuid) }}/>
   }
  
 ]
