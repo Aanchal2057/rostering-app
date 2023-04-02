@@ -158,7 +158,7 @@ export const Event = (state = { event: [] }, action) => {
         case ADD_EVENT_REQUEST:
             case GET_FILTER_REQUEST:
         case EDIT_EVENT_REQUEST:
-        case UPDATE_ISADMINAPPROVAL_REQUEST:
+         case UPDATE_ISADMINAPPROVAL_REQUEST:
         case UPDATE_ADMINSTATUS_REQUEST:
            
             case GET_COMPLETED_REQUEST:
