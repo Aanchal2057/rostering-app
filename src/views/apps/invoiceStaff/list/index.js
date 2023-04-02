@@ -13,40 +13,50 @@ import { Card, CardHeader, CardTitle, CardBody, Input, Row, Col, Label, CustomIn
 
 // import { columns, column, columnscompleted } from './columns'
 import { Link, useHistory, useParams } from 'react-router-dom'
-import { generateInvoice, getStaffInvoice, loadEvent } from '../../../../redux1/action/auth'
+import { generateInvoice, getStaffInvoice, loadEvent, createInvoice, StaffsDetails} from '../../../../redux1/action/auth'
 // ** Table Header
-const CustomHeader = ({ show }) => {
+const CustomHeader = ({ show, dataStaff }) => {
+  const dispatch = useDispatch()
 
-  const shoot = () => {
-    alert("Great Shot!")
+  const userId = String(dataStaff?.id)
+
+  const CreateInvoice = userId => {
+    
+      dispatch(
+        createInvoice({
+          staff_id: userId
+        })
+      )
   }
-  
+
   return (
     <>
       <div className='invoice-list-table-header w-100 py-2 bg-light'>
-      <Row>
-        <Col lg='6' className='d-flex align-items-center px-0 px-lg-1'>
-      
-          <Button  className='mx-2 cursor-pointer' onClick={ () => { show('upcoming') } } color='primary'>
-           Upcoming
-          </Button>
-          <Button tag={Link} className='mx-2' onClick={ () => { show('completed') } } color='primary'>
-           Completed
-          </Button>
-          <Button tag={Link} onClick={ () => { show('invoice') } } className='mx-2'  color='primary'>
-           Invoices
-          </Button>
-        </Col>
-      </Row>
-    </div>
-    <div className='invoice-list-table-header w-100 py-2 bg-white'>
-      <Row>
-        <Col lg='6' className='d-flex align-items-center px-0 px-lg-1'>
-        </Col>
-      </Row>
-    </div>
+        <Row>
+          <Col lg='9' className='d-flex align-items-center px-0 px-lg-1'>
+            <Button className='mx-2 cursor-pointer' onClick={() => show('upcoming')} color='primary'>
+              Upcoming
+            </Button>
+            <Button tag={Link} className='mx-2' onClick={() => show('completed')} color='primary'>
+              Completed
+            </Button>
+            <Button tag={Link} onClick={() => show('invoice')} className='mx-2' color='primary'>
+              Invoices
+            </Button>
+          </Col>
+          <Col lg='3' className='d-flex align-items-center px-0 px-lg-1'>
+            <Button tag={Link} onClick={() => CreateInvoice(userId)} className='mx-2' color='primary'>
+              Generate Invoice
+            </Button>
+          </Col>
+        </Row>
+      </div>
+      <div className='invoice-list-table-header w-100 py-2 bg-white'>
+        <Row>
+          <Col lg='6' className='d-flex align-items-center px-0 px-lg-1'></Col>
+        </Row>
+      </div>
     </>
-    
   )
 }
 
@@ -274,6 +284,7 @@ showevent = datass
               <CustomHeader
                 value={value}
                 show={show}
+                dataStaff={dataStaff}
               />
             }
         />
