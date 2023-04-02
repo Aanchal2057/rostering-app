@@ -7,13 +7,13 @@ import { useDispatch, useSelector } from 'react-redux'
 
 // ** Third Party Components
 import ReactPaginate from 'react-paginate'
-import { ChevronDown, CheckSquare } from 'react-feather'
+import { ChevronDown, CheckSquare, Eye } from 'react-feather'
 import DataTable from 'react-data-table-component'
 import { Card, CardHeader, CardTitle, CardBody, Input, Row, Col, Label, CustomInput, Button } from 'reactstrap'
 
 // import { columns, column, columnscompleted } from './columns'
-import { Link, useParams } from 'react-router-dom'
-import { getStaffInvoice, loadEvent } from '../../../../redux1/action/auth'
+import { Link, useHistory, useParams } from 'react-router-dom'
+import { generateInvoice, getStaffInvoice, loadEvent } from '../../../../redux1/action/auth'
 // ** Table Header
 const CustomHeader = ({ show }) => {
 
@@ -54,7 +54,7 @@ const InvoiceList  = ({dataStaff}) => {
   // ** Store Vars
   const dispatch = useDispatch()
   const checkpage = useRef()
-  
+   const history = useHistory()
   // ** States
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [searchTerm, setSearchTerm] = useState('')
@@ -67,6 +67,12 @@ const InvoiceList  = ({dataStaff}) => {
   // ** Get data on mount
   const {staff_id} = useParams()
   
+  const handleGenerateInvoice = (uuid) => {
+    dispatch(generateInvoice(uuid))
+    history.push("/apps/invoice/add") 
+    
+  }
+
   // ** Function in get data on search query change
   const columns = [
     {
@@ -152,7 +158,7 @@ const column = [
   },
   {
       name: 'Action',
-      selector: row => 'action'
+    selector: row => <Eye color='gray' className='cursor-pointer' onClick={() => { handleGenerateInvoice(row?.uuid) }}/>
   }
  
 ]
