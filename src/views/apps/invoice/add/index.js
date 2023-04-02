@@ -16,6 +16,7 @@ const InvoiceAdd = () => {
 
   const data = useSelector(state => state?.invoice?.invoice)
 
+
   return (
     <div className='invoice-add-wrapper'>
       <Row className='invoice-add'>
@@ -23,7 +24,7 @@ const InvoiceAdd = () => {
           {!data?.invoices ? 'no invoice to display' : <AddCard datas={data?.invoices } /> }
         </Col>
         <Col xl={3} md={4} sm={12}>
-  
+          <AddActions />
         </Col>
       </Row>
     </div>
