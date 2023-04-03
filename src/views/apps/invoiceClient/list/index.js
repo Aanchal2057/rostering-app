@@ -7,25 +7,32 @@ import { useDispatch, useSelector } from 'react-redux'
 
 // ** Third Party Components
 import ReactPaginate from 'react-paginate'
-import { ChevronDown, CheckSquare } from 'react-feather'
+import { Eye } from 'react-feather'
 import DataTable from 'react-data-table-component'
 import { Card, CardHeader, CardTitle, CardBody, Input, Row, Col, Label, CustomInput, Button } from 'reactstrap'
 
 // import { columns, column, columnscompleted } from './columns'
-import { Link, useParams } from 'react-router-dom'
-import { getCleintInvoice, getStaffInvoice, loadEvent } from '../../../../redux1/action/auth'
+import { Link, useParams, useHistory } from 'react-router-dom'
+import { getCleintInvoice, getStaffInvoice, loadEvent, createClientInvoice, generateClientInvoice} from '../../../../redux1/action/auth'
 // ** Table Header
-const CustomHeader = ({ show }) => {
-
-  const shoot = () => {
-    alert("Great Shot!")
+const CustomHeader = ({ show, dataClient}) => {
+  const dispatch = useDispatch()
+  const userId = String(dataClient?.id)
+  console.log(userId)
+   const CreateInvoice = userId => {
+    
+      dispatch(
+        createClientInvoice({
+          client_id: userId
+        })
+      )
   }
-  
+
   return (
     <>
       <div className='invoice-list-table-header w-100 py-2 bg-light'>
       <Row>
-        <Col lg='6' className='d-flex align-items-center px-0 px-lg-1'>
+        <Col lg='9' className='d-flex align-items-center px-0 px-lg-1'>
       
           <Button  className='mx-2 cursor-pointer' onClick={ () => { show('upcoming') } } color='primary'>
            Upcoming
@@ -37,6 +44,11 @@ const CustomHeader = ({ show }) => {
            Invoices
           </Button>
         </Col>
+        <Col lg='3' className='d-flex align-items-center px-0 px-lg-1'>
+            <Button tag={Link} onClick={() => CreateInvoice(userId)} className='mx-2' color='primary'>
+              Generate Invoice
+            </Button>
+          </Col>
       </Row>
     </div>
     <div className='invoice-list-table-header w-100 py-2 bg-white'>
@@ -55,7 +67,7 @@ const InvoiceList  = ({dataClient}) => {
   const dispatch = useDispatch()
   
   const checkpage = useRef()
-  
+   const history = useHistory()
   // ** States
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [searchTerm, setSearchTerm] = useState('')
@@ -72,6 +84,12 @@ const InvoiceList  = ({dataClient}) => {
       const datas = useSelector(state => state?.Event?.event) 
     const datass = useSelector(state => state?.invoice?.invoice?.invoices) 
     //  const datass = useSelector(state => state?.Event?.event) 
+   const handleGenerateInvoice = (uuid) => {
+    dispatch(generateClientInvoice(uuid))
+    history.push("/apps/invoiceClient/add") 
+    
+  }
+
   // ** Function in get data on search query change
   const columns = [
     {
@@ -97,7 +115,7 @@ const InvoiceList  = ({dataClient}) => {
     },
     {
         name: 'STAFF PAYMENT',
-        selector: row => row.staff_rate
+        selector: row => row.client_rate
     },
     {
         name: 'CLIENT PAYMENT',
@@ -140,7 +158,7 @@ const columnscompleted = [
 const column = [
   {
       name: 'NAME',
-      selector: row => dataStaff?.name
+      selector: row => dataClient?.name
   },
   {
       name: 'Total',
@@ -157,7 +175,7 @@ const column = [
   },
   {
       name: 'Action',
-    selector: row => <Eye color='gray' className='cursor-pointer' />
+      selector: row => <Eye color='gray' className='cursor-pointer' onClick={() => { handleGenerateInvoice(row?.uuid) }}/>
   }
  
 ]
@@ -264,6 +282,7 @@ showevent = datass
               <CustomHeader
                 value={value}
                 show={show}
+                dataClient={dataClient}
               />
             }
         />

@@ -16,36 +16,6 @@ const AddActions = () => {
         </CardBody>
       </Card>
       <div className='mt-2'>
-        {/* <div className='invoice-payment-option'>
-          <p className='mb-50'>Accept payments via</p>
-          <Input type='select' id='payment-select'>
-            {/* <option>Debit Card</option>
-            <option>Credit Card</option>
-            <option>Paypal</option>
-            <option>Internet Banking</option>
-            <option>UPI Transfer</option> 
-          </Input>
-        </div> */}
-        {/* <div className='invoice-terms mt-1'>
-          <div className='d-flex justify-content-between'>
-            <Label className='mb-0' for='payment-terms'>
-              Payment Terms
-            </Label>
-            <CustomInput type='switch' id='payment-terms' defaultChecked />
-          </div>
-          <div className='d-flex justify-content-between py-1'>
-            <Label className='mb-0' for='client-notes'>
-              Client Notes
-            </Label>
-            <CustomInput type='switch' id='client-notes' defaultChecked />
-          </div>
-          <div className='d-flex justify-content-between'>
-            <Label className='mb-0' for='payment-stub'>
-              Payment Stub
-            </Label>
-            <CustomInput type='switch' id='payment-stub' />
-          </div>
-        </div> */}
       </div>
     </Fragment>
   )
