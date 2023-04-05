@@ -39,13 +39,8 @@ import Table from './Table'
 const AddCard = ({ datas }) => {
   
   const clients = useSelector(state => state?.Clients?.client)
-  console.log(clients)
   const data = datas[0]
   const events = data.events
-  console.log(events)
-  const client = clients?.clients?.find((data) => data?.id === event?.client_id)
-  console.log(data)
-  console.log(client)
   // ** States
   const [count, setCount] = useState(1)
   const [value, setValue] = useState({})
@@ -176,7 +171,7 @@ const AddCard = ({ datas }) => {
         <CardBody className='invoice-padding pt-0'>
           <Row className='row-bill-to invoice-spacing'>
             <Col className='col-bill-to pl-0' lg='8'>
-              <h6 className='invoice-to-title'>Invoice To: {client?.name }</h6>
+              <h6 className='invoice-to-title'>Invoice To: {clients?.name }</h6>
             </Col>
             <Col className='pr-0 mt-xl-0 mt-2' lg='4'>
               <h6 className='mb-2'>Status : {data.isPaid ? 'paid' : 'unpaid' }</h6>
@@ -210,7 +205,7 @@ const AddCard = ({ datas }) => {
                           <CardText className='col-title mb-md-50 mb-0'>Price</CardText>
                           <CardText className='mb-0'>{event.client_rate}</CardText>
                         </Col> */}
-                        <Table/>
+                        <Table event={events} />
                       </Row>
                     </Col>
                   </Row>

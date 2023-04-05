@@ -1,10 +1,8 @@
 import { Fragment, useState, useEffect } from 'react'
 import DataTable from 'react-data-table-component'
 
-const Table = (event) => {
-   const data1 = event
-   console.log(data1)
-  //  console.log(event[0].title)
+const Table = ({event}) => {
+   console.log(event)
   const columns = [
     {
         name: 'Title',
@@ -12,28 +10,22 @@ const Table = (event) => {
         sortable: true
     },
     {
-        name: 'Year',
-        selector: row => row.year,
+        name: 'Rate',
+        selector: row => row.staff_rate,
+        sortable: true
+    },
+    {
+        name: 'Cost',
+        selector: row => row.staff_rate,
         sortable: true
     }
   ]
   
-  const data = [
-    {
-        id: 1,
-        title: 'Beetlejuice',
-        year: '1988'
-    },
-    {
-        id: 2,
-        title: 'Ghostbusters',
-        year: '1984'
-    }
-  ]
   return (
     <DataTable
+       noHeader
     columns={columns}
-    data={data}
+    data={event}
     responsive
 />
   )
