@@ -38,15 +38,12 @@ import { useSelector } from 'react-redux'
 const AddCard = ({ datas }) => {
   
 
-const staffs = useSelector(state => state?.Staffs)
+const staffs = useSelector(state => state?.Staffs?.staffs)
 console.log(staffs)
   const data = datas[0]
-  const event = data.events[0]
+  const event = data.events
   console.log(data)
-  const staffArray = staffs?.staffs
-  const staff = Array.isArray(staffArray) ? staffArray.find((data) => data?.id === event?.staff_id) : null
 
-  console.log(staff)
   // ** States
   const [count, setCount] = useState(1)
   const [value, setValue] = useState({})
@@ -179,7 +176,7 @@ console.log(staffs)
         <CardBody className='invoice-padding pt-0'>
           <Row className='row-bill-to invoice-spacing'>
             <Col className='col-bill-to pl-0' lg='8'>
-              <h6 className='invoice-to-title'>Invoice To: {staff?.name }</h6>
+              <h6 className='invoice-to-title'>Invoice To: {staffs?.name }</h6>
             </Col>
             <Col className='pr-0 mt-xl-0 mt-2' lg='4'>
               <h6 className='mb-2'>Status : {data.isPaid ? 'paid' : 'unpaid' }</h6>
