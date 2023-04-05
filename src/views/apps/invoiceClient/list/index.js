@@ -13,7 +13,7 @@ import { Card, CardHeader, CardTitle, CardBody, Input, Row, Col, Label, CustomIn
 
 // import { columns, column, columnscompleted } from './columns'
 import { Link, useParams, useHistory } from 'react-router-dom'
-import { getCleintInvoice, getStaffInvoice, loadEvent, createClientInvoice, generateClientInvoice} from '../../../../redux1/action/auth'
+import { getClientInvoice, getStaffInvoice, loadEvent, createClientInvoice, generateClientInvoice} from '../../../../redux1/action/auth'
 // ** Table Header
 const CustomHeader = ({ show, dataClient}) => {
   const dispatch = useDispatch()
@@ -245,7 +245,7 @@ const display = () => {
           setInvoice(false)
           dispatch(loadEvent(staff_id))
         } else if (invoice) {
-    dispatch(getCleintInvoice(dataClient?.id))
+    dispatch(getClientInvoice(dataClient?.id))
         }
     }, [dispatch, invoice, upComming, completed])
   

@@ -15,7 +15,7 @@ import { generateInvoice } from '../../../../redux1/action/auth'
 const InvoiceAdd = () => {
 
   const data = useSelector(state => state?.invoice?.invoice)
-
+  console.log(data)
 
   return (
     <div className='invoice-add-wrapper'>

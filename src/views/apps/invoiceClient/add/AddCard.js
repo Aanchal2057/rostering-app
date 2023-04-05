@@ -35,12 +35,14 @@ import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/flatpickr/flatpickr.scss'
 import '@styles/base/pages/app-invoice.scss'
 import { useSelector } from 'react-redux'
-
+import Table from './Table'
 const AddCard = ({ datas }) => {
   
-const clients = useSelector(state => state?.Clients?.client)
+  const clients = useSelector(state => state?.Clients?.client)
+  console.log(clients)
   const data = datas[0]
-  const event = data.events[0]
+  const events = data.events
+  console.log(events)
   const client = clients?.clients?.find((data) => data?.id === event?.client_id)
   console.log(data)
   console.log(client)
@@ -62,20 +64,6 @@ const clients = useSelector(state => state?.Clients?.client)
   ])
   // ** Function to toggle sidebar
   const toggleSidebar = () => setOpen(!open)
-
-  // ** Vars
-  const countryOptions = [
-    { value: 'australia', label: 'Australia' },
-    { value: 'canada', label: 'Canada' },
-    { value: 'russia', label: 'Russia' },
-    { value: 'saudi-arabia', label: 'Saudi Arabia' },
-    { value: 'singapore', label: 'Singapore' },
-    { value: 'sweden', label: 'Sweden' },
-    { value: 'switzerland', label: 'Switzerland' },
-    { value: 'united-kingdom', label: 'United Kingdom' },
-    { value: 'united-arab-emirates', label: 'United Arab Emirates' },
-    { value: 'united-states-of-america', label: 'United States of America' }
-  ]
 
   const note =
     'It was a pleasure working with you and your team. We hope you will keep us in mind for future freelance projects. Thank You!'
@@ -207,12 +195,10 @@ const clients = useSelector(state => state?.Clients?.client)
                   <Row>
                     <Col className='d-flex product-details-border position-relative pr-0' sm='12'>
                       <Row className='w-100 pr-lg-0 pr-1 py-2'>
-                        <Col className='mb-lg-0 mb-2 mt-lg-0 mt-2' lg='5' sm='12'>
+                        {/* <Col className='mb-lg-0 mb-2 mt-lg-0 mt-2' lg='5' sm='12'>
                           <CardText className='col-title mb-md-50 mb-0'>Events</CardText>
                           <Input disabled className='item-details' value={event.title}>
-                   
                           </Input>
-                          {/* <Input className='mt-2' type='textarea' rows='1' defaultValue='Customization & Bug Fixes' /> */}
                         </Col>
                         <Col className='my-lg-0 my-2' lg='3' sm='12'>
                           <CardText className='col-title mb-md-2 mb-0'>Cost</CardText>
@@ -223,25 +209,16 @@ const clients = useSelector(state => state?.Clients?.client)
                         <Col className='my-lg-0 mt-2' lg='2' sm='12'>
                           <CardText className='col-title mb-md-50 mb-0'>Price</CardText>
                           <CardText className='mb-0'>{event.client_rate}</CardText>
-                        </Col>
+                        </Col> */}
+                        <Table/>
                       </Row>
-                      {/* <div className='d-flex flex-column align-items-center justify-content-start border-left invoice-product-actions py-50 px-25'>
-                        <X size={18} className='cursor-pointer' onClick={deleteForm} />
-                      </div> */}
                     </Col>
                   </Row>
                 </Tag>
               )
             }}
           </Repeater>
-          {/* <Row className='mt-1'>
-            <Col sm='12' className='px-0'>
-              <Button.Ripple color='primary' size='sm' className='btn-add-new' onClick={() => setCount(count + 1)}>
-                <Plus size={14} className='mr-25'></Plus>
-                <span className='align-middle'>Add Item</span>
-              </Button.Ripple>
-            </Col>
-          </Row> */}
+        
         </CardBody>
 
         {/* /Product Details */}
@@ -250,12 +227,7 @@ const clients = useSelector(state => state?.Clients?.client)
         <CardBody className='invoice-padding'>
           <Row className='invoice-sales-total-wrapper'>
             <Col className='mt-md-0 mt-3' md={{ size: '6', order: 1 }} xs={{ size: 12, order: 2 }}>
-              {/* <div className='d-flex align-items-center mb-1'>
-                <Label for='salesperson' className='form-label'>
-                  Salesperson:
-                </Label>
-                <Input type='text' className='ml-50' id='salesperson' placeholder='Edward Crowley' />
-              </div> */}
+  
             </Col>
             <Col className='d-flex justify-content-end' md={{ size: '6', order: 2 }} xs={{ size: 12, order: 1 }}>
               <div className='invoice-total-wrapper'>
@@ -291,62 +263,6 @@ const clients = useSelector(state => state?.Clients?.client)
         </CardBody>
         {/* /Invoice Note */}
       </Card>
-
-      <Sidebar
-        size='lg'
-        open={open}
-        title='Add Payment'
-        headerClassName='mb-1'
-        contentClassName='p-0'
-        toggleSidebar={toggleSidebar}
-      >
-        <Form>
-          <FormGroup>
-            <Label for='customer-name' className='form-label'>
-              Customer Name
-            </Label>
-            <Input id='customer-name' placeholder='John Doe' />
-          </FormGroup>
-          <FormGroup>
-            <Label for='customer-email' className='form-label'>
-              Customer Email
-            </Label>
-            <Input type='email' id='customer-email' placeholder='example@domain.com' />
-          </FormGroup>
-          <FormGroup>
-            <Label for='customer-address' className='form-label'>
-              Customer Address
-            </Label>
-            <Input type='textarea' cols='2' rows='2' id='customer-address' placeholder='1307 Lady Bug Drive New York' />
-          </FormGroup>
-          <FormGroup>
-            <Label for='country' className='form-label'>
-              Country
-            </Label>
-            <Select
-              theme={selectThemeColors}
-              className='react-select'
-              classNamePrefix='select'
-              options={countryOptions}
-              isClearable={false}
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label for='customer-contact' className='form-label'>
-              Contact
-            </Label>
-            <Input type='number' id='customer-contact' placeholder='763-242-9206' />
-          </FormGroup>
-          <FormGroup className='d-flex flex-wrap mt-2'>
-            <Button className='mr-1' color='primary' onClick={() => setOpen(false)}>
-              Add
-            </Button>
-            <Button color='secondary' onClick={() => setOpen(false)} outline>
-              Cancel
-            </Button>
-          </FormGroup>
-        </Form>
-      </Sidebar>
     </Fragment>
   )
 }
