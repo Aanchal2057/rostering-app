@@ -18,11 +18,6 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import {
   fetchEvents,
-  // selectEvent,
-  //updateEvent,
-  // updateFilter,
-  // updateAllFilters,
-  // addEvent,
   removeEvent
 } from './store/actions/index'
 
