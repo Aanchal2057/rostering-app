@@ -627,7 +627,7 @@ export const createInvoice = ({ staff_id }) => async (dispatch) => {
     }
 }
 
-export const createClientInvoice = ({ staff_id }) => async (dispatch) => {
+export const createClientInvoice = ({ client_id }) => async (dispatch) => {
     try {
         dispatch({ type:CREATE_CLIENT_INVOICE_REQUEST })
 
@@ -641,12 +641,13 @@ export const createClientInvoice = ({ staff_id }) => async (dispatch) => {
             },
             config
         )
+        console.log(data)
         dispatch({
             type: CREATE_CLIENT_INVOICE_SUCCESS,
             payload: data
         })
     } catch (error) {
-        dispatch({ type:CREATE_CLIENT_INVOICE_FAIL, payload: error.response.data.message })
+        dispatch({ type: CREATE_CLIENT_INVOICE_FAIL, payload: error.response.data.message })
     }
 }
 
@@ -692,14 +693,14 @@ export const getCompleted = () => async (dispatch) => {
     }
 }
 
-export const generateClientInvoice = () => async (dispatch) => {
+export const generateClientInvoice = (uuid) => async (dispatch) => {
     try {
         dispatch({ type: GENERATE_CLIENT_INVOICE_REQUEST})
         const token = JSON.parse(localStorage.getItem('token'))
         const config = { headers: { 'x-api-key': '23124134', Authorization: `Bearer ${token}` } }
         const { data } = await axios.get(
            
-            `http://rostering.delshagroup.com/invoice/client`,
+            `http://rostering.delshagroup.com/invoice/staff/${uuid}`,
             config
         )
         dispatch({
@@ -711,7 +712,7 @@ export const generateClientInvoice = () => async (dispatch) => {
     }
 }
 
-export const getCleintInvoice = (id) => async (dispatch) => {
+export const getClientInvoice = (id) => async (dispatch) => {
     try {
         dispatch({ type: GET_CLIENT_INVOICE_REQUEST})
         const token = JSON.parse(localStorage.getItem('token'))
