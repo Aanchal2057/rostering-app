@@ -68,6 +68,7 @@ const AddEventSidebar = props => {
   const [uuidd, setUuidd] = useState('')
   const [desc, setDesc] = useState('')
   const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
   const [guests, setGuests] = useState({})
   const [guests1, setGuests1] = useState({})
   const [allDay, setAllDay] = useState(false)
@@ -153,7 +154,8 @@ const getClient =   datas1?.map((data) => {
           client_id: element.id,
           staff_id: '',
           client_rate: desc,
-          rateArray:''
+          rateArray:'',
+          description
         }
 
         dispatch(addEvents(obj))
@@ -166,7 +168,9 @@ const getClient =   datas1?.map((data) => {
             end_date: endPicker,
             client_id: element.id,
             staff_id: e.id,
-            client_rate: desc
+            client_rate: desc,
+            description
+
           }
           const getarray = datas?.find(({id}) => id === obj.staff_id)
           console.log(getarray)
@@ -271,7 +275,8 @@ console.log(guests)
           end_date: endPicker,
           client_id: element.id,
           staff_id: '',
-          client_rate: desc
+          client_rate: desc,
+          description
         }
       console.log(obj)
 
@@ -286,7 +291,8 @@ console.log(guests)
             end_date: endPicker,
             client_id: element.id,
             staff_id: e.id,
-            client_rate: desc
+            client_rate: desc,
+            description
           }
       console.log(obj)
           dispatch(updateEvent(obj))
@@ -494,6 +500,22 @@ console.log(guests)
               placeholder='Client Rate'
                 className={classnames({
                 'is-invalid': errors.desc
+              })}
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label for='title'>
+              Description
+            </Label>
+            <Input
+              id='description'
+              name='description'
+              placeholder='Description'
+              value={description}
+              onChange={e => setDescription(e.target.value)}
+              innerRef={register({ register: true, validate: value => value !== '' })}
+              className={classnames({
+                'is-invalid': errors.title
               })}
             />
           </FormGroup>

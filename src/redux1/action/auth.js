@@ -376,7 +376,7 @@ export const getEventFilter = (val) => async (dispatch) => {
 export const addEvents = (obj) => async (dispatch) => {
     try {
         dispatch({ type: ADD_EVENT_REQUEST })
-        const { title, start_date, end_date, client_id, staff_id, client_rate, rateArray} = obj
+        const { title, start_date, end_date, client_id, staff_id, client_rate, rateArray, description} = obj
         const token = JSON.parse(localStorage.getItem('token'))
         const config = { headers: { 'x-api-key': '23124134', Authorization: `Bearer ${token}` } }
         console.log(obj)
@@ -391,7 +391,8 @@ export const addEvents = (obj) => async (dispatch) => {
                 client_id,
                 staff_id,
                 client_rate,
-                staff_rate:rateArray
+                staff_rate:rateArray,
+                description
             },
             config
         )
@@ -514,7 +515,7 @@ export const updateEvent = (obj) => async (dispatch) => {
         dispatch({ type: EDIT_EVENT_REQUEST })
 
         const token = JSON.parse(localStorage.getItem('token'))
-        const { title, start_date, end_date, client_id, staff_id, client_rate, uuidd, rateArray} = obj
+        const { title, start_date, end_date, client_id, staff_id, client_rate, uuidd, rateArray, description} = obj
         const config = { headers: { 'x-api-key': '23124134', Authorization: `Bearer ${token}` } }
         const { data } = await axios.put(
             `http://rostering.delshagroup.com/event/${uuidd}`,
@@ -526,7 +527,8 @@ export const updateEvent = (obj) => async (dispatch) => {
                 client_id,
                 staff_id,
                 client_rate,
-                staff_rate:rateArray
+                staff_rate:rateArray,
+                description
             },
             config
         )
