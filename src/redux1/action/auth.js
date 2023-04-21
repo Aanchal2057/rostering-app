@@ -41,7 +41,7 @@ export const admin = () => async (dispatch) => {
     }
 }
 
-export const addClient = ({ name, email, address, department, contact }) => async (dispatch) => {
+export const addClient = ({ name, city, email, address, department, contact }) => async (dispatch) => {
     try {
         dispatch({ type: ADD_CLIENT_REQUEST })
 
@@ -52,6 +52,7 @@ export const addClient = ({ name, email, address, department, contact }) => asyn
             `http://rostering.delshagroup.com/client`,
             {
                 name,
+                city,
                 email,
                 address,
                 contact,
@@ -210,7 +211,7 @@ export const Staffs = (currentPage) => async (dispatch) => {
     }
 }
 
-export const addStaffs = ({ name, email, address, department, contact, rate }) => async (dispatch) => {
+export const addStaffs = ({ name, email, city, address, department, contact, rate }) => async (dispatch) => {
     try {
         dispatch({ type: ADD_STAFFS_REQUEST })
 
@@ -222,6 +223,7 @@ export const addStaffs = ({ name, email, address, department, contact, rate }) =
             {
                 name,
                 email,
+                city,
                 address,
                 contact,
                 department,

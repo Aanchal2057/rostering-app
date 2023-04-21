@@ -37,6 +37,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
       dispatch(
         addClient({
           name: values['full-name'],
+          city:values.city,
           address: values.country,
           contact: values.contact,
           email: values.email,
@@ -57,6 +58,61 @@ const data = (datas?.client)
     history.push("/apps/clients/list")
    }
   }, [dispatch, data])
+  const nepalCities = [
+    'Kathmandu',
+    'Pokhara',
+    'Chitwan',
+    'Biratnagar',
+    'Birgunj',
+    'Dharan',
+    'Bharatpur',
+    'Janakpur',
+    'Hetauda',
+    'Butwal',
+    'Bhaktapur',
+    'Dhangadhi',
+    'Mahendranagar',
+    'Bhimdatta',
+    'Itahari',
+    'Tulsipur',
+    'Nepalgunj',
+    'Gulariya',
+    'Birendranagar',
+    'Rajbiraj',
+    'Lahan',
+    'Siddharthanagar',
+    'Gaur',
+    'Dhankuta',
+    'Gorkha',
+    'Ilam',
+    'Khandbari',
+    'Dipayal',
+    'Tansen',
+    'Baglung',
+    'Panauti',
+    'Nawalpur',
+    'Lamjung',
+    'Bhojpur',
+    'Banepa',
+    'Dhulikhel',
+    'Damauli',
+    'Tikapur',
+    'Jaleswar',
+    'Bhadrapur',
+    'Darchula',
+    'Dailekh',
+    'Jumla',
+    'Kalinchowk',
+    'Lukla',
+    'Namche Bazaar',
+    'Simikot',
+    'Taplejung'
+  ]
+  
+  const cities = [
+    { label: '' },
+    ...nepalCities.map((city) => ({ label: city }))
+  ]
 
   return (
     <Sidebar
@@ -93,6 +149,23 @@ const data = (datas?.client)
             className={classnames({ 'is-invalid': errors['email'] })}
           />
           <FormText color='muted'>You can use letters, numbers & periods</FormText>
+        </FormGroup>
+        <FormGroup>
+          <Label for='city'>City</Label>
+          <Input
+            type='select'
+            name='city'
+            id='city'
+            placeholder='Select City'
+            innerRef={register({ required: true })}
+            className={classnames({ 'is-invalid': errors['city'] })}
+          >
+            {cities.map((city, i) => (
+              <option key={i}>
+                {city.label}
+              </option>
+            ))}
+          </Input>
         </FormGroup>
         <FormGroup>
           <Label for='country'>

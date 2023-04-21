@@ -25,7 +25,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
   const [rate, setRate] = useState('')
   // ** Store Vars
   const dispatch = useDispatch()
-    const history = useHistory()
+  const history = useHistory()
 
   // ** Vars
   const { register, errors, handleSubmit } = useForm()
@@ -37,33 +37,90 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
       dispatch(
         addStaffs({
           name: values['full-name'],
+          city:values.city,
           address: values.country,
           contact: values.contact,
           email: values.email,
           department: values.department,
-          rate:values.rate
+          rate: values.rate
         })
       )
     }
-  
-   
+
+
   }
 
   const datas = useSelector(state => state.Staffs)
   const rates = useSelector(state => state.rate.rate)
   console.log(rates)
-const data = (datas?.staffs)
+  const data = (datas?.staffs)
 
   useEffect(() => {
-   if (data?.success) {
-    dispatch(Staffs(1))
-    history.push("/apps/staffs/list")
+    if (data?.success) {
+      dispatch(Staffs(1))
+      history.push("/apps/staffs/list")
     }
-     dispatch(ShowRate())
+    dispatch(ShowRate())
   }, [dispatch, data])
   // useEffect(()=>{
 
   // })
+  const nepalCities = [
+    'Kathmandu',
+    'Pokhara',
+    'Chitwan',
+    'Biratnagar',
+    'Birgunj',
+    'Dharan',
+    'Bharatpur',
+    'Janakpur',
+    'Hetauda',
+    'Butwal',
+    'Bhaktapur',
+    'Dhangadhi',
+    'Mahendranagar',
+    'Bhimdatta',
+    'Itahari',
+    'Tulsipur',
+    'Nepalgunj',
+    'Gulariya',
+    'Birendranagar',
+    'Rajbiraj',
+    'Lahan',
+    'Siddharthanagar',
+    'Gaur',
+    'Dhankuta',
+    'Gorkha',
+    'Ilam',
+    'Khandbari',
+    'Dipayal',
+    'Tansen',
+    'Baglung',
+    'Panauti',
+    'Nawalpur',
+    'Lamjung',
+    'Bhojpur',
+    'Banepa',
+    'Dhulikhel',
+    'Damauli',
+    'Tikapur',
+    'Jaleswar',
+    'Bhadrapur',
+    'Darchula',
+    'Dailekh',
+    'Jumla',
+    'Kalinchowk',
+    'Lukla',
+    'Namche Bazaar',
+    'Simikot',
+    'Taplejung'
+  ]
+  
+  const cities = [
+    { label: '' },
+    ...nepalCities.map((city) => ({ label: city }))
+  ]
+  
 
   return (
     <Sidebar
@@ -88,7 +145,7 @@ const data = (datas?.staffs)
           />
         </FormGroup>
         <FormGroup>
-        <Label for='full-name'>
+          <Label for='full-name'>
             Email <span className='text-danger'>*</span>
           </Label>
           <Input
@@ -101,18 +158,23 @@ const data = (datas?.staffs)
           />
           <FormText color='muted'>You can use letters, numbers & periods</FormText>
         </FormGroup>
-        {/* <FormGroup>
-          <Label for='company'>
-            Company <span className='text-danger'>*</span>
-          </Label>
+        <FormGroup>
+          <Label for='city'>City</Label>
           <Input
-            name='company'
-            id='company'
-            placeholder='Company Pvt Ltd'
+            type='select'
+            name='city'
+            id='city'
+            placeholder='Select City'
             innerRef={register({ required: true })}
-            className={classnames({ 'is-invalid': errors['company'] })}
-          />
-        </FormGroup> */}
+            className={classnames({ 'is-invalid': errors['city'] })}
+          >
+            {cities.map((city, i) => (
+              <option key={i}>
+                {city.label}
+              </option>
+            ))}
+          </Input>
+        </FormGroup>
         <FormGroup>
           <Label for='country'>
             Address <span className='text-danger'>*</span>
@@ -138,7 +200,7 @@ const data = (datas?.staffs)
             className={classnames({ 'is-invalid': errors['contact'] })}
           />
         </FormGroup>
-         <FormGroup>
+        <FormGroup>
           <Label for='department'>
             Departmnet<span className='text-danger'>*</span>
           </Label>
@@ -150,26 +212,28 @@ const data = (datas?.staffs)
             className={classnames({ 'is-invalid': errors['department'] })}
           />
         </FormGroup>
-           <FormGroup>
+        <FormGroup >
           <Label for='rate'>
             Rate<span className='text-danger'>*</span>
           </Label>
-          <Input
-            type='select'
-            name='rate'
-            id='rate'
-            placeholder='Rate'
-            innerRef={register({ required: true })}
-            className={classnames({ 'is-invalid': errors['rate'] })}
-          >
-                 { rates?.map((rate, i) => {
-return <option key={i} value={rate?.rate}>{rate?.rate}</option>
-            })}
-             
-         
-         </Input>
+          <div style={{ maxHeight: "200px", overflowY: "auto" }}>
+            <Input
+              type='select'
+              name='rate'
+              id='rate'
+              placeholder='Rate'
+              innerRef={register({ required: true })}
+              className={classnames({ 'is-invalid': errors['rate'] })}
+            >
+              {rates?.map((rate, i) => {
+                return <option key={i} value={rate?.rate}>{rate?.rate}</option>
+              })}
+
+
+            </Input>
+          </div>
         </FormGroup>
-     
+
         <Button type='submit' className='mr-1' color='primary'>
           Submit
         </Button>
