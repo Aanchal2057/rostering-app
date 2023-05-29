@@ -212,8 +212,10 @@ console.log(guests)
       const calendar = selectedEvent.extendedProps.calendar
       const id = selectedEvent.id
       const data = events.find((event) => event.uuid === id)
-      const staffname = datas.find(({ id }) => id === data.staff_id)
-      const clientname = datas1.find(({id}) => id === data.client_id)
+      // const staffname = datas.find(({ id }) => id === data.staff_id)
+      const staffname = datas.find(({ id }) => id === (data && data.staff_id))
+      // const clientname = datas1.find(({id}) => id === data.client_id)
+      const clientname = datas1.find(({id}) => id === (data && data.client_id))
       const staffdata = [{value: staffname?.name, label: staffname?.name, id: staffname?.id}]
       const clientdata = [{ value: clientname?.name, label: clientname?.name, id: clientname?.id }]
       console.log(clientdata)
@@ -229,11 +231,12 @@ console.log(guests)
       setAllDay(selectedEvent.allDay || allDay)
       setUrl(selectedEvent.url || url)
       setLocation(selectedEvent.extendedProps.location || location)
-      setDesc(data.client_rate || desc)
+      // setDesc(data.client_rate || desc)
+      setDesc(data && data.client_rate !== undefined ? data.client_rate : desc)
      data?.statusUnassigned ?  setGuests('') :  setGuests(staffdata || guests)
       setGuests1(clientdata || guests1)
       setStartPicker(new Date(selectedEvent.start))
-      setEndPicker(selectedEvent.allDay ? new Date(selectedEvent.start) : new Date(selectedEvent.end).toISOString().slice(0, 10))
+      setEndPicker(selectedEvent.allDay ? new Date(selectedEvent.start) : new Date(selectedEvent.end))
       setValue([resolveLabel()])
     }
   }
@@ -254,7 +257,6 @@ console.log(guests)
     // ** Set date related props
     // ? Docs: https://fullcalendar.io/docs/Event-setDates
     existingEvent.setDates(updatedEventData.start, updatedEventData.end, { allDay: updatedEventData.allDay })
-
     // ** Set event's extendedProps
     // ? Docs: https://fullcalendar.io/docs/Event-setExtendedProp
     // ** eslint-disable-next-line no-plusplus

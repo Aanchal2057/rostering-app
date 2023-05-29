@@ -137,24 +137,50 @@ const Calendar = props => {
       }
     },
 
-    dateClick(info) {
-      const ev = blankEvent
-      ev.start_date = info.date
-      const data = ev.start_date
-      console.log(data)
-      ev.end_date = info.date
-      const today = new Date()
-      // console.log(today)
-      const nextDate = today.setDate(today.getDate() - 1)
-      // console.log(nextDate)
-      dispatch(loadEvent(ev))
-      if (data > nextDate) {
-        handleAddEventSidebar()
-      } else {
-        info.jsEvent.preventDefault()
-      }
+    // dateClick(info) {
+    //   const ev = blankEvent
+    //   ev.start_date = info.date
+    //   const data = ev.start_date
+    //   console.log(data)
+    //   ev.end_date = info.date
+    //   const today = new Date()
+    //   // console.log(today)
+    //   const nextDate = today.setDate(today.getDate() - 1)
+    //   // console.log(nextDate)
+    //   // dispatch(loadEvent(ev))
+    //   dispatch(selectEvent(ev))
+    //   if (data > nextDate) {
+    //     handleAddEventSidebar()
+    //   } else {
+    //     info.jsEvent.preventDefault()
+    //   }
       
+    // },
+    // dateClick(info) {
+    //   const ev = blankEvent
+    //   ev.start = info.date
+    //   ev.end = info.date
+    //   dispatch(selectEvent(ev))
+    //   handleAddEventSidebar()
+    // },
+    dateClick(info) {
+      const clickedDate = info.date
+      const today = new Date()
+    
+      // Compare the clicked date with today's date
+      if (clickedDate < today) {
+        // Clicked date is before today
+        console.log('Cannot select a date before today')
+        return
+      }
+    
+      const ev = blankEvent
+      ev.start = clickedDate
+      ev.end = clickedDate
+      dispatch(selectEvent(ev))
+      handleAddEventSidebar()
     },
+    
     
     /*
       Handle event drop (Also include dragged event)
@@ -169,6 +195,7 @@ const Calendar = props => {
         closeButton: false
       })
     },
+
 
     /*
       Handle event resize
