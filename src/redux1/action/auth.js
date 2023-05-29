@@ -4,6 +4,7 @@ import {
 } from '../constant/authConstant'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
+const baseURL = 'https://rostering.delshagroup.com/'
 
 export const login = (email, password) => async (dispatch) => {
     try {
@@ -11,7 +12,7 @@ export const login = (email, password) => async (dispatch) => {
 
         const config = { headers: { 'Content-Type': 'application/json', 'x-api-key': '23124134' } }
         const { data } = await axios.post(
-            `http://rostering.delshagroup.com/admin/login`,
+            `${baseURL}admin/login`,
             { email, password },
             config
         )
@@ -49,7 +50,7 @@ export const addClient = ({ name, city, email, address, department, contact }) =
 
         const config = { headers: { 'x-api-key': '23124134', Authorization: `Bearer ${token}` } }
         const { data } = await axios.post(
-            `http://rostering.delshagroup.com/client`,
+            `${baseURL}client`,
             {
                 name,
                 city,
@@ -77,7 +78,7 @@ export const editClient = ({ id, name, email, address, department, contact }) =>
 
         const config = { headers: { 'x-api-key': '23124134', Authorization: `Bearer ${token}` } }
         const { data } = await axios.put(
-            `http://rostering.delshagroup.com/client/${id}`,
+            `${baseURL}client/${id}`,
             {
                 name,
                 email,
@@ -114,7 +115,7 @@ export const ClientsList = () => async (dispatch) => {
 
         const config = { headers: { 'x-api-key': '23124134' } }
         const { data } = await axios.get(
-            `http://rostering.delshagroup.com/client`,
+            `${baseURL}client`,
             config
         )
 
@@ -134,7 +135,7 @@ export const Clients = (currentPage) => async (dispatch) => {
 
         const config = { headers: { 'x-api-key': '23124134' } }
         const { data } = await axios.get(
-            `http://rostering.delshagroup.com/client?pageSize=10&page=${currentPage}&`,
+            `${baseURL}client?pageSize=10&page=${currentPage}&`,
             config
         )
 
@@ -155,7 +156,7 @@ export const ClientDetails = ({ id }) => async (dispatch) => {
 
         const config = { headers: { 'x-api-key': '23124134', Authorization: `Bearer ${token}` } }
         const { data } = await axios.get(
-            `http://rostering.delshagroup.com/client/${id}`,
+            `${baseURL}client/${id}`,
             config
         )
 
@@ -176,7 +177,7 @@ export const ClientDelete = ({ id }) => async (dispatch) => {
 
         const config = { headers: { 'x-api-key': '23124134', Authorization: `Bearer ${token}` } }
         const { data } = await axios.delete(
-            `http://rostering.delshagroup.com/client/${id}`,
+            `${baseURL}client/${id}`,
             config
         )
 
@@ -197,7 +198,7 @@ export const Staffs = (currentPage) => async (dispatch) => {
 
         const config = { headers: { 'x-api-key': '23124134', Authorization: `Bearer ${token}` } }
         const { data } = await axios.get(
-            `http://rostering.delshagroup.com/staff?pageSize=10&page=${currentPage}&`,
+            `${baseURL}staff?pageSize=10&page=${currentPage}&`,
             config
         )
 
@@ -219,7 +220,7 @@ export const addStaffs = ({ name, email, city, address, department, contact, rat
 
         const config = { headers: { 'x-api-key': '23124134', Authorization: `Bearer ${token}` } }
         const { data } = await axios.post(
-            `http://rostering.delshagroup.com/staff`,
+            `${baseURL}/staff`,
             {
                 name,
                 email,
@@ -248,7 +249,7 @@ export const editStaffs = ({ id, name, email, address, department, contact }) =>
 
         const config = { headers: { 'x-api-key': '23124134', Authorization: `Bearer ${token}` } }
         const { data } = await axios.put(
-            `http://rostering.delshagroup.com/staff/${id}`,
+            `${baseURL}staff/${id}`,
             {
                 name,
                 email,
@@ -274,7 +275,7 @@ export const StaffsDetails = ({ id }) => async (dispatch) => {
 
         const config = { headers: { 'x-api-key': '23124134', Authorization: `Bearer ${token}` } }
         const { data } = await axios.get(
-            `http://rostering.delshagroup.com/staff/${id}`,
+            `${baseURL}staff/${id}`,
             config
         )
 
@@ -295,7 +296,7 @@ export const StaffsDelete = ({ id }) => async (dispatch) => {
 
         const config = { headers: { 'x-api-key': '23124134', Authorization: `Bearer ${token}` } }
         const { data } = await axios.delete(
-            `http://rostering.delshagroup.com/staff/${id}`,
+            `${baseURL}staff/${id}`,
             config
         )
 
@@ -317,7 +318,7 @@ export const ShowRate = () => async (dispatch) => {
 
         const config = { headers: { 'x-api-key': '23124134', Authorization: `Bearer ${token}` } }
         const { data } = await axios.get(
-            `http://rostering.delshagroup.com/rate`,
+            `${baseURL}rate`,
             config
         )
 
@@ -339,7 +340,7 @@ export const loadEvent = () => async (dispatch) => {
 
         const config = { headers: { 'x-api-key': '23124134', Authorization: `Bearer ${token}` } }
         const { data } = await axios.get(
-            `http://rostering.delshagroup.com/event`,
+            `${baseURL}event`,
             config
         )
 
@@ -361,7 +362,7 @@ export const getEventFilter = (val) => async (dispatch) => {
 
         const config = { headers: { 'x-api-key': '23124134', Authorization: `Bearer ${token}` } }
         const { data } = await axios.get(
-            `http://rostering.delshagroup.com/event/?statusUnassigned=${val}`,
+            `${baseURL}event/?statusUnassigned=${val}`,
             config
         )
 
@@ -384,7 +385,7 @@ export const addEvents = (obj) => async (dispatch) => {
         console.log(obj)
 
         const { data } = await axios.post(
-            `http://rostering.delshagroup.com/event`,
+            `${baseURL}event`,
             {
                 title,
                 start_date,
@@ -446,7 +447,7 @@ export const addEmployee = (obj) => async (dispatch) => {
         console.log(obj)
 
         const { data } = await axios.post(
-            `http://rostering.delshagroup.com/admin`,
+            `${baseURL}admin`,
             {
                 name,
                 email,
@@ -473,7 +474,7 @@ export const loadEmploee = () => async (dispatch) => {
 
         const config = { headers: { 'x-api-key': '23124134', Authorization: `Bearer ${token}` } }
         const { data } = await axios.get(
-            `http://rostering.delshagroup.com/admin`,
+            `${baseURL}admin`,
             config
         )
 
@@ -496,7 +497,7 @@ export const addStaffrate = (obj) => async (dispatch) => {
         console.log(obj)
 
         const { data } = await axios.post(
-            `http://rostering.delshagroup.com/rate`,
+            `${baseURL}rate`,
             {
                rate
             },
@@ -520,7 +521,7 @@ export const updateEvent = (obj) => async (dispatch) => {
         const { title, start_date, end_date, client_id, staff_id, client_rate, uuidd, rateArray, description} = obj
         const config = { headers: { 'x-api-key': '23124134', Authorization: `Bearer ${token}` } }
         const { data } = await axios.put(
-            `http://rostering.delshagroup.com/event/${uuidd}`,
+            `${baseURL}event/${uuidd}`,
             {
                 title,
                 start_date,
@@ -550,7 +551,7 @@ export const updateAdminApproval = (uuid, {isAdminApproval}) => async (dispatch)
         const token = JSON.parse(localStorage.getItem('token'))
         const config = { headers: { 'x-api-key': '23124134', Authorization: `Bearer ${token}` } }
         const { data } = await axios.put(
-            `http://rostering.delshagroup.com/event/admin/${uuid}`,
+            `${baseURL}event/admin/${uuid}`,
             
             {
              isAdminApproval
@@ -573,7 +574,7 @@ export const updateAdminStatus = (uuid, {active}) => async (dispatch) => {
         const token = JSON.parse(localStorage.getItem('token'))
         const config = { headers: { 'x-api-key': '23124134', Authorization: `Bearer ${token}` } }
         const { data } = await axios.put(
-            `http://rostering.delshagroup.com/admin/status/${uuid}`,
+            `${baseURL}admin/status/${uuid}`,
             
             {
              active
@@ -596,7 +597,7 @@ export const generateInvoice = (uuid) => async (dispatch) => {
         const config = { headers: { 'x-api-key': '23124134', Authorization: `Bearer ${token}` } }
         const { data } = await axios.get(
            
-            `http://rostering.delshagroup.com/invoice/staff/${uuid}`,
+            `${baseURL}invoice/staff/${uuid}`,
             config
         )
         dispatch({
@@ -616,7 +617,7 @@ export const createInvoice = ({ staff_id }) => async (dispatch) => {
 
         const config = { headers: { 'x-api-key': '23124134', Authorization: `Bearer ${token}` } }
         const { data } = await axios.post(
-            `http://rostering.delshagroup.com/invoice/staff`,
+            `${baseURL}invoice/staff`,
             {
                staff_id
             },
@@ -639,7 +640,7 @@ export const createClientInvoice = ({ client_id }) => async (dispatch) => {
 
         const config = { headers: { 'x-api-key': '23124134', Authorization: `Bearer ${token}` } }
         const { data } = await axios.post(
-            `http://rostering.delshagroup.com/invoice/client`,
+            `${baseURL}invoice/client`,
             {
                client_id
             },
@@ -663,7 +664,7 @@ export const getStaffInvoice = (id) => async (dispatch) => {
         const config = { headers: { 'x-api-key': '23124134', Authorization: `Bearer ${token}` } }
         const { data } = await axios.get(
            
-            `http://rostering.delshagroup.com/invoice/staff?staff_id=${id}`,
+            `${baseURL}invoice/staff?staff_id=${id}`,
             config
         )
         dispatch({
@@ -683,7 +684,7 @@ export const getCompleted = () => async (dispatch) => {
 
         const config = { headers: { 'x-api-key': '23124134', Authorization: `Bearer ${token}` } }
         const { data } = await axios.get(
-            `http://rostering.delshagroup.com/event?statusComplete=1`,
+            `${baseURL}event?statusComplete=1`,
             config
         )
 
@@ -704,7 +705,7 @@ export const generateClientInvoice = (uuid) => async (dispatch) => {
         const config = { headers: { 'x-api-key': '23124134', Authorization: `Bearer ${token}` } }
         const { data } = await axios.get(
            
-            `http://rostering.delshagroup.com/invoice/staff/${uuid}`,
+            `${baseURL}invoice/staff/${uuid}`,
             config
         )
         dispatch({
@@ -723,7 +724,7 @@ export const getClientInvoice = (id) => async (dispatch) => {
         const config = { headers: { 'x-api-key': '23124134', Authorization: `Bearer ${token}` } }
         const { data } = await axios.get(
            
-            `http://rostering.delshagroup.com/invoice/client?client_id=${id}`,
+            `${baseURL}invoice/client?client_id=${id}`,
             config
         )
         dispatch({
