@@ -289,7 +289,7 @@ const AddEventSidebar = props => {
       } else {
         const start = new Date(selectedEvent.start)
         const end = new Date(selectedEvent.end)
-        const defaultEndPicker = selectedEvent.end ? (start.getTime() !== end.getTime() ? end : start) : new Date()
+        const defaultEndPicker = selectedEvent.end ? (start.getTime() !== end.getTime() ? end : start) : new Date(selectedEvent.start)
         setEndPicker(defaultEndPicker)
       }
       
