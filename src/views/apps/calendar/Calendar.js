@@ -65,6 +65,7 @@ const Calendar = props => {
     start: event.start_date,
     end: event.end_date
   }))
+  // console.log(events)
   // ** calendarOptions(Props)
   
   const calendarOptions = { 

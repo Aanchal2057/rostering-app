@@ -25,15 +25,15 @@ export const addEvent = event => {
 }
 
 // ** Update Event
-export const updateEvent = event => {
-  return dispatch => {
-    axios.post('/apps/calendar/update-event', { event }).then(() => {
-      dispatch({
-        type: 'UPDATE_EVENT'
-      })
-    })
-  }
-}
+// export const updateEvent = event => {
+//   return dispatch => {
+//     axios.post('/apps/calendar/update-event', { event }).then(() => {
+//       dispatch({
+//         type: 'UPDATE_EVENT'
+//       })
+//     })
+//   }
+// }
 
 // ** Filter Events
 export const updateFilter = filter => {

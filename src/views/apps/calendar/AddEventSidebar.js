@@ -47,7 +47,7 @@ const AddEventSidebar = props => {
   // ** Props
   const {
     store,
-     dispatch,
+    dispatch,
     open,
     handleAddEventSidebar,
     calendarsColor,
@@ -58,7 +58,7 @@ const AddEventSidebar = props => {
     updateEvent,
     removeEvent
   } = props
-  
+
   // ** Vars
   const selectedEvent = store.selectedEvent
   const { register, errors, handleSubmit } = useForm()
@@ -81,43 +81,44 @@ const AddEventSidebar = props => {
   const [currentPage1, setCurrentPage1] = useState(1)
   useEffect(() => {
     if (value.value === 'Unassigned') {
-    setShowStaff(false)
-  } else {
-    setShowStaff(true)
-  }
-}, [value])
+      setShowStaff(false)
+    } else {
+      setShowStaff(true)
+    }
+  }, [value])
 
-useEffect(() => {
-    
-  dispatch(Staffs(currentPage))
- 
-}, [dispatch, currentPage])
+  useEffect(() => {
 
-const data = useSelector(state => state.Staffs)
- const datas = (data.staffs?.staff)
+    dispatch(Staffs(currentPage))
+
+  }, [dispatch, currentPage])
+
+  const data = useSelector(state => state.Staffs)
+  const datas = (data.staffs?.staff)
 
 
- useEffect(() => {
-    
-  dispatch(Clients(currentPage1))
- 
-}, [dispatch, currentPage1])
+  useEffect(() => {
+
+    dispatch(Clients(currentPage1))
+
+  }, [dispatch, currentPage1])
   const events = useSelector(state => state?.Event?.event)
+  console.log(events)
 
-const data1 = useSelector(state => state.Clients)
-const datas1 = (data1.client?.clients)
+  const data1 = useSelector(state => state.Clients)
+  const datas1 = (data1.client?.clients)
   // ** Select Options
   const options = [
     { value: 'Assigned', label: 'Assigned', color: 'primary' },
     { value: 'Unassigned', label: 'Unassigned', color: 'danger' }
   ]
- 
-const getStaff =   datas?.map((data) => {
-    return { value: data?.name, label: data?.name, id:data?.id}
+
+  const getStaff = datas?.map((data) => {
+    return { value: data?.name, label: data?.name, id: data?.id }
   })
 
-const getClient =   datas1?.map((data) => {
-    return { value: data?.name, label: data?.name, id:data?.id}
+  const getClient = datas1?.map((data) => {
+    return { value: data?.name, label: data?.name, id: data?.id }
   })
 
 
@@ -144,17 +145,18 @@ const getClient =   datas1?.map((data) => {
 
   // ** Adds New Event
   const handleAddEvent = () => {
-    
+
     guests1.forEach(element => {
       if (Object.keys(guests).length === 0) {
         const obj = {
           title,
           start_date: startPicker,
           end_date: endPicker,
+          allDay,
           client_id: element.id,
           staff_id: '',
           client_rate: desc,
-          rateArray:'',
+          rateArray: '',
           description
         }
 
@@ -166,23 +168,24 @@ const getClient =   datas1?.map((data) => {
             title,
             start_date: startPicker,
             end_date: endPicker,
+            allDay,
             client_id: element.id,
             staff_id: e.id,
             client_rate: desc,
             description
 
           }
-          const getarray = datas?.find(({id}) => id === obj.staff_id)
+          const getarray = datas?.find(({ id }) => id === obj.staff_id)
           console.log(getarray)
           const rateArray = getarray.rate
           console.log(rateArray)
-          obj = {...obj, rateArray}
+          obj = { ...obj, rateArray }
           dispatch(addEvents(obj))
-          
+
         })
       }
     })
-    
+
     dispatch(loadEvent())
     handleAddEventSidebar()
     toast.success(<ToastComponent title='Event Added' color='success' icon={<Check />} />, {
@@ -191,7 +194,8 @@ const getClient =   datas1?.map((data) => {
       closeButton: false
     })
   }
-
+  console.log(selectedEvent.start)
+  console.log(selectEvent.end)
   // ** Reset Input Values on Close
   const handleResetInputValues = () => {
     dispatch(selectEvent({}))
@@ -203,20 +207,58 @@ const getClient =   datas1?.map((data) => {
     setGuests({})
     setValue([{ value: 'Assigned', label: 'Assigned', color: 'primary' }])
     setStartPicker(new Date())
-    setEndPicker(new Date())
+    // setEndPicker(new Date())
   }
-console.log(guests)
+  console.log(guests)
   // ** Set sidebar fields
+  // const handleSelectedEvent = () => {
+  //   if (!isObjEmpty(selectedEvent)) {
+  //     const calendar = selectedEvent.extendedProps.calendar
+  //     const id = selectedEvent.id
+  //     const data = events.find((event) => event.uuid === id)
+  //     // const staffname = datas.find(({ id }) => id === data.staff_id)
+  //     const staffname = datas.find(({ id }) => id === (data && data.staff_id))
+  //     // const clientname = datas1.find(({id}) => id === data.client_id)
+  //     const clientname = datas1.find(({id}) => id === (data && data.client_id))
+  //     const staffdata = [{value: staffname?.name, label: staffname?.name, id: staffname?.id}]
+  //     const clientdata = [{ value: clientname?.name, label: clientname?.name, id: clientname?.id }]
+  //     console.log(clientdata)
+  //     const resolveLabel = () => {
+  //       if (data?.statusUnassigned) {
+  //         return { value: 'Unassigned', label: 'Unassigned', color: 'danger' }
+  //       } else {
+  //         return { value: 'Assigned', label: 'Assigned', color: 'primary' }
+  //       }
+  //     }
+  //     setUuidd(id)
+  //     setTitle(selectedEvent.title || title)
+  //     setAllDay(selectedEvent.allDay || allDay)
+  //     setUrl(selectedEvent.url || url)
+  //     setLocation(selectedEvent.extendedProps.location || location)
+  //     // setDesc(data.client_rate || desc)
+  //     setDesc(data && data.client_rate !== undefined ? data.client_rate : desc)
+  //    data?.statusUnassigned ?  setGuests('') :  setGuests(staffdata || guests)
+  //     setGuests1(clientdata || guests1)
+  //     setStartPicker(new Date(selectedEvent.start))
+  //     setEndPicker(selectedEvent.allDay ? new Date(selectedEvent.start) : new Date(selectedEvent.end).toISOString().slice(0, 10))
+
+  //     // if (selectedEvent.allDay) {
+  //     //   setEndPicker(new Date(selectedEvent.start))
+  //     // } else {
+  //     //   setEndPicker(new Date(selectedEvent.end))
+  //     // }
+
+  //     setValue([resolveLabel()])
+  //   }
+  // }
   const handleSelectedEvent = () => {
     if (!isObjEmpty(selectedEvent)) {
       const calendar = selectedEvent.extendedProps.calendar
       const id = selectedEvent.id
       const data = events.find((event) => event.uuid === id)
-      // const staffname = datas.find(({ id }) => id === data.staff_id)
       const staffname = datas.find(({ id }) => id === (data && data.staff_id))
-      // const clientname = datas1.find(({id}) => id === data.client_id)
-      const clientname = datas1.find(({id}) => id === (data && data.client_id))
-      const staffdata = [{value: staffname?.name, label: staffname?.name, id: staffname?.id}]
+      const clientname = datas1.find(({ id }) => id === (data && data.client_id))
+      const staffdata = [{ value: staffname?.name, label: staffname?.name, id: staffname?.id }]
       const clientdata = [{ value: clientname?.name, label: clientname?.name, id: clientname?.id }]
       console.log(clientdata)
       const resolveLabel = () => {
@@ -231,15 +273,30 @@ console.log(guests)
       setAllDay(selectedEvent.allDay || allDay)
       setUrl(selectedEvent.url || url)
       setLocation(selectedEvent.extendedProps.location || location)
-      // setDesc(data.client_rate || desc)
       setDesc(data && data.client_rate !== undefined ? data.client_rate : desc)
-     data?.statusUnassigned ?  setGuests('') :  setGuests(staffdata || guests)
+      data?.statusUnassigned ? setGuests('') : setGuests(staffdata || guests)
       setGuests1(clientdata || guests1)
+
       setStartPicker(new Date(selectedEvent.start))
-      setEndPicker(selectedEvent.allDay ? new Date(selectedEvent.start) : new Date(selectedEvent.end))
+      // if (selectedEvent.allDay) {
+      //   setEndPicker(new Date(selectedEvent.start).toISOString().slice(0, 10))
+      // } else {
+      //   const defaultEndPicker = selectedEvent.end ? new Date(selectedEvent.end) : new Date()
+      //   setEndPicker(defaultEndPicker)
+      // }
+      if (selectedEvent.allDay) {
+        setEndPicker(new Date(selectedEvent.start).toISOString().slice(0, 10))
+      } else {
+        const start = new Date(selectedEvent.start)
+        const end = new Date(selectedEvent.end)
+        const defaultEndPicker = selectedEvent.end ? (start.getTime() !== end.getTime() ? end : start) : new Date()
+        setEndPicker(defaultEndPicker)
+      }
+      
       setValue([resolveLabel()])
     }
   }
+
 
   // ** (UI) updateEventInCalendar
   const updateEventInCalendar = (updatedEventData, propsToUpdate, extendedPropsToUpdate) => {
@@ -266,13 +323,14 @@ console.log(guests)
     }
   }
 
-  // ** Updates Event in Store
+  // // ** Updates Event in Store
   const handleUpdateEvent = () => {
-   guests1.forEach(element => {
+    guests1.forEach(element => {
       if (Object.keys(guests).length === 0) {
         const obj = {
-            uuidd,
+          uuidd,
           title,
+          allDay,
           start_date: startPicker,
           end_date: endPicker,
           client_id: element.id,
@@ -280,15 +338,16 @@ console.log(guests)
           client_rate: desc,
           description
         }
-      console.log(obj)
+        console.log(obj)
 
-        dispatch(updateEvent(obj, uuid))
+        dispatch(updateEvent(obj))
 
       } else {
         guests.forEach((e) => {
           const obj = {
             uuidd,
             title,
+            allDay,
             start_date: startPicker,
             end_date: endPicker,
             client_id: element.id,
@@ -296,14 +355,14 @@ console.log(guests)
             client_rate: desc,
             description
           }
-      console.log(obj)
+          console.log(obj)
           dispatch(updateEvent(obj))
-          
+
         })
       }
     })
 
-    // updateEventInCalendar(eventToUpdate, propsToUpdate, extendedPropsToUpdate)
+    // updateEventInCalendar(obj, uuidd)
     handleAddEventSidebar()
     toast.success(<ToastComponent title='Event Updated' color='success' icon={<Check />} />, {
       autoClose: 2000,
@@ -479,7 +538,7 @@ console.log(guests)
             <Label for='guests'>Select Staffs</Label>
             <Select
               isMulti
-              id='guests' 
+              id='guests'
               className='react-select '
               classNamePrefix='select '
               isClearable={false}
@@ -487,7 +546,7 @@ console.log(guests)
               theme={selectThemeColors}
               value={guests.length ? [...guests] : null}
               onChange={data => setGuests([...data])}
-              components={showStaff && ({Option: GuestsComponent})}
+              components={showStaff && ({ Option: GuestsComponent })}
             />
           </FormGroup>
           <FormGroup>
@@ -498,9 +557,9 @@ console.log(guests)
               id='client-rate'
               value={desc}
               onChange={e => setDesc(e.target.value)}
-               innerRef={register({ register: true, validate: value => value !== '' })}
+              innerRef={register({ register: true, validate: value => value !== '' })}
               placeholder='Client Rate'
-                className={classnames({
+              className={classnames({
                 'is-invalid': errors.desc
               })}
             />
