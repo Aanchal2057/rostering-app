@@ -69,8 +69,8 @@ const AddEventSidebar = props => {
   const [desc, setDesc] = useState('')
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
-  const [guests, setGuests] = useState({})
-  const [guests1, setGuests1] = useState({})
+  const [guests, setGuests] = useState([])
+  const [guests1, setGuests1] = useState([])
   const [allDay, setAllDay] = useState(false)
   const [location, setLocation] = useState('')
   const [endPicker, setEndPicker] = useState(new Date())
@@ -96,6 +96,9 @@ const AddEventSidebar = props => {
   const data = useSelector(state => state.Staffs)
   const datas = (data.staffs?.staff)
 
+  console.log(guests)
+  console.log(typeof guests)
+  console.log(typeof guests[0]?.value)
 
   useEffect(() => {
 
@@ -204,7 +207,7 @@ const AddEventSidebar = props => {
     setUrl('')
     setLocation('')
     setDesc('')
-    setGuests({})
+    setGuests([])
     setValue([{ value: 'Assigned', label: 'Assigned', color: 'primary' }])
     setStartPicker(new Date())
     setEndPicker(new Date())
@@ -522,7 +525,7 @@ const AddEventSidebar = props => {
               isClearable={false}
               options={getClient}
               theme={selectThemeColors}
-              value={guests1.length ? [...guests1] : null}
+              value={guests1.length && guests1[0]?.value !== undefined ? [...guests1] : []}
               onChange={data => setGuests1([...data])}
               components={{
                 Option: GuestsComponent
@@ -541,7 +544,7 @@ const AddEventSidebar = props => {
               isClearable={false}
               options={showStaff ? getStaff : []}
               theme={selectThemeColors}
-              value={guests.length ? [...guests] : null}
+value={guests.length && guests[0]?.value !== undefined ? guests : []}
               onChange={data => setGuests([...data])}
               components={showStaff && ({ Option: GuestsComponent })}
             />
