@@ -444,6 +444,8 @@ const AddEventSidebar = props => {
                 handleUpdateEvent()
               }
               handleAddEventSidebar()
+              window.location.reload() // Add this line to reload the page
+
             }
           })}
         >
