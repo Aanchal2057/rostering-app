@@ -257,8 +257,10 @@ const AddEventSidebar = props => {
       const calendar = selectedEvent.extendedProps.calendar
       const id = selectedEvent.id
       const data = events.find((event) => event.uuid === id)
-      const staffname = datas.find(({ id }) => id === (data && data.staff_id))
+      const staffname = datas.find(({ id }) => id === (data && parseInt(data.staff_id)))
       const clientname = datas1.find(({ id }) => id === (data && data.client_id))
+
+      console.log(staffname)
     
       const staffdata = [{ value: staffname?.name, label: staffname?.name, id: staffname?.id }]
       const clientdata = [{ value: clientname?.name, label: clientname?.name, id: clientname?.id }]
