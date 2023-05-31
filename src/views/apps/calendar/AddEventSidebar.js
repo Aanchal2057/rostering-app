@@ -131,7 +131,7 @@ const AddEventSidebar = props => {
       </components.Option>
     )
   }
-
+ 
   const GuestsComponent = ({ data, ...props }) => {
     return (
       <components.Option {...props}>
@@ -141,7 +141,7 @@ const AddEventSidebar = props => {
       </components.Option>
     )
   }
-  console.log(guests1)
+  console.log(guests)
 
   // ** Adds New Event
   const handleAddEvent = () => {
@@ -207,9 +207,10 @@ const AddEventSidebar = props => {
     setGuests({})
     setValue([{ value: 'Assigned', label: 'Assigned', color: 'primary' }])
     setStartPicker(new Date())
-    // setEndPicker(new Date())
+    setEndPicker(new Date())
   }
   console.log(guests)
+
   // ** Set sidebar fields
   // const handleSelectedEvent = () => {
   //   if (!isObjEmpty(selectedEvent)) {
@@ -258,9 +259,9 @@ const AddEventSidebar = props => {
       const data = events.find((event) => event.uuid === id)
       const staffname = datas.find(({ id }) => id === (data && data.staff_id))
       const clientname = datas1.find(({ id }) => id === (data && data.client_id))
+    
       const staffdata = [{ value: staffname?.name, label: staffname?.name, id: staffname?.id }]
       const clientdata = [{ value: clientname?.name, label: clientname?.name, id: clientname?.id }]
-      console.log(clientdata)
       const resolveLabel = () => {
         if (data?.statusUnassigned) {
           return { value: 'Unassigned', label: 'Unassigned', color: 'danger' }
@@ -276,14 +277,7 @@ const AddEventSidebar = props => {
       setDesc(data && data.client_rate !== undefined ? data.client_rate : desc)
       data?.statusUnassigned ? setGuests('') : setGuests(staffdata || guests)
       setGuests1(clientdata || guests1)
-
       setStartPicker(new Date(selectedEvent.start))
-      // if (selectedEvent.allDay) {
-      //   setEndPicker(new Date(selectedEvent.start).toISOString().slice(0, 10))
-      // } else {
-      //   const defaultEndPicker = selectedEvent.end ? new Date(selectedEvent.end) : new Date()
-      //   setEndPicker(defaultEndPicker)
-      // }
       if (selectedEvent.allDay) {
         setEndPicker(new Date(selectedEvent.start).toISOString().slice(0, 10))
       } else {
@@ -409,9 +403,9 @@ const AddEventSidebar = props => {
           >
             Update
           </Button.Ripple>
-          <Button.Ripple color='danger' onClick={handleDeleteEvent} outline>
+          {/* <Button.Ripple color='danger' onClick={handleDeleteEvent} outline>
             Delete
-          </Button.Ripple>
+          </Button.Ripple> */}
         </Fragment>
       )
     }
@@ -533,6 +527,7 @@ const AddEventSidebar = props => {
               }}
             />
           </FormGroup>
+          
 
           <FormGroup>
             <Label for='guests'>Select Staffs</Label>
@@ -548,6 +543,7 @@ const AddEventSidebar = props => {
               onChange={data => setGuests([...data])}
               components={showStaff && ({ Option: GuestsComponent })}
             />
+          
           </FormGroup>
           <FormGroup>
             <Label for='client-rate'>Client Rate<span className='text-danger'>*</span></Label>
