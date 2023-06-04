@@ -28,6 +28,7 @@ const CustomHeader = ({ show, dataStaff }) => {
           staff_id: userId
         })
       )
+      alert('Invoice created successfully!')
   }
 
   return (

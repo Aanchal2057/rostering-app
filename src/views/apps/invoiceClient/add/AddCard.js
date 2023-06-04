@@ -41,6 +41,9 @@ const AddCard = ({ datas }) => {
   const clients = useSelector(state => state?.Clients?.client)
   const data = datas[0]
   const events = data.events
+  console.log(events)
+  const clientRates = events.map(event => event.client_rate)
+  
   // ** States
   const [count, setCount] = useState(1)
   const [value, setValue] = useState({})
@@ -146,7 +149,7 @@ const AddCard = ({ datas }) => {
               </div>
               <div className='d-flex align-items-center mb-1'>
                 <span className='title'>Date:</span>
-                <Flatpickr
+                <input
                   value={data.invoice_start_date}
                 
                   className='form-control invoice-edit-input date-picker'
@@ -154,7 +157,7 @@ const AddCard = ({ datas }) => {
               </div>
               <div className='d-flex align-items-center'>
                 <span className='title'>Due Date:</span>
-                <Flatpickr
+                <input
                   value={data.invoice_end_date}
               
                   className='form-control invoice-edit-input due-date-picker'
@@ -213,7 +216,7 @@ const AddCard = ({ datas }) => {
               )
             }}
           </Repeater>
-        
+       
         </CardBody>
 
         {/* /Product Details */}
@@ -227,13 +230,11 @@ const AddCard = ({ datas }) => {
             <Col className='d-flex justify-content-end' md={{ size: '6', order: 2 }} xs={{ size: 12, order: 1 }}>
               <div className='invoice-total-wrapper'>
                 <div className='invoice-total-item'>
-                  <p className='invoice-total-title'>Subtotal:</p>
-                  <p className='invoice-total-amount'>  {event.client_rate}</p>
                 </div>
                 <hr className='my-50' />
                 <div className='invoice-total-item'>
                   <p className='invoice-total-title'>Total:</p>
-                  <p className='invoice-total-amount'>  {event.client_rate}</p>
+                  <p className='invoice-total-amount'>  {clientRates}</p>
                 </div>
               </div>
             </Col>

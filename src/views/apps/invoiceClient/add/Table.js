@@ -2,7 +2,7 @@ import { Fragment, useState, useEffect } from 'react'
 import DataTable from 'react-data-table-component'
 
 const Table = ({event}) => {
-
+  console.log(event)
   const columns = [
     {
         name: 'Title',
@@ -10,8 +10,8 @@ const Table = ({event}) => {
         sortable: true
     },
     {
-        name: 'Rate',
-        selector: row => row.client_rate,
+        name: 'department',
+        selector: row => row.department,
         sortable: true
     },
     {

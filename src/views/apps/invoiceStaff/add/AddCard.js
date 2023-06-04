@@ -43,7 +43,7 @@ console.log(staffs)
   const data = datas[0]
   const event = data.events
   console.log(data)
-
+  const staffRates = event.map(event => event.staff_rate)
   // ** States
   const [count, setCount] = useState(1)
   const [value, setValue] = useState({})
@@ -231,13 +231,13 @@ console.log(staffs)
             <Col className='d-flex justify-content-end' md={{ size: '6', order: 2 }} xs={{ size: 12, order: 1 }}>
               <div className='invoice-total-wrapper'>
                 <div className='invoice-total-item'>
-                  <p className='invoice-total-title'>Subtotal:</p>
-                  <p className='invoice-total-amount'>  {event.staff_rate}</p>
+                  {/* <p className='invoice-total-title'>Subtotal:</p>
+                  <p className='invoice-total-amount'>  {event.staff_rate}</p> */}
                 </div>
                 <hr className='my-50' />
                 <div className='invoice-total-item'>
                   <p className='invoice-total-title'>Total:</p>
-                  <p className='invoice-total-amount'>  {event.staff_rate}</p>
+                  <p className='invoice-total-amount'>  {staffRates}</p>
                 </div>
               </div>
             </Col>

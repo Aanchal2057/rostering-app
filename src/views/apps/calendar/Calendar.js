@@ -60,16 +60,16 @@ const Calendar = props => {
 
 
   const events = Array.isArray(store) && store?.map(event => ({
-    id:event.uuid,
+    id: event.uuid,
     title: event.title,
     start: event.start_date,
     end: event.end_date
   }))
   // console.log(events)
   // ** calendarOptions(Props)
-  
-  const calendarOptions = { 
-    events : events ? events : null,
+
+  const calendarOptions = {
+    events: events ? events : null,
     plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
     initialView: 'dayGridMonth',
     headerToolbar: {
@@ -81,7 +81,7 @@ const Calendar = props => {
       ? Docs: https://fullcalendar.io/docs/editable
     */
     editable: true,
-    
+
     /*
       Enable resizing event from start
       ? Docs: https://fullcalendar.io/docs/eventResizableFromStart
@@ -94,7 +94,7 @@ const Calendar = props => {
       ? Docs: https://fullcalendar.io/docs/dragScroll
     */
     dragScroll: true,
-    
+
 
     /*
       Max number of events within a given day
@@ -107,7 +107,7 @@ const Calendar = props => {
       ? Docs: https://fullcalendar.io/docs/navLinks
     */
     navLinks: true,
-    
+
     eventClassNames({ event: calendarEvent }) {
       // eslint-disable-next-line no-underscore-dangle
       const colorName = calendarsColor[calendarEvent._def.extendedProps.calendar]
@@ -138,51 +138,27 @@ const Calendar = props => {
       }
     },
 
-    // dateClick(info) {
-    //   const ev = blankEvent
-    //   ev.start_date = info.date
-    //   const data = ev.start_date
-    //   console.log(data)
-    //   ev.end_date = info.date
-    //   const today = new Date()
-    //   // console.log(today)
-    //   const nextDate = today.setDate(today.getDate() - 1)
-    //   // console.log(nextDate)
-    //   // dispatch(loadEvent(ev))
-    //   dispatch(selectEvent(ev))
-    //   if (data > nextDate) {
-    //     handleAddEventSidebar()
-    //   } else {
-    //     info.jsEvent.preventDefault()
-    //   }
-      
-    // },
-    // dateClick(info) {
-    //   const ev = blankEvent
-    //   ev.start = info.date
-    //   ev.end = info.date
-    //   dispatch(selectEvent(ev))
-    //   handleAddEventSidebar()
-    // },
     dateClick(info) {
       const clickedDate = info.date
       const today = new Date()
-    
+      // Set the time component of clickedDate and today to midnight
+      clickedDate.setHours(0, 0, 0, 0)
+      today.setHours(0, 0, 0, 0)
+
       // Compare the clicked date with today's date
       if (clickedDate < today) {
         // Clicked date is before today
         console.log('Cannot select a date before today')
         return
       }
-    
       const ev = blankEvent
       ev.start = clickedDate
       ev.end = clickedDate
       dispatch(selectEvent(ev))
       handleAddEventSidebar()
     },
-    
-    
+
+
     /*
       Handle event drop (Also include dragged event)
       ? Docs: https://fullcalendar.io/docs/eventDrop
@@ -220,7 +196,7 @@ const Calendar = props => {
   return (
     <Card className='shadow-none border-0 mb-0 rounded-0'>
       <CardBody className='pb-0'>
-        <FullCalendar {...calendarOptions} eventBackgroundColor='#7367FD' eventTextColor='white'  height='700'/>
+        <FullCalendar {...calendarOptions} eventBackgroundColor='#7367FD' eventTextColor='white' height='700' />
       </CardBody>
     </Card>
   )
